@@ -1,0 +1,117 @@
+-- Table: adempiere.I_UserJP
+
+-- DROP TABLE adempiere.I_UserJP;
+
+CREATE TABLE adempiere.I_UserJP
+(
+    I_ErrorMsg character varying(2000),
+    I_IsImported character(1) DEFAULT 'N'::bpchar,
+    Processing character(1),
+
+    Processed character(1) DEFAULT 'N'::bpchar,
+
+    I_UserJP_ID numeric(10,0),
+    I_UserJP_UU character varying(36) DEFAULT NULL::character varying,
+
+    AD_Client_ID numeric(10,0) NOT NULL,
+    AD_Org_ID numeric(10,0) NOT NULL,
+    JP_Org_Value character varying(40) DEFAULT NULL::character varying,
+    IsActive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+    I_IsActiveJP character(1) NOT NULL DEFAULT 'Y'::bpchar,
+    Created timestamp without time zone NOT NULL DEFAULT now(),
+    CreatedBy numeric(10,0) NOT NULL,
+    Updated timestamp without time zone NOT NULL DEFAULT now(),
+    Updatedby numeric(10,0) NOT NULL,
+
+    Name character varying(60),
+    Description character varying(255),
+    Password character varying(1024),
+    Email character varying(60) ,
+    JP_Supervisor_EMail character varying(60),
+    Supervisor_ID numeric(10,0),
+
+    JP_BPartner_Value character varying(40),
+    C_BPartner_ID numeric(10,0),
+
+    EmailUser character varying(60),
+    EmailUserPW character varying(255) ,
+
+    JP_BPartner_Location_Name character varying(60),
+    C_BPartner_Location_ID numeric(10,0),
+
+    JP_Greeting_Name character varying(60),
+    C_Greeting_ID numeric(10,0),
+
+    Title character varying(40) ,
+    Comments character varying(2000),
+
+    Phone character varying(40) ,
+    Phone2 character varying(40) ,
+    Fax character varying(40) ,
+    LastContact timestamp without time zone,
+    LastResult character varying(255) ,
+
+    Birthday timestamp without time zone,
+
+    JP_OrgTrx_Value character varying(40) DEFAULT NULL::character varying,
+    AD_OrgTrx_ID numeric(10,0),
+
+    Emailverify character varying(40),
+    EmailverifyDate timestamp without time zone,
+    NotificationType character(1) DEFAULT 'E'::bpchar,
+    IsFullBPAccess character(1) NOT NULL DEFAULT 'Y'::bpchar,
+    
+    JP_Job_Name character varying(60),
+    C_Job_ID numeric(10,0),
+    LDAPUser character varying(60),
+    ConnectionProfile character(1),
+
+    Value character varying(40) DEFAULT NULL::character varying,
+    UserPIN character varying(20),
+    IsInPayroll character(1) NOT NULL DEFAULT 'N'::bpchar,
+
+    IsMenuAutoExpand character(1) NOT NULL DEFAULT 'N'::bpchar ,
+
+    SALT character varying(16) ,
+    IsLocked character(1) NOT NULL DEFAULT 'N'::bpchar,
+    DateAccountLocked timestamp without time zone,
+    failedLoginCount numeric(10,0) NOT NULL DEFAULT (0)::numeric,
+    DatePasswordChanged timestamp without time zone,
+    DateLastLogin timestamp without time zone,
+    IsNoPasswordReset character(1) NOT NULL DEFAULT 'N'::bpchar,
+    IsExpired character(1) NOT NULL DEFAULT 'N'::bpchar,
+    SecurityQuestion character varying(1024),
+    Answer character varying(1024) ,
+
+    IsSalesLead character(1) NOT NULL DEFAULT 'N'::bpchar,
+
+    C_Location_ID numeric(10,0) DEFAULT NULL::numeric,
+    JP_Location_Label character varying(255) DEFAULT NULL::character varying,
+
+    LeadSource character varying(10) DEFAULT NULL::character varying,
+    LeadStatus character varying(10) DEFAULT NULL::character varying,
+    LeadSourceDescription character varying(255) DEFAULT NULL::character varying,
+    LeadStatusDescription character varying(255) DEFAULT NULL::character varying,
+
+    JP_Campaign_Value character varying(40) DEFAULT NULL::character varying,
+    C_Campaign_ID numeric(10,0) DEFAULT NULL::numeric,
+
+    JP_SalesRep_EMail character varying(60) DEFAULT NULL::character varying,
+    SalesRep_ID numeric(10,0) DEFAULT NULL::numeric,
+
+    BPName character varying(60) DEFAULT NULL::character varying,
+
+    JP_BP_Location_Label character varying(255) DEFAULT NULL::character varying,
+    BP_Location_ID numeric(10,0) DEFAULT NULL::numeric,
+    IsAddMailTextAutomatically character(1) NOT NULL DEFAULT 'N'::bpchar,
+
+    JP_MailText_Name character varying(60) DEFAULT NULL::character varying,
+    R_DefaultMailText_ID numeric(10,0) DEFAULT NULL::numeric,
+    
+    JP_Corporation_Value character varying(40) DEFAULT NULL::character varying,
+    JP_Corporation_ID numeric(10,0) DEFAULT NULL::numeric,
+
+    AD_User_ID numeric(10,0) DEFAULT NULL::numeric,
+
+    CONSTRAINT I_UserJP_Pkey PRIMARY KEY (I_UserJP_ID)
+)

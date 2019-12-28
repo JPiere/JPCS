@@ -1,0 +1,1 @@
+Add JP_LimitCount Column to AD_ReportView Table 	English Name:Limit Count / Japanese Name:§ŒÀ”

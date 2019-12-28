@@ -1,0 +1,3 @@
+Add C_BankAccount_ID Column to JP_Bill Table	 
+
+Add JP_PromisedPayDate Column to JP_Bill Table

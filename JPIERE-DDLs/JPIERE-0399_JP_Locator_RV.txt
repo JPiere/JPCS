@@ -1,0 +1,31 @@
+CREATE OR REPLACE VIEW adempiere.JP_Locator_RV AS
+SELECT
+ loc.AD_Client_ID AS AD_Client_ID
+ ,loc.AD_Org_ID AS AD_Org_ID
+ ,org.Value AS JP_Org_Value
+ ,org.Name AS JP_Org_Name
+ ,loc.M_Warehouse_ID AS M_Warehouse_ID
+ ,ow.Value AS JP_Warehouse_Value
+ ,ow.Name AS JP_Warehouse_Name
+ ,loc.Value
+ ,loc.JP_PhysicalWarehouse_ID AS JP_PhysicalWarehouse_ID
+ ,pw.Value AS JP_PhysicalWarehouse_Value
+ ,pw.Value AS JP_PhysicalWarehouse_Name
+ ,loc.M_LocatorType_ID AS M_LocatorType_ID
+ ,loct.Name AS JP_LocatorType_Name
+ ,loc.PriorityNo
+ ,loc.X
+ ,loc.Y
+ ,loc.Z
+ ,loc.IsCommonLocatorJP
+ ,loc.IsDefault
+ ,loc.IsActive
+ 
+FROM adempiere.M_Locator loc
+	INNER JOIN adempiere.M_Warehouse ow ON (loc.M_Warehouse_ID = ow.M_Warehouse_ID) 
+    INNER JOIN adempiere.AD_Org org ON (loc.AD_Org_ID = org.AD_Org_ID)
+    LEFT OUTER JOIN adempiere.JP_PhysicalWarehouse pw ON (loc.JP_PhysicalWarehouse_ID = pw.JP_PhysicalWarehouse_ID)
+    LEFT OUTER JOIN adempiere.M_LocatorType loct ON (loc.M_LocatorType_ID = loct.M_LocatorType_ID);
+
+ALTER TABLE adempiere.JP_Locator_RV
+    OWNER TO adempiere;

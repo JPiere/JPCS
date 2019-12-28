@@ -1,0 +1,81 @@
+-- Table: adempiere.I_BP_GroupJP
+
+-- DROP TABLE adempiere.I_BP_GroupJP;
+
+CREATE TABLE adempiere.I_BP_GroupJP
+(
+  i_errormsg character varying(2000),
+  i_isimported character(1) DEFAULT 'N'::bpchar,
+  processing character(1),
+
+  processed character(1) DEFAULT 'N'::bpchar,
+
+  I_BP_GroupJP_ID numeric(10,0) NOT NULL,
+  I_BP_GroupJP_UU character varying(36) DEFAULT NULL::character varying,
+  AD_Client_ID numeric(10,0) NOT NULL DEFAULT 0 ,
+  AD_Org_ID numeric(10,0) NOT NULL DEFAULT 0 ,
+  IsActive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+  Created timestamp without time zone NOT NULL DEFAULT now(),
+  CreatedBy numeric(10,0) NOT NULL,
+  Updated timestamp without time zone NOT NULL DEFAULT now(),
+  UpdatedBy numeric(10,0) NOT NULL,
+
+  JP_Org_Value character varying(40) DEFAULT NULL::character varying,
+  Value character varying(40),
+  C_BP_Group_ID numeric(10,0),
+  Name character varying(60),
+  Description character varying(255) ,
+  IsDefault character(1)  NOT NULL DEFAULT 'N'::bpchar,
+  
+  JP_PrintColor_Name character varying(60),
+  AD_PrintColor_ID numeric(10,0),
+
+  IsConfidentialInfo character(1) NOT NULL DEFAULT 'N'::bpchar,
+  PriorityBase character(1) ,
+
+  JP_PriceList_Name character varying(60) ,
+  M_PriceList_ID numeric(10,0),
+  JP_PO_PriceList_Name character varying(60) ,
+  PO_PriceList_ID numeric(10,0),
+  JP_DiscountSchema_Name character varying(60) ,
+  M_DiscountSchema_ID numeric(10,0),
+  JP_PO_DiscountSchema_Name character varying(60) ,
+  PO_DiscountSchema_ID numeric(10,0),
+  CreditWatchPercent numeric,
+  PriceMatchTolerance numeric,
+  JP_Dunning_Name character varying(60) ,
+  C_Dunning_ID numeric(10,0),
+
+
+
+ --âÔåvèÓïÒ
+  JP_AcctSchema_Name character varying(60),
+  C_AcctSchema_ID numeric(10,0),
+
+  JP_Receivable_Acct_Value character varying(40),
+  C_Receivable_Acct numeric(10,0) NOT NULL,
+ 
+  JP_C_PrePayment_Acct_Value character varying(40),
+  C_PrePayment_acct numeric(10,0) NOT NULL,
+
+  JP_Liability_Acct_Value character varying(40),
+  V_Liability_acct numeric(10,0) NOT NULL,
+
+  JP_V_Prepayment_Acct_Value character varying(40),
+  V_PrePayment_acct numeric(10,0) NOT NULL,
+
+  JP_PayDiscount_Exp_Value character varying(40),
+  PayDiscount_Exp_Acct numeric(10,0) NOT NULL,
+
+  JP_PayDiscount_Rev_Value character varying(40),
+  PayDiscount_Rev_Acct numeric(10,0) NOT NULL,
+
+  JP_WriteOff_Acct_Value character varying(40),
+  WriteOff_Acct numeric(10,0) NOT NULL,
+
+  JP_NotInvoicedReceipts_Value character varying(40),
+  NotInvoicedReceipts_Acct numeric(10,0) NOT NULL,
+ I_IsActiveJP character(1) NOT NULL DEFAULT 'Y'::bpchar,
+
+  CONSTRAINT I_BP_GroupJP_pkey PRIMARY KEY (I_BP_GroupJP_ID)
+)

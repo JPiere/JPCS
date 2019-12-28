@@ -1,0 +1,66 @@
+-- DROP VIEW adempiere.JP_RV_InOutLineConfirm;
+
+CREATE OR REPLACE VIEW adempiere.JP_RV_InOutLineConfirm AS 
+ SELECT 
+	cl.M_InOutConfirm_ID
+	,cl.M_InOutLineConfirm_ID
+	,cl.AD_Client_ID
+	,cl.AD_Org_ID
+	,cl.IsActive
+	,cl.Created
+	,cl.CreatedBy
+	,cl.Updated
+	,cl.Updatedby
+	,cl.TargetQty
+	,cl.ConfirmedQty
+	,cl.DifferenceQty
+	,cl.ScrappedQty
+	,cl.Description
+	,cl.Processed
+	,c.M_InOut_ID
+	,c.DocumentNo
+	,c.ConfirmType
+	,c.IsApproved
+	,c.IsCancelled
+   	,c.DocStatus
+   	,c.ConfirmationNo
+  	,io.C_DocType_ID AS JP_InOutDocType_ID
+   	,io.MovementDate
+   	,io.DateAcct
+   	,io.DocumentNo as JP_InOut_DocumentNo
+   	,io.SalesRep_ID
+	,io.C_BPartner_ID
+	,io.C_BPartner_Location_ID
+	,io.IsDropShip
+	,CASE WHEN COALESCE(io.DropShip_BPartner_ID,0) <= 0 AND io.IsSOTrx='Y' THEN io.C_BPartner_ID ELSE io.DropShip_BPartner_ID END AS DropShip_BPartner_ID
+	,CASE WHEN COALESCE(io.DropShip_BPartner_ID,0) <= 0 AND io.IsSOTrx='Y' THEN io.C_BPartner_Location_ID ELSE io.DropShip_Location_ID  END AS DropShip_Location_ID
+   	,io.M_Warehouse_ID 
+   	,io.C_Order_ID
+   	,io.IsSOTrx
+   	,io.PriorityRule
+   	,io.DeliveryViaRule
+   	,io.M_Shipper_ID
+   	,io.DocStatus AS JP_InOut_DocStatus
+	,cl.M_InOutLine_ID
+	,iol.M_Product_ID
+	,iol.M_AttributeSetInstance_ID
+	,iol.M_Locator_ID
+	,ol.DatePromised
+	,ol.DateOrdered
+	,o.C_DocType_ID AS JP_OrderDocType_ID
+   	,o.DocumentNo as JP_Order_DocumentNo
+	,o.DocStatus AS JP_Order_DocStatus
+	,lt.M_LocatorType_ID
+	,lt.Name as JP_LocatorType_Name
+	,io.JP_ScheduledInOutDate AS JP_ScheduledInOutDate
+   FROM adempiere.M_InOutLineConfirm cl
+   	INNER JOIN adempiere.M_InOutConfirm c ON (cl.M_InOutConfirm_ID = c.M_InOutConfirm_ID)
+   	INNER JOIN adempiere.M_InOut io ON (c.M_InOut_ID = io.M_InOut_ID)
+   	INNER JOIN adempiere.M_InOutLine iol ON (cl.M_InOutLine_ID = iol.M_InOutLine_ID)
+		LEFT OUTER JOIN adempiere.C_OrderLine ol ON (iol.C_OrderLine_ID = ol.C_OrderLine_ID)
+		LEFT OUTER JOIN adempiere.C_Order o ON (ol.C_Order_ID = o.C_Order_ID) 
+		INNER JOIN adempiere.M_Locator loc ON (iol.M_Locator_ID = loc.M_Locator_ID)
+		LEFT OUTER JOIN adempiere.M_LocatorType lt ON(loc.M_LocatorType_ID=lt.M_LocatorType_ID);
+
+ALTER TABLE adempiere.JP_RV_InOutLineConfirm
+  OWNER TO adempiere;

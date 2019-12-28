@@ -1,0 +1,3 @@
+Å°Add JP_Location_Label Column 	to C_Location Table
+
+

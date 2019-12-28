@@ -1,0 +1,42 @@
+-- Table: adempiere.JP_PivotWindow
+
+-- DROP TABLE adempiere.JP_PivotWindow;
+
+CREATE TABLE adempiere.JP_PivotWindow
+(
+    JP_PivotWindow_ID numeric(10) NOT NULL,
+    AD_Client_ID numeric(10) NOT NULL,
+    AD_Org_ID numeric(10) NOT NULL,
+    CreatedBy numeric(10) NOT NULL,
+    UpdatedBy numeric(10) NOT NULL,
+    Created timestamp without time zone NOT NULL DEFAULT now(),
+    Updated timestamp without time zone NOT NULL DEFAULT now(),
+    JP_PivotWindow_UU character varying(36) DEFAULT NULL::character varying,
+    IsActive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+
+    Name character varying(60) NOT NULL,
+    Description character varying(255),
+    Help character varying(2000),
+    AD_Table_ID numeric(10) NOT NULL,
+
+    Fromclause character varying(2000) NOT NULL,    
+    Whereclause character varying(2000) DEFAULT NULL::character varying,
+    IsValid character(1) NOT NULL DEFAULT 'N'::bpchar,
+
+    seqno numeric(10) DEFAULT NULL::numeric,
+    MaxQueryRecords numeric(10) NOT NULL DEFAULT (0)::numeric,
+    ConfirmQueryRecords numeric(10) NOT NULL DEFAULT 0::numeric,
+    FormatPattern character varying(22) DEFAULT NULL::character varying,
+
+    OrderByClause character varying(2000) DEFAULT NULL::character varying,
+    IsShowInDashboard character(1) DEFAULT 'Y'::bpchar,
+    ImageUrl character varying(120) DEFAULT NULL::character varying,
+
+    IsSOTrx character(1) NOT NULL DEFAULT 'Y'::bpchar,
+    CONSTRAINT JP_PivotWindow_Pkey PRIMARY KEY (JP_PivotWindow_ID)
+
+);
+
+
+ALTER TABLE adempiere.JP_PivotWindow
+    OWNER to adempiere;

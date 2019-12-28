@@ -1,0 +1,127 @@
+
+CREATE TABLE adempiere.I_TableColumnJP
+(
+  i_errormsg character varying(2000),
+  i_isimported character(1) DEFAULT 'N'::bpchar,
+  processing character(1),
+
+  processed character(1) DEFAULT 'N'::bpchar,
+
+  I_TableColumnJP_ID numeric(10,0) NOT NULL,
+  I_TableColumnJP_UU character varying(36) DEFAULT NULL::character varying,
+  AD_Client_ID numeric(10,0) DEFAULT 0,
+  AD_Org_ID numeric(10,0) DEFAULT 0,
+  IsActive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+  Created timestamp without time zone NOT NULL DEFAULT now(),
+  CreatedBy numeric(10,0) NOT NULL,
+  Updated timestamp without time zone NOT NULL DEFAULT now(),
+  UpdatedBy numeric(10,0) NOT NULL,
+
+  --Table---
+  AD_Table_ID numeric(10,0),
+  AD_Table_UU character varying(36) DEFAULT NULL::character varying,
+  TableName character varying(40),
+  JP_Table_Name character varying(60),
+  JP_Table_Description character varying(255),
+  JP_Table_Help character varying(2000),
+  IsView character(1),
+  AccessLevel character(1),
+  IsChangeLog character(1),
+  JP_Window_Name character varying(60),
+  AD_Window_ID  numeric(10,0),
+  JP_PO_Window_Name character varying(60),
+  PO_Window_ID  numeric(10,0),
+  IsDeleteable character(1),
+  IsHighVolume character(1),
+  JP_Table_EntityType character varying(40),
+  IsCentrallyMaintained character(1),
+
+  --Element--
+  AD_Element_ID numeric(10,0),
+  AD_Element_UU character varying(36) DEFAULT NULL::character varying,
+  JP_Element_EntityType character varying(40),
+  ColumnName character varying(30),
+  JP_Element_Name character varying(60),
+  JP_Element_PrintName character varying(60),
+  JP_Element_Description character varying(255),
+  JP_Element_Help character varying(2000),
+  JP_Element_PO_Name character varying(60),
+  JP_Element_PO_Printname character varying(60),
+  JP_Element_PO_Description character varying(255),
+  JP_Element_PO_Help character varying(2000),
+  JP_Element_Placeholder character varying(255),
+
+  --Element Trl--
+  AD_Language character varying(6),
+  AD_Element_Trl_UU character varying(36) DEFAULT NULL::character varying,
+  JP_Element_Trl_Name character varying(60),
+  JP_Element_Trl_PrintName character varying(60),
+  JP_Element_Trl_Description character varying(255),
+  JP_Element_Trl_Help character varying(2000),
+  JP_Element_Trl_PO_Name character varying(60),
+  JP_Element_Trl_PO_Printname character varying(60),
+  JP_Element_Trl_PO_Description character varying(255),
+  JP_Element_Trl_PO_Help character varying(2000),
+  JP_Element_Trl_Placeholder character varying(255),
+
+  --Column--
+  AD_Column_ID numeric(10,0),
+  AD_Column_UU character varying(36) DEFAULT NULL::character varying,
+  JP_Column_EntityType character varying(40),
+  JP_Column_Name character varying(60),
+  JP_Column_Description character varying(255),
+  JP_Column_Help character varying(2000),
+  version numeric,
+
+  JP_Reference_Name character varying(60),
+  AD_Reference_ID numeric(10,0),
+  AD_Reference_Value_ID numeric(10,0),
+  JP_Reference_Value_Name character varying(60),
+  JP_Val_Rule_Name character varying(60),
+  AD_Val_Rule_ID numeric(10,0),
+
+  FieldLength numeric(10,0),
+  DefaultValue character varying(2000),
+  IsKey character(1),
+  IsParent character(1),
+  IsMandatory character(1),
+  IsUpdateable character(1),
+  Readonlylogic character varying(2000),
+  IsIdentifier character(1),
+  SeqNo numeric(10,0),
+  IsTranslated character(1),
+  IsEncrypted character(1),
+  Callout character varying(255),
+  VFormat character varying(255),
+  ValueMin character varying(20),
+  ValueMax character varying(20),
+  IsSelectionColumn character(1),
+
+  JP_Process_Value character varying(40),
+  AD_Process_ID numeric(10,0),
+  IsAlwaysUpdateable character(1),
+  ColumnSql character varying(4000),
+  MandatoryLogic character varying(2000),
+  IsAutoComplete character(1),
+  IsAllowlogging character(1),
+  FormatPattern character varying(22),
+  IsAllowcopy character(1),
+  SeqNoSelection numeric(10,0) ,
+  IsToolbarbutton character(1),
+  IsSecure character(1),
+
+  JP_Chart_Name character varying(60),
+  AD_Chart_ID numeric(10,0) ,
+  FKConstraintName character varying(30),
+  FKConstraintType character(1),
+  JP_Dashboardcontent_Name character varying(60),
+  PA_Dashboardcontent_ID numeric(10,0),
+  JP_Column_Placeholder character varying(255),
+  IsHTML character(1) ,
+
+  CONSTRAINT I_TableColumnJP_pkey PRIMARY KEY (I_TableColumnJP_ID)
+);
+
+ALTER TABLE adempiere.I_TableColumnJP
+    OWNER to adempiere;
+

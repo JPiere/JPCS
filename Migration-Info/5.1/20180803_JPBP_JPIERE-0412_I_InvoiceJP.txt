@@ -1,0 +1,94 @@
+
+CREATE TABLE adempiere.I_InvoiceJP
+(
+    I_InvoiceJP_ID numeric(10,0) NOT NULL,
+    I_InvoiceJP_UU character varying(36) DEFAULT NULL::character varying,
+
+    AD_Client_ID numeric(10,0),
+    AD_Org_ID numeric(10,0),
+    IsActive character(1) DEFAULT 'Y'::bpchar,
+    Created timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+    CreatedBy numeric(10,0),
+    Updated timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+    UpdatedBy numeric(10,0),
+
+    I_IsImported character(1) NOT NULL DEFAULT 'N'::bpchar,
+    I_ErrorMsg character varying(2000) ,
+    Processing character(1) DEFAULT 'N'::bpchar,
+    Processed character(1) DEFAULT 'N'::bpchar,
+
+    JP_Org_Value character varying(40) DEFAULT NULL::character varying,
+    JP_DocType_Name character varying(60),
+    C_DocType_ID numeric(10,0),
+    DocumentNo character varying(30),
+    POReference character varying(20),
+    DateInvoiced timestamp without time zone,
+    DateAcct timestamp without time zone,
+    JP_SalesRep_Value character varying(40) DEFAULT NULL,
+    JP_SalesRep_Name character varying(60) DEFAULT NULL,
+    JP_SalesRep_EMail character varying(60) DEFAULT NULL,
+    SalesRep_ID numeric(10,0),
+
+    JP_BPartner_Value character varying(40),
+    C_BPartner_ID numeric(10,0),
+    JP_BPartner_Location_Name character varying(60) DEFAULT NULL::character varying,
+    C_BPartner_Location_ID numeric(10,0),
+
+    JP_User_Value character varying(40) DEFAULT NULL::character varying,
+    JP_User_Name character varying(60),
+    JP_User_EMail character varying(60),
+    AD_User_ID numeric(10,0),
+
+    Description character varying(255),
+
+    JP_PriceList_Name character varying(60) DEFAULT NULL::character varying,
+    M_PriceList_ID numeric(10,0),
+    C_Currency_ID numeric(10,0),
+    IsSOTrx character(1) DEFAULT 'Y'::bpchar,
+
+    PaymentRule character(1) COLLATE pg_catalog."default" DEFAULT NULL::bpchar,
+    IsDiscountPrinted character(1) DEFAULT 'N'::bpchar,
+    JP_PaymentTerm_Value character varying(40),
+    C_PaymentTerm_ID numeric(10,0),
+
+    JP_OrgTrx_Value character varying(40) DEFAULT NULL::character varying,
+    AD_OrgTrx_ID numeric(10,0),
+    JP_Project_Value character varying(40) DEFAULT NULL::character varying,
+    C_Project_ID numeric(10,0),
+    JP_Activity_Value character varying(40) DEFAULT NULL::character varying,
+    C_Activity_ID numeric(10,0),
+    JP_Campaign_Value character varying(40) DEFAULT NULL::character varying,
+    C_Campaign_ID numeric(10,0), 
+    JP_UserElement2_Value character varying(40) DEFAULT NULL::character varying,
+    JP_UserElement1_value character varying(40) DEFAULT NULL::character varying,
+    User1_ID numeric(10,0) DEFAULT NULL::numeric,
+    User2_ID numeric(10,0) DEFAULT NULL::numeric,   
+
+    Line numeric(10,0) DEFAULT (0)::numeric,
+    LineDescription character varying(255),
+
+    JP_Product_Value character varying(40),
+    M_Product_ID numeric(10,0),
+
+    JP_Charge_Name character varying(60),
+    C_Charge_ID numeric(10,0),
+    
+    TaxIndicator character varying(10) ,
+    C_Tax_ID numeric(10,0),
+    
+    x12de355 character varying(4) DEFAULT NULL::character varying,
+    C_UOM_ID numeric(10,0),
+    QtyEntered numeric DEFAULT 0,
+    QtyInvoiced numeric DEFAULT 0,
+    PriceEntered numeric DEFAULT 0,
+    PriceActual numeric DEFAULT 0,
+    C_Invoice_ID numeric(10,0) DEFAULT NULL::numeric,
+    C_InvoiceLine_ID numeric(10,0) DEFAULT NULL::numeric,
+    Phone character varying(40) DEFAULT NULL::character varying,
+
+    CONSTRAINT I_InvoiceJP_Pkey PRIMARY KEY (I_InvoiceJP_ID)
+);
+
+
+ALTER TABLE adempiere.I_InvoiceJP
+    OWNER to adempiere;

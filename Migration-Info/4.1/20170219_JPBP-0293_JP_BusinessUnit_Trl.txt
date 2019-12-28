@@ -1,0 +1,20 @@
+CREATE TABLE adempiere.JP_BusinessUnit_Trl
+(
+  JP_BusinessUnit_ID numeric(10,0) NOT NULL,
+  AD_Language character varying(6) NOT NULL,
+  AD_Client_ID numeric(10,0) NOT NULL,
+  AD_Org_ID numeric(10,0) NOT NULL,
+  CreatedBy numeric(10,0) NOT NULL,
+  UpdatedBy numeric(10,0) NOT NULL,
+  Created timestamp without time zone NOT NULL DEFAULT now(),
+  Updated timestamp without time zone NOT NULL DEFAULT now(),
+  IsActive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+  
+  JP_BusinessUnit_Trl_uu character varying(36) DEFAULT NULL::character varying,
+  
+  IsTranslated character(1) NOT NULL DEFAULT 'N'::bpchar,
+  Name character varying(60) NOT NULL,
+  Description character varying(255),
+
+  CONSTRAINT JP_BusinessUnit_Trl_pkey PRIMARY KEY (JP_BusinessUnit_ID, AD_Language)
+);

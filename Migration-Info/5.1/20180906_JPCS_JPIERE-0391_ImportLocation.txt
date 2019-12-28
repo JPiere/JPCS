@@ -1,0 +1,11 @@
+Add JP_Region_Name Column to I_LocationJP Table
+Add JP_City_Name Column to I_LocationJP Table
+
+Add JP_Region_Name Column to I_BPartnerJP Table
+Add JP_City_Name Column to I_BPartnerJP Table
+
+Add JP_Region_Name Column to I_OrgJP Table
+Add JP_City_Name Column to I_OrgJP Table
+
+Add JP_Region_Name Column to I_WarehouseJP Table
+Add JP_City_Name Column to I_WarehouseJP Table

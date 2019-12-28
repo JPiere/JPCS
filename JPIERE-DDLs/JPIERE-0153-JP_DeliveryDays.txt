@@ -1,0 +1,19 @@
+CREATE TABLE adempiere.JP_DeliveryDays
+(
+  JP_DeliveryDays_ID numeric(10,0) NOT NULL,
+  JP_DeliveryDays_UU character varying(36) DEFAULT NULL::character varying,
+  AD_Client_ID numeric(10,0) NOT NULL,
+  AD_Org_ID numeric(10,0) NOT NULL DEFAULT 0,
+  IsActive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+  Created timestamp without time zone NOT NULL DEFAULT now(),
+  CreatedBy numeric(10,0) NOT NULL,
+  Updated timestamp without time zone NOT NULL DEFAULT now(),
+  UpdatedBy numeric(10,0) NOT NULL,
+
+  M_Warehouse_ID numeric(10,0) NOT NULL,
+  C_SalesRegion_ID numeric(10,0) NOT NULL DEFAULT NULL::numeric,
+  Description character varying(255),
+  DeliveryDays numeric(10,0) DEFAULT 0,
+
+  CONSTRAINT JP_DeliveryDays_pkey PRIMARY KEY (JP_DeliveryDays_ID)
+);

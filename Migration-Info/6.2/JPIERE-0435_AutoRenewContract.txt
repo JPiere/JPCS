@@ -1,0 +1,17 @@
+Table: JP_ContractContent
+・ JP_ContractC_AutoUpdatePolicy Column
+
+Table: JP_ContractContentT
+・ JP_ContractC_AutoUpdatePolicy Column
+
+Table: JP_ContractLine
+・ JP_ContractL_AutoUpdatePolicy Column
+
+Table: JP_ContractLineT
+・ JP_ContractL_AutoUpdatePolicy Column
+
+
+
+Table: JP_ContractProcess
+・ JP_ContractAutoRenewClass Column
+・ JP_ContractStatusUpdateClass Column

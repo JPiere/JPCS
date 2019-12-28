@@ -1,0 +1,91 @@
+-- Table: adempiere.I_ProductCategoryJP
+
+-- DROP TABLE adempiere.I_ProductCategoryJP;
+
+CREATE TABLE adempiere.I_ProductCategoryJP
+(
+  i_errormsg character varying(2000),
+  i_isimported character(1) DEFAULT 'N'::bpchar,
+  processing character(1),
+
+  processed character(1) DEFAULT 'N'::bpchar,
+
+  I_ProductCategoryJP_ID numeric(10,0) NOT NULL,
+  I_ProductCategoryJP_UU character varying(36) DEFAULT NULL::character varying,
+  AD_Client_ID numeric(10,0) NOT NULL DEFAULT 0 ,
+  AD_Org_ID numeric(10,0) NOT NULL DEFAULT 0 ,
+  IsActive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+  Created timestamp without time zone NOT NULL DEFAULT now(),
+  CreatedBy numeric(10,0) NOT NULL,
+  Updated timestamp without time zone NOT NULL DEFAULT now(),
+  UpdatedBy numeric(10,0) NOT NULL,
+
+  JP_Org_Value character varying(40) DEFAULT NULL::character varying,
+  Value character varying(40) ,
+  M_Product_Category_ID numeric(10,0),
+  Name character varying(60),
+  Description character varying(255) ,
+  IsDefault character(1)  NOT NULL DEFAULT 'N'::bpchar,
+  PlannedMargin numeric NOT NULL DEFAULT 0 ,
+
+  JP_Asset_Group_Name character varying(60),
+  A_Asset_Group_ID numeric(10,0),
+
+  IsSelfService character(1) NOT NULL DEFAULT 'Y'::bpchar,
+
+  JP_PrintColor_Name character varying(60),
+  AD_PrintColor_ID numeric(10,0),
+
+  MMPolicy character(1) NOT NULL DEFAULT 'F'::bpchar,
+
+  JP_ProductCategoryL1_Value character varying(40) ,
+  JP_ProductCategoryL1_ID numeric(10,0) ,
+
+ --âÔåvèÓïÒ
+  JP_AcctSchema_Name character varying(60),
+  C_AcctSchema_ID numeric(10,0),
+  CostingMethod character(1) ,
+  CostingLevel character(1),
+ 
+  JP_P_Asset_Acct_Value character varying(40),
+  P_Asset_Acct numeric(10,0),
+
+  JP_P_Expense_Acct_Value character varying(40),
+  P_Expense_Acct numeric(10,0),
+
+  JP_CostAdjustment_Value character varying(40),
+  P_CostAdjustment_Acct numeric(10,0),
+
+  JP_InventoryClearing_Value character varying(40),
+  P_InventoryClearing_Acct numeric(10,0),
+
+  JP_COGS_Acct_Value character varying(40),
+  P_COGS_Acct numeric(10,0),
+
+  JP_P_Revenue_Acct_Value character varying(40),
+  P_Revenue_Acct numeric(10,0),
+
+  JP_PO_PriceVariance_Value character varying(40),
+  P_PurchasePriceVariance_Acct numeric(10,0),
+
+  JP_InvoicePriceVariance_Value character varying(40),
+  P_InvoicePriceVariance_Acct numeric(10,0),
+
+  JP_P_TradeDiscountRec_Value character varying(40),
+  P_TradeDiscountRec_Acct numeric(10,0),
+
+  JP_P_TradeDiscountGrant_Value character varying(40),
+  P_TradeDiscountGrant_Acct numeric(10,0),
+
+  JP_RateVariance_Acct_Value character varying(40),
+  P_RateVariance_Acct numeric(10,0),
+
+  JP_AverageCostVariance_Value character varying(40),
+  P_AverageCostVariance_Acct numeric(10,0),
+
+  JP_LandedCostClearing_Value character varying(40),
+  P_LandedCostClearing_Acct   numeric(10,0),
+
+ I_IsActiveJP character(1) NOT NULL DEFAULT 'Y'::bpchar,
+  CONSTRAINT I_ProductCategoryJP_pkey PRIMARY KEY (I_ProductCategoryJP_ID)
+)

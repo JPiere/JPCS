@@ -1,0 +1,22 @@
+CREATE OR REPLACE VIEW adempiere.JP_Trl_Corporation AS
+
+SELECT t.AD_Language, t.JP_Trl_Name, t.JP_Trl_Description,t.JP_Trl_Name2, a.* FROM adempiere.JP_Corporation a INNER JOIN
+(
+SELECT 
+    trl.JP_Corporation_ID AS JP_Corporation_ID
+    , trl.AD_Language AS AD_Language
+    , trl.Name AS JP_Trl_Name
+    , Trl.Description AS JP_Trl_Description
+     ,trl.Name2 AS JP_Trl_Name2
+ FROM adempiere.JP_Corporation_Trl trl
+ 
+UNION ALL
+ 
+SELECT  
+    p.JP_Corporation_ID AS JP_Corporation_ID
+    ,(SELECT AD_Language FROM adempiere.AD_Language WHERE IsBaseLanguage = 'Y' ) AS AD_Language
+    ,p.Name AS JP_Trl_Name
+    ,p.Description AS JP_Trl_Description
+    ,p.Name2 AS JP_Trl_Name2
+FROM adempiere.JP_Corporation p 
+) t ON (a.JP_Corporation_ID = t.JP_Corporation_ID) 

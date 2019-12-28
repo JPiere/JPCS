@@ -1,0 +1,30 @@
+CREATE OR REPLACE VIEW adempiere.JP_MTransTS_PhyWH AS
+SELECT
+    rv.AD_Client_ID AS AD_Client_ID
+    ,0	AS AD_Org_ID
+    ,rv.JP_PhysicalWarehouse_ID AS JP_PhysicalWarehouse_ID
+    ,rv.M_Product_ID AS M_Product_ID
+    ,rv.DateValue AS DateValue
+    ,rv.QtyBook AS QtyBook
+    ,p.C_UOM_ID AS C_UOM_ID
+    ,p.Discontinued AS Discontinued
+    ,p.ProductType AS ProductType
+    ,p.IsStocked AS IsStocked
+    ,p.IsBOM AS IsBOM
+    ,p.IsDropShip AS IsDropShip
+    ,p.M_Product_Category_ID AS M_Product_Category_ID
+    ,pc.JP_ProductCategoryL1_ID AS JP_ProductCategoryL1_ID
+    ,pl1.JP_ProductCategoryL2_ID AS JP_ProductCategoryL2_ID
+FROM (SELECT 
+    s.AD_Client_ID AS AD_Client_ID
+    ,loc.JP_PhysicalWarehouse_ID AS JP_PhysicalWarehouse_ID
+    ,s.M_Product_ID AS M_Product_ID
+    ,s.DateValue AS DateValue
+    ,sum(QtyBook) AS QtyBook
+FROM adempiere.JP_MTrans_TimeStamp s
+	INNER JOIN adempiere.M_Locator loc ON(s.M_Locator_ID = loc.M_Locator_ID )
+	GROUP BY s.DateValue,s.M_Product_ID,loc.JP_PhysicalWarehouse_ID,s.AD_Client_ID
+) rv
+INNER JOIN adempiere.M_Product p ON(rv.M_Product_ID = p.M_Product_ID)
+	INNER JOIN adempiere.M_Product_Category pc ON (p.M_Product_Category_ID=pc.M_Product_Category_ID)
+		LEFT OUTER JOIN adempiere.JP_ProductCategoryL1 pl1 ON (pc.JP_ProductCategoryL1_ID=pl1.JP_ProductCategoryL1_ID)

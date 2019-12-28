@@ -1,0 +1,170 @@
+CREATE OR REPLACE VIEW adempiere.JP_RV_Fact_Acct AS
+
+SELECT fact.AD_Client_ID
+ ,fact.AD_Org_ID
+ ,org.Value AS JP_Org_Value
+ ,org.Name AS JP_Org_Name
+ ,fact.C_AcctSchema_ID
+ ,acs.Name AS JP_AcctSchema_Name
+ ,fact.AD_Table_ID
+ ,tb.TableName AS TableName
+ ,tb.Name AS JP_Table_Name
+ ,fact.Record_ID
+ ,CASE WHEN fact.AD_Table_ID=250 THEN o.DocumentNo --C_ORder
+       WHEN fact.AD_Table_ID=319 THEN io.DocumentNo --M_InOut
+       WHEN fact.AD_Table_ID=318 THEN inv.DocumentNo --M_InOut
+       WHEN fact.AD_Table_ID=473 THEN mpo.DocumentNo --M_MatchPO
+       WHEN fact.AD_Table_ID=472 THEN minv.DocumentNo --M_MatchInv
+       WHEN fact.AD_Table_ID=335 THEN pay.DocumentNo --C_Payment
+       WHEN fact.AD_Table_ID=735 THEN alc.DocumentNo --C_AllocationHdr
+       WHEN fact.AD_Table_ID=392 THEN bs.Name --C_BankStatement
+       WHEN fact.AD_Table_ID=323 THEN mov.DocumentNo --M_Movement
+       WHEN fact.AD_Table_ID=321 THEN miv.DocumentNo --M_Inventory
+       WHEN fact.AD_Table_ID=325 THEN mprd.DocumentNo --M_Production
+       WHEN fact.AD_Table_ID=224 THEN gl.DocumentNo --GL_Journal
+       WHEN fact.AD_Table_ID=632 THEN pi.Description --C_ProjectIssue
+       WHEN fact.AD_Table_ID=407 THEN cash.Name --C_Cash
+       WHEN fact.AD_Table_ID=1000188 THEN recog.DocumentNo --JP_Recognition
+       ELSE ''
+  END AS DocumentNo
+ ,CASE WHEN fact.AD_Table_ID=250 THEN o.Description --C_ORder
+       WHEN fact.AD_Table_ID=319 THEN io.Description --M_InOut
+       WHEN fact.AD_Table_ID=318 THEN inv.Description --M_InOut
+       WHEN fact.AD_Table_ID=473 THEN mpo.Description --M_MatchPO
+       WHEN fact.AD_Table_ID=472 THEN minv.Description --M_MatchInv
+       WHEN fact.AD_Table_ID=335 THEN pay.Description --C_Payment
+       WHEN fact.AD_Table_ID=735 THEN alc.Description --C_AllocationHdr
+       WHEN fact.AD_Table_ID=392 THEN bs.Description --C_BankStatement
+       WHEN fact.AD_Table_ID=323 THEN mov.Description --M_Movement
+       WHEN fact.AD_Table_ID=321 THEN miv.Description --M_Inventory
+       WHEN fact.AD_Table_ID=325 THEN mprd.Description --M_Production
+       WHEN fact.AD_Table_ID=224 THEN gl.Description --GL_Journal
+       WHEN fact.AD_Table_ID=632 THEN pi.Description --C_ProjectIssue
+       WHEN fact.AD_Table_ID=407 THEN cash.Description --C_Cash
+       WHEN fact.AD_Table_ID=1000188 THEN recog.Description --JP_Recognition
+       ELSE ''
+  END AS JP_Description_Header
+ ,fact.Description
+ ,fact.C_Period_ID
+ ,prid.Name AS JP_Period_Name
+ ,fact.PostingType
+ ,fact.DateAcct
+ ,fact.DateTrx
+ ,fact.Account_ID
+ ,ev.Value AS JP_ElementValue_Value
+ ,ev.Name AS JP_ElementValue_Name
+ ,fact.C_SubAcct_ID
+ ,sub.Value AS JP_SubAcct_Value
+ ,sub.Name AS JP_SubAcct_Name
+ ,fact.C_BPartner_ID
+ ,bp.Value AS JP_BPartner_Value
+ ,bp.Name AS JP_BPartner_Name
+ ,fact.M_Product_ID
+ ,p.Value AS JP_Product_Value
+ ,p.Name AS JP_Product_Name 
+ ,fact.C_Project_ID
+ ,pj.Value AS JP_Project_Value
+ ,pj.Name AS JP_Project_Name 
+ ,fact.C_SalesRegion_ID
+ ,sr.Value AS JP_SalesRegion_Value
+ ,sr.Name AS JP_SalesRegion_Name 
+ ,fact.C_Campaign_ID
+ ,cp.Value AS JP_Campaign_Value
+ ,cp.Name AS JP_Campaign_Name 
+ ,fact.C_LocFrom_ID
+ ,fact.C_LocTo_ID
+ ,fact.User1_ID
+ ,fact.User2_ID
+ ,fact.UserElement1_ID
+ ,uev1.Value AS JP_UserElement1_Value
+ ,uev1.Name AS JP_UserElement1_Name
+ ,fact.UserElement2_ID
+ ,uev2.Value AS JP_UserElement2_Value
+ ,uev2.Name AS JP_UserElement2_Name
+ ,fact.GL_Category_ID
+ ,glc.Name AS JP_GL_Category_Name
+ ,fact.GL_Budget_ID
+ ,bd.Name AS JP_GL_Budget_Name
+ ,fact.C_Tax_ID
+ ,tax.Name AS JP_Tax_Name
+ ,fact.M_Locator_ID
+ ,loc.Value AS JP_Locator_Value
+ ,fact.C_Currency_ID
+ ,cy.ISO_Code
+ ,fact.AmtSourceDr
+ ,fact.AmtSourceCr
+ ,fact.AmtAcctDr
+ ,fact.AmtAcctCr
+ ,fact.C_UOM_ID
+ ,uom.X12DE355
+ ,fact.Qty
+ ,fact.JP_Order_ID
+ ,o2.DocumentNo AS JP_Order_DocumentNo
+ ,fact.JP_ContractContent_ID
+ ,cc.DocumentNo AS JP_ContractContent_DocNo
+ ,cc.Name AS JP_ContractContent_Name
+ ,fact.AD_OrgTrx_ID
+ ,trx.Value AS JP_OrgTrx_Value
+ ,trx.Name AS JP_OrgTrx_Name
+ ,fact.A_Asset_ID
+ ,asset.Value AS JP_Asset_Value
+ ,asset.Name AS JP_Asset_Name
+ ,fact.C_Activity_ID
+ ,acti.Value AS JP_Activity_Value
+ ,acti.Name AS JP_Activity_Name
+ ,fact.C_ProjectPhase_ID
+ ,pjf.Name AS JP_ProjectPhase_Name
+ ,fact.C_ProjectTask_ID
+ ,pjt.Name AS JP_ProjectTask_Name
+ ,fact.Fact_Acct_ID
+ ,fact.AD_Table_ID || '-' || fact.Record_ID AS JP_DataMigration_Identifier
+FROM adempiere.FACT_ACCT fact
+    INNER JOIN adempiere.AD_Org org ON (fact.AD_Org_ID = org.AD_Org_ID)
+    LEFT OUTER JOIN adempiere.AD_Org trx ON (fact.AD_OrgTrx_ID = trx.AD_Org_ID)
+    INNER JOIN adempiere.C_AcctSchema acs ON (fact.C_AcctSchema_ID = acs.C_AcctSchema_ID)
+    INNER JOIN adempiere.AD_Table tb ON (fact.AD_Table_ID = tb.AD_Table_ID)
+
+    LEFT OUTER JOIN adempiere.C_Order o ON (fact.AD_Table_ID=250 AND fact.Record_ID=o.C_Order_ID)
+    LEFT OUTER JOIN adempiere.M_InOut io ON (fact.AD_Table_ID=319 AND fact.Record_ID=io.M_InOut_ID)
+    LEFT OUTER JOIN adempiere.C_Invoice inv ON (fact.AD_Table_ID=318 AND fact.Record_ID=inv.C_Invoice_ID)
+    LEFT OUTER JOIN adempiere.M_MatchPO mpo ON (fact.AD_Table_ID=473 AND fact.Record_ID=mpo.M_MatchPO_ID)
+    LEFT OUTER JOIN adempiere.M_MatchInv minv ON (fact.AD_Table_ID=472 AND fact.Record_ID=minv.M_MatchInv_ID)
+    LEFT OUTER JOIN adempiere.C_Payment pay ON (fact.AD_Table_ID=335 AND fact.Record_ID=pay.C_Payment_ID)
+    LEFT OUTER JOIN adempiere.C_AllocationHdr alc ON (fact.AD_Table_ID=735 AND fact.Record_ID=alc.C_AllocationHdr_ID)
+    LEFT OUTER JOIN adempiere.C_BankStatement bs ON (fact.AD_Table_ID=392 AND fact.Record_ID=bs.C_BankStatement_ID)
+    LEFT OUTER JOIN adempiere.M_Movement mov ON (fact.AD_Table_ID=323 AND fact.Record_ID=mov.M_Movement_ID)
+    LEFT OUTER JOIN adempiere.M_Inventory miv ON (fact.AD_Table_ID=321 AND fact.Record_ID=miv.M_Inventory_ID)
+    LEFT OUTER JOIN adempiere.M_Production mprd ON (fact.AD_Table_ID=325 AND fact.Record_ID=mprd.M_Production_ID)
+    LEFT OUTER JOIN adempiere.GL_Journal gl ON (fact.AD_Table_ID=224 AND fact.Record_ID=gl.GL_Journal_ID)
+    LEFT OUTER JOIN adempiere.C_ProjectIssue pi ON (fact.AD_Table_ID=623 AND fact.Record_ID=pi.C_ProjectIssue_ID)
+    LEFT OUTER JOIN adempiere.C_Cash cash ON (fact.AD_Table_ID=407 AND fact.Record_ID=cash.C_Cash_ID)
+    LEFT OUTER JOIN adempiere.JP_Recognition recog ON (fact.AD_Table_ID=1000188 AND fact.Record_ID=recog.JP_Recognition_ID)
+
+    INNER JOIN adempiere.C_Period prid ON (fact.C_Period_ID = prid.C_Period_ID)
+    INNER JOIN adempiere.C_ElementValue ev ON (fact.Account_ID = ev.C_ElementValue_ID)
+    LEFT OUTER JOIN adempiere.C_SubAcct sub ON (sub.C_SubAcct_ID = sub.C_SubAcct_ID)
+    
+    LEFT OUTER JOIN adempiere.C_BPartner bp ON (fact.C_BPartner_ID = bp.C_BPartner_ID)
+    LEFT OUTER JOIN adempiere.M_Product p ON (fact.M_Product_ID = p.M_Product_ID)
+    LEFT OUTER JOIN adempiere.C_Project pj ON (fact.C_Project_ID = pj.C_Project_ID)
+    LEFT OUTER JOIN adempiere.C_SalesRegion sr ON (fact.C_SalesRegion_ID = sr.C_SalesRegion_ID)
+    LEFT OUTER JOIN adempiere.C_Campaign cp ON (fact.C_Campaign_ID = cp.C_Campaign_ID)
+    LEFT OUTER JOIN adempiere.C_ElementValue uev1 ON (fact.UserElement1_ID = uev1.C_ElementValue_ID)
+    LEFT OUTER JOIN adempiere.C_ElementValue uev2 ON (fact.UserElement2_ID = uev2.C_ElementValue_ID)
+    LEFT OUTER JOIN adempiere.GL_Category glc ON (fact.GL_Category_ID = glc.GL_Category_ID)
+    LEFT OUTER JOIN adempiere.GL_Budget bd ON (fact.GL_Budget_ID = bd.GL_Budget_ID)
+    LEFT OUTER JOIN adempiere.C_Tax tax ON (fact.C_Tax_ID = tax.C_Tax_ID)
+    LEFT OUTER JOIN adempiere.M_Locator loc ON (fact.M_Locator_ID = loc.M_Locator_ID)
+    INNER JOIN adempiere.C_Currency cy ON (fact.C_Currency_ID = cy.C_Currency_ID)
+    LEFT OUTER JOIN adempiere.C_UOM uom ON (fact.C_UOM_ID = uom.C_UOM_ID)
+    LEFT OUTER JOIN adempiere.A_Asset asset ON (fact.A_Asset_ID = asset.A_Asset_ID)
+    LEFT OUTER JOIN adempiere.C_Activity acti ON (fact.C_Activity_ID = acti.C_Activity_ID)
+    LEFT OUTER JOIN adempiere.C_ProjectPhase pjf ON (fact.C_ProjectPhase_ID = pjf.C_ProjectPhase_ID)
+    LEFT OUTER JOIN adempiere.C_ProjectTask pjt ON (fact.C_ProjectTask_ID = pjt.C_ProjectTask_ID)
+
+    LEFT OUTER JOIN adempiere.C_Order o2 ON (fact.JP_Order_ID = o2.C_Order_ID)
+    LEFT OUTER JOIN adempiere.JP_ContractContent cc ON (fact.JP_ContractContent_ID = cc.JP_ContractContent_ID)
+ ;
+
+ALTER TABLE adempiere.jp_rv_fact_acct
+    OWNER TO adempiere;

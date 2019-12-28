@@ -1,0 +1,8 @@
+Add JP_BP_Name Column to JP_Estimation Table
+Add JP_BP_Address Column to JP_Estimation Table
+Add JP_BP_User_Name Column to JP_Estimation Table
+
+•K{‚©‚ç”CˆÓ“ü—Í‚Ö•ÏX
+JP_Estimation.C_BPartner_ID
+JP_Estimation.C_BPartner_Location_ID
+JP_EstimationLine.C_BPartner_Location_ID

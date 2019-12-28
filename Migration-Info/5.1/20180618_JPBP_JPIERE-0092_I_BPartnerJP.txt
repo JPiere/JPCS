@@ -1,0 +1,81 @@
+Å°ADD JP_Org_Value  Column to I_BPartnerJP Table
+Å°ADD IsProspect  Column to I_BPartnerJP Table
+Å°ADD IsSalesRep  Column to I_BPartnerJP Table
+Å°ADD I_IsActiveJP  Column to I_BPartnerJP Table
+Å°ADD ReferenceNo  Column to I_BPartnerJP Table
+Å°ADD Rating  Column to I_BPartnerJP Table
+Å°ADD JP_SalesRep_EMail  Column to I_BPartnerJP Table
+Å°ADD SalesRep_ID  Column to I_BPartnerJP Table
+Å°ADD SOCreditStatus  Column to I_BPartnerJP Table
+Å°ADD SO_CreditLimit  Column to I_BPartnerJP Table
+Å°ADD IsTaxExempt  Column to I_BPartnerJP Table
+Å°ADD IsPOTaxExempt  Column to I_BPartnerJP Table
+Å°ADD URL  Column to I_BPartnerJP Table
+Å°ADD IsSummary  Column to I_BPartnerJP Table
+Å°ADD InvoiceRule  Column to I_BPartnerJP Table
+Å°ADD JP_InvoiceSchedule_Name  Column to I_BPartnerJP Table
+Å°ADD C_InvoiceSchedule_ID  Column to I_BPartnerJP Table
+Å°ADD PaymentRule  Column to I_BPartnerJP Table
+Å°ADD C_PaymentTerm_ID  Column to I_BPartnerJP Table
+Å°ADD JP_PaymentTerm_Value  Column to I_BPartnerJP Table
+Å°ADD JP_BillSchema_Value  Column to I_BPartnerJP Table
+Å°ADD JP_BillSchema_ID  Column to I_BPartnerJP Table
+Å°ADD DeliveryRule  Column to I_BPartnerJP Table
+Å°ADD DeliveryViaRule  Column to I_BPartnerJP Table
+Å°ADD M_PriceList_ID  Column to I_BPartnerJP Table
+Å°ADD JP_PriceList_Name  Column to I_BPartnerJP Table
+Å°ADD M_DiscountSchema_ID  Column to I_BPartnerJP Table
+Å°ADD JP_DiscountSchema_Name  Column to I_BPartnerJP Table
+Å°ADD FlatDiscount  Column to I_BPartnerJP Table
+Å°ADD C_Dunning_ID  Column to I_BPartnerJP Table
+Å°ADD JP_Dunning_Name  Column to I_BPartnerJP Table
+Å°ADD DunningGrace  Column to I_BPartnerJP Table
+Å°ADD ShelfLifeMinPct  Column to I_BPartnerJP Table
+Å°ADD PO_PaymentTerm_ID  Column to I_BPartnerJP Table
+Å°ADD JP_PO_PaymentTerm_Value  Column to I_BPartnerJP Table
+Å°ADD JP_BillSchemaPO_ID  Column to I_BPartnerJP Table
+Å°ADD JP_BillSchemaPO_Value  Column to I_BPartnerJP Table
+Å°ADD PO_PriceList_ID  Column to I_BPartnerJP Table
+Å°ADD JP_PO_PriceList_Name  Column to I_BPartnerJP Table
+Å°ADD PO_DiscountSchema_ID  Column to I_BPartnerJP Table
+Å°ADD JP_PO_DiscountSchema_Name  Column to I_BPartnerJP Table
+
+Å°ADD Is1099Vendor
+Å°ADD Default1099Box_ID
+Å°ADD JP_Default1099Box_Value
+Å°ADD IsManufacturer
+
+Å°ADD POReference
+Å°ADD AD_Language
+Å°ADD JP_Greeting_Name
+Å°ADD SO_Description
+Å°ADD Invoice_PrintFormat_ID
+Å°ADD JP_Invoice_PrintFormat_Name
+
+Å°ADD ShareOfCustomer
+Å°ADD AcqusitionCost
+Å°ADD NumberEmployees
+Å°ADD SalesVolume
+Å°ADD PotentialLifeTimeValue
+Å°ADD ActualLifeTimeValue
+Å°ADD FirstSale
+
+
+Å°ADD JP_BPartner_Location_Name
+Å°ADD JP_Location_Label
+Å°ADD ISDN
+Å°ADD IsShipTo
+Å°ADD IsBillTo
+Å°ADD C_SalesRegion_ID
+Å°ADD JP_SalesRegion_Value
+Å°ADD CustomerAddressID
+
+Å°ADD C_City_ID
+Å°ADD Address5
+
+Å°ADD JP_User_Value
+Å°ADD JP_User_Phone
+Å°ADD JP_User_Phone2
+
+Å°ADD JP_User_Greeting_ID
+Å°ADD C_Location_ID

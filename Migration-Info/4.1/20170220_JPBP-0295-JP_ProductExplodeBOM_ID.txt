@@ -1,0 +1,2 @@
+Add JP_ProductExplodeBOM_ID Column to C_InvoiceLine Table
+

@@ -1,0 +1,19 @@
+ダイナミックバリデーション1
+名称:JP C_DocType AR/AP Invoices and Credit Memos
+バリデーションコード：
+C_DocType.DocBaseType IN ('ARI', 'API','ARC','APC') AND C_DocType.IsSOTrx='@IsSOTrx@'  AND C_DocType.AD_Client_ID=@#AD_Client_ID@ AND  C_DocType.IsDisplayDocTypeJP= 'Y'
+
+
+ダイナミックバリデーション2
+名称:JP DocType Material Receipts
+バリデーションコード:
+C_DocType.DocBaseType IN ('MMR') AND C_DocType.IsSOTrx='N' AND C_DocType.AD_Client_ID=@#AD_Client_ID@ AND C_DocType.IsDisplayDocTypeJP='Y'
+
+
+ダイナミックバリデーション3
+名称:JP DocType Material Shipments
+バリデーションコード:
+C_DocType.DocBaseType IN ('MMS') AND IsSOTrx='Y' AND C_DocType.IsDisplayDocTypeJP='Y'
+
+
+

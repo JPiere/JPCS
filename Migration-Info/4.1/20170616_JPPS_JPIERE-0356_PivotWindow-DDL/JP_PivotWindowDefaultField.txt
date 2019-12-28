@@ -1,0 +1,29 @@
+-- Table: adempiere.JP_PivotWindowDefaultField
+
+-- DROP TABLE adempiere.JP_PivotWindowDefaultField;
+
+CREATE TABLE adempiere.JP_PivotWindowDefaultField
+(
+    JP_PivotWindowDefaultField_ID numeric(10) NOT NULL,
+    JP_PivotWindowDefault_ID numeric(10) NOT NULL,
+    AD_Client_ID numeric(10) NOT NULL,
+    AD_Org_ID numeric(10) NOT NULL,
+    CreatedBy numeric(10) NOT NULL,
+    UpdatedBy numeric(10) NOT NULL,
+    Created timestamp without time zone NOT NULL DEFAULT now(),
+    Updated timestamp without time zone NOT NULL DEFAULT now(),
+    JP_PivotWindowDefaultField_UU character varying(36) DEFAULT NULL::character varying,
+    IsActive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+
+    JP_PivotFieldPosition character(1) NOT NULL,
+    Seqno numeric(10) NOT NULL DEFAULT 0, 
+    JP_PivotWindowField_ID  numeric(10) NOT NULL,
+
+
+    CONSTRAINT JP_PivotWindowDefaultField_Pkey PRIMARY KEY (JP_PivotWindowDefaultField_ID)
+
+);
+
+
+ALTER TABLE adempiere.JP_PivotWindowDefaultField
+    OWNER to adempiere;

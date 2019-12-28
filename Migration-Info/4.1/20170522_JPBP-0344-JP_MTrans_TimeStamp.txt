@@ -1,0 +1,17 @@
+CREATE TABLE adempiere.JP_MTrans_TimeStamp
+(
+  JP_MTrans_TimeStamp_UU character varying(36) DEFAULT NULL::character varying,
+  AD_Client_ID numeric(10,0) NOT NULL,
+  AD_Org_ID numeric(10,0) NOT NULL,
+  IsActive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+  Created timestamp without time zone NOT NULL DEFAULT now(),
+  CreatedBy numeric(10,0) NOT NULL,
+  Updated timestamp without time zone NOT NULL DEFAULT now(),
+  UpdatedBy numeric(10,0) NOT NULL,
+
+  DateValue timestamp without time zone NOT NULL DEFAULT now(),
+  M_Locator_ID numeric(10) NOT NULL,
+  M_Product_ID  numeric(10,0) NOT NULL,
+  QtyBook numeric NOT NULL DEFAULT 0,
+  PRIMARY KEY(DateValue,M_Locator_ID,M_Product_ID)
+)

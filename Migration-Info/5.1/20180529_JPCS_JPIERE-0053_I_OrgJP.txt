@@ -1,0 +1,25 @@
+Å°Add JP_Location_Label Column to I_OrgJP Table
+Å°Add C_Location_ID Column to I_OrgJP Table
+Å°Add CountryCode Column to I_OrgJP Table
+Å°Add C_Country_ID Column to I_OrgJP Table
+Å°Add Postal Column to I_OrgJP Table
+Å°Add Postal_Add Column to I_OrgJP Table
+Å°Add RegionName Column to I_OrgJP Table
+Å°Add C_Region_ID Column to I_OrgJP Table
+Å°Add City Column to I_OrgJP Table
+Å°Add C_City_ID Column to I_OrgJP Table
+Å°Add Address1 Column to I_OrgJP Table
+Å°Add Address2 Column to I_OrgJP Table
+Å°Add Address3 Column to I_OrgJP Table
+Å°Add Address4 Column to I_OrgJP Table
+Å°Add Address5 Column to I_OrgJP Table
+Å°Add Comments Column to I_OrgJP Table
+Å°Add AD_OrgType_ID Column to I_OrgJP Table
+Å°Add JP_OrgType_Name Column to I_OrgJP Table
+Å°Add Phone Column to I_OrgJP Table
+Å°Add Phone2 Column to I_OrgJP Table
+Å°Add Fax Column to I_OrgJP Table
+Å°Add EMail Column to I_OrgJP Table
+Å°Add DUNS Column to I_OrgJP Table
+Å°Add TaxID Column to I_OrgJP Table
+

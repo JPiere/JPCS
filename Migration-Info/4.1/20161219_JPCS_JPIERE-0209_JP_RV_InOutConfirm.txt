@@ -1,0 +1,51 @@
+-- DROP VIEW adempiere.JP_RV_InOutConfirm;
+
+CREATE OR REPLACE VIEW adempiere.JP_RV_InOutConfirm AS 
+ SELECT 
+   c.M_InOutConfirm_ID
+   ,c.AD_Client_ID
+   ,c.AD_Org_ID
+   ,c.IsActive
+   ,c.Created
+   ,c.Createdby
+   ,c.Updated
+   ,c.Updatedby
+   ,c.M_Inout_ID
+   ,c.DocumentNo
+   ,c.ConfirmType
+   ,c.IsApproved
+   ,c.IsCancelled
+   ,c.Description
+   ,c.Processing
+   ,c.Processed
+   ,c.DocStatus
+   ,c.ConfirmationNo
+   ,io.C_DocType_ID AS JP_InOutDocType_ID
+   ,io.MovementDate
+   ,io.DateAcct
+   ,io.DateOrdered
+   ,io.DocumentNo as JP_InOut_DocumentNo
+   ,io.SalesRep_ID
+   ,io.C_BPartner_ID
+   ,io.C_BPartner_Location_ID
+   ,io.IsDropShip
+   ,CASE WHEN COALESCE(io.DropShip_BPartner_ID,0) <= 0 AND io.IsSOTrx='Y' THEN io.C_BPartner_ID ELSE io.DropShip_BPartner_ID END AS DropShip_BPartner_ID
+   ,CASE WHEN COALESCE(io.DropShip_BPartner_ID,0) <= 0 AND io.IsSOTrx='Y' THEN io.C_BPartner_Location_ID ELSE io.DropShip_Location_ID  END AS DropShip_Location_ID
+   ,io.M_Warehouse_ID 
+   ,io.C_Order_ID
+   ,io.IsSOTrx
+   ,io.PriorityRule
+   ,io.DeliveryViaRule
+   ,io.M_Shipper_ID
+   ,io.DocStatus AS JP_InOut_DocStatus
+   ,o.C_DocType_ID AS JP_OrderDocType_ID
+   ,o.DocumentNo as JP_Order_DocumentNo
+   ,o.DatePromised
+   ,o.DocStatus AS JP_Order_DocStatus
+   ,io.JP_ScheduledInOutDate AS JP_ScheduledInOutDate
+   FROM adempiere.M_InoutConfirm c
+   		INNER JOIN adempiere.M_InOut io ON (c.M_InOut_ID = io.M_InOut_ID)
+   		LEFT OUTER JOIN adempiere.C_Order o ON (io.C_Order_ID = o.C_Order_ID) ;
+
+ALTER TABLE adempiere.JP_RV_InOutConfirm
+  OWNER TO adempiere;

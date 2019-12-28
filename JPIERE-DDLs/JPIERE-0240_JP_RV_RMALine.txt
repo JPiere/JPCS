@@ -1,0 +1,55 @@
+﻿-- View: adempiere.JP_RV_RMALine
+
+-- DROP VIEW adempiere.JP_RV_RMALine;
+
+CREATE OR REPLACE VIEW adempiere.JP_RV_RMALine AS 
+
+SELECT
+	r.M_RMA_ID
+	,r.AD_Client_ID
+	,r.AD_Org_ID
+	,r.C_DocType_ID
+	,r.IsSOTrx
+	,r.M_RMAType_ID
+	,r.DocumentNo
+	,r.SalesRep_ID
+	,r.InOut_ID
+	,r.C_BPartner_ID
+	,bp.Value AS BPartnerValue
+	,bp.Name AS JP_BPartnerName
+	,bp.Name2 AS JP_BPartnerName2
+	,bp.C_BP_Group_ID
+	,r.Name
+	,r.Description
+	,r.Help
+	,r.Amt
+	,r.C_Currency_ID
+	,r.DocStatus
+	,r.DocAction
+	,r.C_Order_ID
+	,r.Ref_RMA_ID
+	,rl.Line
+	,rl.M_InOutLine_ID
+	,rl.Description AS LineDescription
+	,rl.M_Product_ID
+	,p.Value AS ProductValue
+	,p.Name AS ProductName
+	,p.M_Product_Category_ID
+	,rl.C_Charge_ID
+	,rl.Qty
+	,rl.QtyDelivered
+	,COALESCE(rl.QtyInvoiced,0) AS QtyInvoiced
+	,rl.Amt AS Amount
+	,rl.C_Tax_ID
+	,rl.LineNetAmt
+	,rl.Ref_RMALine_ID
+	,rl.Qty - rl.QtyDelivered AS QtytoDeliver
+	,rl.Qty - COALESCE(rl.QtyInvoiced,0) AS QtytoInvoice 
+	
+FROM adempiere.M_RMA r
+	INNER JOIN adempiere.C_BPartner bp ON (r.C_BPartner_ID=bp.C_BPartner_ID)
+	INNER JOIN adempiere.M_RMALine rl ON(r.M_RMA_ID=rl.M_RMA_ID)
+	LEFT OUTER JOIN adempiere.M_Product p ON(rl.M_Product_ID = p.M_Product_ID);
+
+ALTER TABLE adempiere.JP_RV_RMALine
+  OWNER TO adempiere;

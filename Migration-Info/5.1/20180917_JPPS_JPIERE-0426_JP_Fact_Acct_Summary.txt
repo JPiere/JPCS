@@ -1,0 +1,77 @@
+CREATE OR REPLACE VIEW adempiere.JP_Fact_Acct_Summary AS
+SELECT 
+ fas.AD_Client_ID AS AD_Client_ID
+ ,fas.AD_OrgTrx_ID AS AD_OrgTrx_ID
+ ,otrx.Value || '_' ||   otrx.Name AS JP_OrgTrx_VN
+ ,fas.AD_Org_ID AS AD_Org_ID
+ ,org.Value || '_' ||   org.Name AS JP_Org_VN
+ ,oif.JP_Corporation_ID AS JP_Org_Corporation_ID
+ ,ocrp.Value  || '_' ||  ocrp.Name AS JP_Org_Corporation_VN
+ ,oif.JP_BusinessUnit_ID AS JP_BusinessUnit_ID
+ ,bu.Value || '_' ||  bu.Name AS JP_BusinessUnit_VN
+ ,fas.Account_ID AS Account_ID
+ ,ev.Value || '_' ||   ev.Name AS JP_Account_VN
+ ,fas.AmtAcctCr AS AmtAcctCr
+ ,fas.AmtAcctDr AS AmtAcctDr
+ ,fas.C_AcctSchema_ID AS C_AcctSchema_ID
+ ,fas.C_Activity_ID AS C_Activity_ID
+ ,act.Value || '_' ||   act.Name AS JP_Activity_VN
+ ,fas.C_BPartner_ID AS C_BPartner_ID
+ ,bp.Value  || '_' ||   bp.Name AS JP_BPartner_VN
+ ,bpg.C_BP_Group_ID AS C_BP_Group_ID
+ ,bpg.Value || '_' ||  bpg.Name AS JP_BP_Group_VN
+ ,bp.JP_Corporation_ID AS JP_Corporation_ID
+ ,crp.Value  || '_' ||  crp.Name AS JP_Corporation_VN
+ ,fas.C_Campaign_ID AS C_Campaign_ID
+ ,cmp.Value || '_' ||  cmp.Name AS JP_Campaign_VN
+ ,fas.C_Period_ID AS C_Period_ID
+ ,priod.Name AS JP_Period_Name
+ ,fas.C_ProjectPhase_ID AS C_ProjectPhase_ID
+ ,pjp.Name AS JP_ProjectPhase_Name
+ ,fas.C_Project_ID AS C_Project_ID
+ ,pj.Value || '_' ||  pj.Name AS JP_Project_VN
+ ,fas.C_SalesRegion_ID AS C_SalesRegion_ID
+ ,sr.Value || '_' ||  sr.Name AS JP_SalesRegion_VN
+ ,fas.GL_Budget_ID AS GL_Budget_ID
+ ,bdgt.Name AS JP_Budget_Name
+ ,fas.M_Product_ID AS M_Product_ID
+ ,p.Value || '_' ||  p.Name AS JP_Product_VN
+ ,pc.M_Product_Category_ID AS M_Product_Category_ID
+ ,pc.Value || '_' ||  p.Name AS JP_Product_Category_VN
+ ,fas.PA_ReportCube_ID AS PA_ReportCube_ID
+ ,fas.PostingType AS PostingType
+ ,fas.Qty AS Qty
+ ,fas.DateAcct AS DateAcct
+ ,fas.IsActive AS IsActive
+ ,CASE WHEN ev.AccountType = 'A' THEN fas.AmtAcctDr - fas.AmtAcctCr
+ 		WHEN ev.AccountType = 'L'  THEN fas.AmtAcctCr - fas.AmtAcctDr
+ 		WHEN ev.AccountType = 'O'  THEN fas.AmtAcctCr - fas.AmtAcctDr
+ 		WHEN ev.AccountType = 'R'  THEN fas.AmtAcctCr - fas.AmtAcctDr
+ 		WHEN ev.AccountType = 'E' THEN fas.AmtAcctDr - fas.AmtAcctCr
+ 		ELSE fas.AmtAcctDr - fas.AmtAcctCr 
+ 		END AS JP_Balance
+  ,ev.AccountType AS AccountType
+ FROM adempiere.fact_acct_summary fas
+ 		LEFT OUTER JOIN adempiere.AD_Org otrx ON (fas.AD_OrgTrx_ID = otrx.AD_Org_ID)
+ 		INNER JOIN adempiere.AD_Org org ON (fas.AD_Org_ID = org.AD_Org_ID)
+ 			INNER JOIN adempiere.AD_OrgInfo oif ON (org.AD_Org_ID = oif.AD_Org_ID)
+ 				LEFT OUTER JOIN adempiere.JP_Corporation ocrp ON (oif.JP_Corporation_ID = ocrp.JP_Corporation_ID)
+ 				LEFT OUTER JOIN adempiere.JP_BusinessUnit bu ON (oif.JP_BusinessUnit_ID = bu.JP_BusinessUnit_ID)
+ 		INNER JOIN adempiere.C_ElementValue ev ON (fas.Account_ID = ev.C_ElementValue_ID)
+		LEFT OUTER JOIN adempiere.C_Activity act ON (fas.C_Activity_ID = act.C_Activity_ID)
+		LEFT OUTER JOIN adempiere.C_BPartner bp ON (fas.C_BPartner_ID = bp.C_BPartner_ID)
+			LEFT OUTER JOIN adempiere.C_BP_Group bpg ON (bp.C_BP_Group_ID = bpg.C_BP_Group_ID)
+			LEFT OUTER JOIN adempiere.JP_Corporation crp ON (bp.JP_Corporation_ID = crp.JP_Corporation_ID)
+		LEFT OUTER JOIN adempiere.C_Campaign cmp ON (fas.C_Campaign_ID = cmp.C_Campaign_ID)
+		INNER JOIN adempiere.C_Period priod ON (fas.C_Period_ID = priod.C_Period_ID)
+		LEFT OUTER JOIN adempiere.C_ProjectPhase pjp ON (fas.C_ProjectPhase_ID = pjp.C_ProjectPhase_ID)
+		LEFT OUTER JOIN adempiere.C_Project pj ON (fas.C_Project_ID = pj.C_Project_ID)
+		LEFT OUTER JOIN adempiere.C_SalesRegion sr ON (fas.C_SalesRegion_ID = sr.C_SalesRegion_ID)
+		LEFT OUTER JOIN adempiere.GL_Budget bdgt ON (fas.GL_Budget_ID = bdgt.GL_Budget_ID)
+		LEFT OUTER JOIN adempiere.M_Product p ON (fas.M_Product_ID = p.M_Product_ID)
+			LEFT OUTER JOIN adempiere.M_Product_Category pc ON (p.M_Product_Category_ID = pc.M_Product_Category_ID)
+;
+
+ALTER TABLE adempiere.JP_Fact_Acct_Summary
+    OWNER TO adempiere;
+

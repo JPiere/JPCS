@@ -1,0 +1,1 @@
+Add IsReceiptJP Column to C_PaymentBatch Table

@@ -1,0 +1,3 @@
+バリデーション名称:JP C_OrderLine of Order (Not In Same Receipt/Shipment)
+バリデーションコード：
+C_OrderLine.C_Order_ID=@C_Order_ID@ AND C_OrderLine.C_OrderLine_ID NOT IN(SELECT C_OrderLine_ID FROM M_InOutLine iol WHERE iol.M_InOut_ID = @M_InOut_ID@) AND C_OrderLine.QtyOrdered <> C_OrderLine.QtyDelivered

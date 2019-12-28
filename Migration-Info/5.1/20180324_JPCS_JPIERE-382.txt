@@ -1,0 +1,1 @@
+ŸAdd JP_RMA_Acceptance_Date column to M_RMA table

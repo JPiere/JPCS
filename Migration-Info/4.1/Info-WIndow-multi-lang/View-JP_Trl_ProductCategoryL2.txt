@@ -1,0 +1,21 @@
+CREATE OR REPLACE VIEW adempiere.JP_Trl_ProductCategoryL2 AS
+
+SELECT t.AD_Language, t.JP_Trl_Name, t.JP_Trl_Description, a.* FROM adempiere.JP_ProductCategoryL2 a INNER JOIN
+(
+SELECT 
+    trl.JP_ProductCategoryL2_ID AS JP_ProductCategoryL2_ID
+    , trl.AD_Language AS AD_Language
+    , trl.Name AS JP_Trl_Name
+    , Trl.Description AS JP_Trl_Description
+ 
+ FROM adempiere.JP_ProductCategoryL2_Trl trl
+ 
+UNION ALL
+ 
+SELECT  
+    p.JP_ProductCategoryL2_ID AS JP_ProductCategoryL2_ID
+    ,(SELECT AD_Language FROM adempiere.AD_Language WHERE IsBaseLanguage = 'Y' ) AS AD_Language
+    ,p.Name AS JP_Trl_Name
+    ,p.Description AS JP_Trl_Description
+FROM adempiere.JP_ProductCategoryL2 p 
+) t ON (a.JP_ProductCategoryL2_ID = t.JP_ProductCategoryL2_ID) 

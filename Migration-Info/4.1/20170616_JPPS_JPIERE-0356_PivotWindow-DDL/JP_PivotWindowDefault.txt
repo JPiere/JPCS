@@ -1,0 +1,37 @@
+-- Table: adempiere.JP_PivotWindowDefault
+
+-- DROP TABLE adempiere.JP_PivotWindowDefault;
+
+CREATE TABLE adempiere.JP_PivotWindowDefault
+(
+    JP_PivotWindowDefault_ID numeric(10) NOT NULL,
+    JP_PivotWindow_ID numeric(10) NOT NULL,
+    AD_Client_ID numeric(10) NOT NULL,
+    AD_Org_ID numeric(10) NOT NULL,
+    CreatedBy numeric(10) NOT NULL,
+    UpdatedBy numeric(10) NOT NULL,
+    Created timestamp without time zone NOT NULL DEFAULT now(),
+    Updated timestamp without time zone NOT NULL DEFAULT now(),
+    JP_PivotWindowDefault_UU character varying(36) DEFAULT NULL::character varying,
+    IsActive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+
+    Name character varying(60) NOT NULL,
+    Description character varying(255),
+    Help character varying(2000),
+    JP_DataFieldOrientation character(1) NOT NULL,
+
+    IsDefault character(1) NOT NULL DEFAULT 'N'::bpchar,
+    IsDisplayTotalColumnJP character(1) NOT NULL DEFAULT 'N'::bpchar,
+    IsDisplayTotalRowJP character(1) NOT NULL DEFAULT 'N'::bpchar,
+    IsAutoWrapJP character(1) NOT NULL DEFAULT 'Y'::bpchar,
+
+    Seqno numeric(10) NOT NULL DEFAULT 0, 
+    JP_PageSize numeric(10) NOT NULL DEFAULT 20,
+
+    CONSTRAINT JP_PivotWindowDefault_Pkey PRIMARY KEY (JP_PivotWindowDefault_ID)
+
+);
+
+
+ALTER TABLE adempiere.JP_PivotWindowDefault
+    OWNER to adempiere;

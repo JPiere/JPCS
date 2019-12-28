@@ -1,0 +1,18 @@
+CREATE TABLE adempiere.JP_ProductGroupLine
+(
+  JP_ProductGroupLine_ID numeric(10,0) NOT NULL,
+  JP_ProductGroupLine_uu character varying(36) DEFAULT NULL::character varying,
+  AD_Client_ID numeric(10,0) NOT NULL,
+  AD_Org_ID numeric(10,0) NOT NULL,
+  IsActive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+  Created timestamp without time zone NOT NULL DEFAULT now(),
+  CreatedBy numeric(10,0) NOT NULL,
+  Updated timestamp without time zone NOT NULL DEFAULT now(),
+  UpdatedBy numeric(10,0) NOT NULL,
+
+  JP_ProductGroup_ID numeric(10,0) NOT NULL,
+  Description character varying(255),
+  M_Product_ID numeric(10,0) NOT NULL DEFAULT NULL::numeric,
+
+  CONSTRAINT JP_ProductGroupLine_pkey PRIMARY KEY (JP_ProductGroupLine_ID)
+);

@@ -1,0 +1,10 @@
+Table: JP_Contract
+ÅE JP_Processing1 Column
+
+
+Table: JP_ContractContent
+ÅE JP_Processing3 Column
+
+
+Table: JP_ContractT
+ÅE JP_Classname1 Column

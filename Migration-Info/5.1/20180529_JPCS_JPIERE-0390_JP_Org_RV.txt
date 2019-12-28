@@ -1,0 +1,51 @@
+CREATE OR REPLACE VIEW adempiere.JP_Org_RV AS
+SELECT 
+ o.AD_Client_ID
+ ,o.AD_Org_ID
+ ,o.Value AS JP_Org_Value
+ ,o.Name AS JP_Org_Name
+ ,o.Description AS Description
+ ,o.IsActive
+ ,o.IsSummary
+ ,oi.AD_OrgType_ID
+ ,ot.Name AS JP_OrgType_Name
+ ,oi.C_Location_ID
+ ,l.JP_Location_Label
+ ,c.CountryCode
+ ,l.Postal
+ ,l.Postal_Add
+ ,l.RegionName AS RegionName
+ ,l.C_Region_ID AS C_Region_ID
+ ,r.Name AS JP_Region_Name
+ ,l.City AS City
+ ,l.C_City_ID AS C_City_ID
+ ,city.Name AS JP_City_Name
+ ,l.Address1
+ ,l.Address2
+ ,l.Address3
+ ,l.Address4
+ ,l.Address5
+ ,l.Comments
+ ,oi.JP_Corporation_ID
+ ,oi.JP_BusinessUnit_ID
+ ,oi.Parent_Org_ID
+ ,oi.M_Warehouse_ID
+ ,oi.DropShip_Warehouse_ID
+ ,oi.DUNS
+ ,oi.TaxID
+ ,oi.Supervisor_ID
+ ,oi.C_Calendar_ID
+ ,oi.Phone
+ ,oi.Phone2
+ ,oi.Fax
+ ,oi.EMail
+From adempiere.AD_Org o
+	INNER JOIN adempiere.AD_OrgInfo oi ON(o.AD_Org_ID = oi.AD_Org_ID)
+	left Outer join adempiere.AD_OrgType ot ON(oi.AD_OrgType_ID = ot.AD_OrgType_ID)
+        left Outer join adempiere.C_Location l ON(oi.C_Location_ID = l.C_Location_ID)
+        left Outer join adempiere.C_Country c ON(l.C_Country_ID = c.C_Country_ID)
+        left Outer join adempiere.C_Region r ON(l.C_Region_ID = r.C_Region_ID)
+        left Outer join adempiere.C_City city ON(l.C_City_ID = city.C_City_ID);
+        
+ALTER TABLE adempiere.JP_Org_RV
+    OWNER TO adempiere;

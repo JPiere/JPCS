@@ -1,0 +1,3 @@
+Add JP_CounterContract_ID Column to JP_Contract Table
+Add JP_CounterContractContent_ID Column to JP_ContractContent Table
+Add JP_CounterContractLine_ID Column to JP_CcontractLine Table

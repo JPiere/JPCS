@@ -1,0 +1,42 @@
+﻿CREATE OR REPLACE VIEW adempiere.JP_MatchedInOutInvoiceDoc AS 
+SELECT 
+	io.AD_Client_ID
+	,io.AD_Org_ID
+	,io.AD_OrgTrx_ID
+	,io.M_InOut_ID
+	,io.DocumentNo
+	,io.C_DocType_ID AS JP_InOutDoctype_ID
+	,io.C_BPartner_ID
+	,io.DateAcct
+	,io.MovementDate
+	,io.IsSOTrx
+	,io.DocStatus AS JP_InOut_DocStatus
+	,io.M_Warehouse_ID
+	,io.SalesRep_ID
+	,io.C_Order_ID
+	,i.C_Invoice_ID
+	,i.C_DocType_ID AS JP_InvoiceDoctype_ID
+	,i.DocumentNo AS JP_Invoice_DocumentNo
+	,i.DateAcct AS JP_Invoice_DateAcct
+	,i.DateInvoiced
+	,i.DocStatus AS JP_Invoice_DocStatus
+	,i.SalesRep_ID AS JP_Invoice_SalesRep_ID
+	,i.C_BPartner_ID AS JP_Invoice_BPartner_ID
+	,i.C_Currency_ID
+	,i.TotalLines
+	,i.GrandTotal
+	,dt.DocBaseType
+	,io.M_RMA_ID
+
+FROM adempiere.M_InOut io
+	INNER JOIN adempiere.M_InOutLine iol ON (io.M_InOut_ID = iol.M_InOut_ID)
+		INNER JOIN adempiere.C_DocType dt ON(io.C_DocType_ID = dt.C_DocType_ID)
+	INNER JOIN adempiere.C_InvoiceLine il ON (iol.M_InOutLine_ID = il.M_InOutLine_ID )
+		INNER JOIN adempiere.C_Invoice i ON (il.C_Invoice_ID = i.C_Invoice_ID)
+--WHERE io.DateAcct<> i.DateAcct
+--WHERE TO_Char(io.DateAcct,'YYYY-MM-DD') <> TO_Char(i.DateAcct,'YYYY-MM-DD')
+Group By
+	io.M_InOut_ID
+	,i.C_Invoice_ID
+	,dt.C_DocType_ID
+

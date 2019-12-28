@@ -1,0 +1,11 @@
+Å°Add JP_Locator_ID Column 	to C_Order Table	
+
+
+Å°Add JP_Locator_ID Column 	to JP_Estimation Table
+
+Å°Add JP_Locator_ID Column 	to JP_EstimationLine Table
+Å°Add JP_LocatorFrom_ID Column 	to JP_EstimationLine Table
+Å°Add JP_LocatorTo_ID Column 	to JP_EstimationLine Table
+Å°Add JP_ASI_From_ID Column 	to JP_EstimationLine Table
+Å°Add JP_ASI_To_ID Column 	to JP_EstimationLine Table
+

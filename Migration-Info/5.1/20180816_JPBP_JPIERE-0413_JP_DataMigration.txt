@@ -1,0 +1,95 @@
+CREATE TABLE adempiere.JP_DataMigration
+(
+    JP_DataMigration_ID numeric(10,0) NOT NULL,
+    JP_DataMigration_UU character varying(36) DEFAULT NULL::character varying,
+
+    AD_Client_ID numeric(10,0),
+    AD_Org_ID numeric(10,0),
+    IsActive character(1) DEFAULT 'Y'::bpchar,
+    Created timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+    CreatedBy numeric(10,0),
+    Updated timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+    UpdatedBy numeric(10,0),
+
+
+    --Header Info
+    AD_Table_ID numeric(10,0),
+    JP_DataMigration_Identifier character varying(40) NOT NULL, 
+    GL_Journal_ID numeric(10,0),
+    JP_Order_DocumentNo character varying(30),
+    C_Order_ID numeric(10,0),
+
+    JP_DocType_Name character varying(60) DEFAULT NULL::character varying,
+    DocBaseType character(3),
+    DocumentNo character varying(30),
+    POReference character varying(20),
+    DateDoc timestamp without time zone,
+    SalesRep_ID numeric(10,0),
+    Name character varying(60), 
+    Description character varying(255),
+    IsSOTrx character(1) DEFAULT 'Y'::bpchar,
+
+
+    --BP Info
+    C_BPartner_ID numeric(10,0),
+    C_BPartner_Location_ID numeric(10,0),
+    AD_User_ID numeric(10,0),
+
+
+    --In Out Info
+    M_Warehouse_ID  numeric(10,0),
+    M_Locator_ID  numeric(10,0),
+    DropShip_BPartner_ID numeric(10,0),
+    DropShip_Location_ID numeric(10,0),
+    DropShip_User_ID numeric(10,0),
+    DeliveryViaRule character(1),
+    M_Shipper_ID numeric(10,0),
+    M_FreightCategory_ID numeric(10,0),
+    FreightCostRule character(1) ,
+    FreightAmt numeric,
+
+    --Invoice Info
+    M_PriceList_ID numeric(10,0),
+    C_Currency_ID numeric(10,0),
+    PaymentRule character(1) DEFAULT NULL::bpchar,
+    C_PaymentTerm_ID numeric(10,0),
+
+    --Bank Account Info
+    C_BankAccount_ID numeric(10,0),
+    C_Charge_ID  numeric(10,0),
+
+
+    --Reference
+    AD_OrgTrx_ID numeric(10,0),
+    C_Project_ID numeric(10,0),
+    C_Activity_ID numeric(10,0),
+    C_Campaign_ID numeric(10,0), 
+    User1_ID numeric(10,0) DEFAULT NULL::numeric,
+    User2_ID numeric(10,0) DEFAULT NULL::numeric,   
+
+    --Status
+    TotalLines numeric,
+    GrandTotal numeric,
+    PayAmt numeric,
+    DiscountAmt numeric,
+    WriteOffAmt numeric,
+    OverUnderAmt numeric,
+    JP_DataMigration_DocStatus character(2) ,
+
+    --Other
+    JP_Link_Order_DocumentNo character varying(30),
+    Link_Order_ID numeric(10,0),
+    JP_Ref_Order_DocumentNo character varying(30),
+    Ref_Order_ID numeric(10,0),
+    
+    JP_PhysicalWarehouse_ID numeric(10,0) DEFAULT NULL::numeric,
+    DeliveryRule character(1) DEFAULT NULL::bpchar,
+    IsDropShip character(1) DEFAULT NULL::bpchar,
+    PriorityRule character(1) DEFAULT NULL::bpchar,
+
+    CONSTRAINT JP_DataMigration_Pkey PRIMARY KEY (JP_DataMigration_ID)
+);
+
+
+ALTER TABLE adempiere.JP_DataMigration
+    OWNER to adempiere;

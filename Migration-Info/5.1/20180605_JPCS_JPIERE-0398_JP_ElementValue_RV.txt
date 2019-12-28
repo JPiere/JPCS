@@ -1,0 +1,43 @@
+
+CREATE OR REPLACE VIEW adempiere.JP_ElementValue_RV AS
+
+SELECT 
+ e.AD_Client_ID
+ ,e.AD_Org_ID
+ ,e.Name AS JP_C_Element_Name
+ ,e.Description AS JP_C_Element_Description
+ ,e.C_Element_ID
+ ,ev.C_ElementValue_ID
+ ,ev.Value
+ ,ev.Name
+ ,ev.Description
+ ,ev.IsSummary
+ ,ev.AccountType
+ ,ev.AccountSign
+ ,ev.IsActive
+ ,ev.IsDocControlled
+ ,ev.PostActual
+ ,ev.PostBudget
+ ,ev.PostEncumbrance
+ ,ev.poststatistical
+ ,ev.IsBankAccount
+ ,ev.C_BankAccount_ID
+ ,ev.IsForeignCurrency
+ ,ev.C_Currency_ID
+ ,ev.IsDetailBPartner
+ ,ev.IsDetailProduct
+ ,ev.BPartnerType
+ ,tn.Parent_ID
+ ,p.Value AS JP_Parent_ElementValue
+ ,p.Name AS JP_Parent_ElementName
+ ,p.Description AS JP_Parent_ElementDescription
+ ,p.IsSummary AS IsParentSummaryJP
+ ,p.AccountType AS JP_Parent_AccountType
+ ,p.AccountSign AS JP_Parent_AccountSign
+FROM adempiere.C_Element e 
+	INNER JOIN adempiere.C_ElementValue ev ON(e.C_Element_ID = ev.C_Element_ID)
+    LEFT OUTER JOIN adempiere.AD_TreeNode tn ON (e.AD_Tree_ID = tn.AD_Tree_ID AND ev.C_ElementValue_ID = tn.Node_ID)
+    LEFT OUTER JOIN adempiere.C_ElementValue p ON(tn.Parent_ID = p.C_ElementValue_ID)
+;
+ALTER TABLE adempiere.JP_ElementValue_RV
+    OWNER TO adempiere;

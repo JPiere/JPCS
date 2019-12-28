@@ -1,0 +1,78 @@
+CREATE OR REPLACE VIEW adempiere.JP_QtyReserved_DatePromised AS
+SELECT
+ AD_Client_ID
+ ,AD_Org_ID
+ ,AD_OrgTrx_ID
+ ,C_Order_ID
+ ,IsSOTrx
+ ,C_DocTypeTarget_ID
+ ,C_DocType_ID
+ ,C_BPartner_ID
+ ,SalesRep_ID
+ ,M_PriceList_ID
+ ,DocumentNo
+ ,POReference
+ ,DocStatus
+ ,C_OrderLine_ID
+ ,Line
+ ,M_Product_ID
+ ,JP_Locator_ID
+ ,JP_DateReserved
+ ,DateOrdered
+ ,DatePromised
+ ,QtyOnHand
+ ,QtyReserved
+ ,QtyToDeliver
+ ,QtyOnHand - sum(rv.QtyReserved ) over (partition by JP_Locator_ID,M_Product_ID order by DatePromised)
+ 		+ sum(rv.QtyToDeliver) over (partition by JP_Locator_ID,M_Product_ID order by DatePromised)
+		as JP_ForecastAvailableQty
+ ,QtyDelivered
+ ,QtyInvoiced
+ ,M_Product_C_UOM_ID
+ ,Discontinued
+ ,ProductType
+ ,IsStocked
+ ,IsBOM
+ ,IsDropShip
+ ,M_Product_Category_ID
+
+FROM (SELECT 
+ ol.AD_Client_ID AS AD_Client_ID
+ ,ol.AD_Org_ID AS AD_Org_ID
+ ,ol.AD_OrgTrx_ID AS AD_OrgTrx_ID
+ ,o.C_Order_ID AS C_Order_ID
+ ,o.IsSOTrx AS IsSOTrx
+ ,o.C_DocTypeTarget_ID AS C_DocTypeTarget_ID
+ ,o.C_DocType_ID AS C_DocType_ID
+ ,o.C_BPartner_ID AS C_BPartner_ID
+ ,o.SalesRep_ID AS SalesRep_ID
+ ,o.M_PriceList_ID AS M_PriceList_ID
+ ,o.DocumentNo AS DocumentNo
+ ,o.POReference AS POReference
+ ,o.DocStatus AS DocStatus
+ ,ol.C_OrderLine_ID AS C_OrderLine_ID
+ ,ol.Line AS Line
+ ,ol.M_Product_ID AS M_Product_ID
+ ,ol.JP_Locator_ID AS JP_Locator_ID
+ ,ol.JP_DateReserved AS JP_DateReserved
+ ,ol.DateOrdered AS DateOrdered
+ ,ol.DatePromised AS DatePromised
+ ,COALESCE(s.QtyOnHand,0) AS QtyOnHand
+ ,CASE WHEN o.IsSOTrx='Y' THEN ol.QtyReserved ELSE 0 END AS QtyReserved
+ ,CASE WHEN o.IsSOTrx='N' THEN ol.QtyReserved ELSE 0 END AS QtyToDeliver
+ ,ol.QtyDelivered AS QtyDelivered
+ ,ol.QtyInvoiced AS QtyInvoiced
+ ,p.C_UOM_ID AS M_Product_C_UOM_ID
+ ,p.Discontinued AS Discontinued
+ ,p.ProductType AS ProductType
+ ,p.IsStocked AS IsStocked
+ ,p.IsBOM
+ ,p.IsDropShip
+ ,p.M_Product_Category_ID AS M_Product_Category_ID
+
+FROM adempiere.C_OrderLine ol 
+	INNER JOIN adempiere.C_Order o ON (ol.C_Order_ID = o.C_Order_ID)
+        INNER JOIN adempiere.M_Product p ON (ol.M_Product_ID =p.M_Product_ID )
+        LEFT OUTER JOIN adempiere.JP_StorageOnHand_Locator s ON (ol.JP_Locator_ID = s.M_Locator_ID and ol.M_Product_ID = s.M_Product_ID)
+WHERE  ol.QtyReserved <> 0 
+) rv   ORDER BY DatePromised,JP_DateReserved

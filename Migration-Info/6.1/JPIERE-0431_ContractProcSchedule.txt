@@ -1,0 +1,28 @@
+Table: JP_ContractContentT
+・ JP_ContractProcessMethod Column
+
+
+Table: JP_ContractContent
+・ JP_ContractProcessMethod Column
+・ IsScheduleCreatedJP  Column
+・ JP_Processing2 character(1) COLLATE pg_catalog."default" DEFAULT NULL::bpchar,
+
+
+Table: JP_ContractProcess 
+・ JP_CreateContractPSClass Column
+・ JP_IndirectcontractProcClass Column
+
+
+Table: JP_ContractLogDetail
+・ JP_ContractProcSchedule_ID Column
+・ JP_ContractPSLine_ID Column
+・ JP_ContractPSInoutline_ID Column
+・ JP_ContractPSInvoiceline_ID Column
+
+
+
+Table: C_DocType
+・ JP_ContractPSDocType_ID
+
+
+

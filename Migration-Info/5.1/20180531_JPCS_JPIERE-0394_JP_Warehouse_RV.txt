@@ -1,0 +1,51 @@
+CREATE OR REPLACE VIEW adempiere.JP_Warehouse_RV AS
+SELECT 
+ w.AD_Client_ID
+ ,w.AD_Org_ID
+ ,org.Value as JP_Org_Value
+ ,org.Name as JP_Org_Name
+ ,w.Value AS JP_Warehouse_Value
+ ,w.Name AS JP_Warehouse_Name
+ ,w.Description AS Description
+ ,w.IsActive
+ ,w.IsInTransit
+ ,w.IsDisallowNegativeInv
+ ,w.Separator
+ ,w.ReplenishmentClass
+ ,w.M_WarehouseSource_ID
+ ,w.M_ReserveLocator_ID
+ ,w.C_Location_ID
+ ,l.JP_Location_Label
+ ,c.CountryCode
+ ,l.Postal
+ ,l.Postal_Add
+ ,l.RegionName AS RegionName
+ ,l.C_Region_ID AS C_Region_ID
+ ,r.Name AS JP_Region_Name
+ ,l.City AS City
+ ,l.C_City_ID AS C_City_ID
+ ,city.Name AS JP_City_Name
+ ,l.Address1
+ ,l.Address2
+ ,l.Address3
+ ,l.Address4
+ ,l.Address5
+ ,l.Comments
+ ,wa.C_AcctSchema_ID
+ ,a.name as JP_AcctSchema_Name
+ ,ev1.C_ElementValue_ID AS W_Differences_Acct
+ ,ev1.Value AS JP_W_Differences_Value
+ ,ev1.Name AS JP_W_Differences_Name
+From adempiere.M_Warehouse w
+        INNER JOIN adempiere.AD_Org org ON(w.AD_Org_ID = org.AD_Org_ID)
+        INNER JOIN adempiere.C_Location l ON(w.C_Location_ID = l.C_Location_ID)
+        left Outer join adempiere.C_Country c ON(l.C_Country_ID = c.C_Country_ID)
+        left Outer join adempiere.C_Region r ON(l.C_Region_ID = r.C_Region_ID)
+        left Outer join adempiere.C_City city ON(l.C_City_ID = city.C_City_ID)
+        INNER JOIN adempiere.M_Warehouse_Acct wa ON (w.M_Warehouse_ID=wa.M_Warehouse_ID)
+                INNER JOIN adempiere.C_AcctSchema a ON (wa.C_AcctSchema_ID = a.C_AcctSchema_ID)
+        INNER JOIN adempiere.C_ValidCombination v1 ON (wa.W_Differences_Acct = v1.C_ValidCombination_ID)
+	    INNER JOIN adempiere.C_ElementValue ev1 ON (v1.Account_ID = ev1.C_ElementValue_ID);
+        
+ALTER TABLE adempiere.JP_Warehouse_RV
+    OWNER TO adempiere;

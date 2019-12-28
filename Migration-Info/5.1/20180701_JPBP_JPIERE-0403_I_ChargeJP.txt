@@ -1,0 +1,56 @@
+-- Table: adempiere.I_ChargeJP
+
+-- DROP TABLE adempiere.I_ChargeJP;
+
+CREATE TABLE adempiere.I_ChargeJP
+(
+  i_errormsg character varying(2000),
+  i_isimported character(1) DEFAULT 'N'::bpchar,
+  processing character(1),
+
+  processed character(1) DEFAULT 'N'::bpchar,
+
+  I_ChargeJP_ID numeric(10,0) NOT NULL,
+  I_ChargeJP_UU character varying(36) DEFAULT NULL::character varying,
+  AD_Client_ID numeric(10,0) DEFAULT 0,
+  AD_Org_ID numeric(10,0) DEFAULT 0,
+  IsActive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+  Created timestamp without time zone NOT NULL DEFAULT now(),
+  CreatedBy numeric(10,0) NOT NULL,
+  Updated timestamp without time zone NOT NULL DEFAULT now(),
+  UpdatedBy numeric(10,0) NOT NULL,
+
+  JP_Org_Value character varying(40) DEFAULT NULL::character varying,
+  C_Charge_ID numeric(10,0),
+  Name character varying(60),
+  Description character varying(255) ,
+
+  JP_ChargeType_Value character varying(40) DEFAULT NULL::character varying,
+  C_ChargeType_ID numeric(10,0),
+
+  JP_TaxCategory_Name character varying(60) DEFAULT NULL::character varying,
+  C_TaxCategory_ID numeric(10,0),
+ 
+  IsSameTax character(1) NOT NULL DEFAULT 'N'::bpchar,
+  IsTaxINcluded character(1) NOT NULL DEFAULT 'N'::bpchar,
+
+  JP_BPartner_Value character varying(40) DEFAULT NULL::character varying,
+  C_BPartner_ID   numeric(10,0),
+  
+  ChargeAmt numeric NOT NULL DEFAULT 0,
+
+  I_IsActiveJP character(1) NOT NULL DEFAULT 'Y'::bpchar,
+
+   --âÔåvèÓïÒ
+  JP_AcctSchema_Name character varying(60),
+  C_AcctSchema_ID numeric(10,0),
+
+  JP_Ch_Expense_Acct_Value character varying(40),
+  Ch_Expense_Acct numeric(10,0),
+
+  CONSTRAINT I_ChargeJP_pkey PRIMARY KEY (I_ChargeJP_ID)
+);
+
+ALTER TABLE adempiere.I_ChargeJP
+    OWNER to adempiere;
+

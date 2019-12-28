@@ -1,0 +1,1 @@
+Add JP_PhysicalWarehouse_ID Column to M_LocatorType Table

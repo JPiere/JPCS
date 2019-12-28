@@ -1,0 +1,116 @@
+-- View: adempiere.jp_rv_tablecolumn
+
+-- DROP VIEW adempiere.jp_rv_tablecolumn;
+
+CREATE OR REPLACE VIEW adempiere.jp_rv_tablecolumn AS
+ SELECT c.ad_client_id,
+    c.ad_org_id,
+    c.ad_column_id,
+    c.ad_column_uu,
+    c.columnname,
+    c.name AS jp_column_name,
+    c.description AS jp_column_description,
+    c.help AS jp_column_help,
+    c.columnsql,
+    c.version,
+    c.ad_reference_id,
+    r.name AS jp_reference_name,
+    c.ad_reference_value_id,
+    rv.name AS jp_reference_value_name,
+    c.ad_val_rule_id,
+    dv.name AS jp_val_rule_name,
+    c.fieldlength,
+    c.iskey,
+    c.isparent,
+    c.ismandatory,
+    c.isupdateable,
+    c.isalwaysupdateable,
+    c.isidentifier,
+    c.seqno,
+    c.isselectioncolumn,
+    c.seqnoselection,
+    c.vformat,
+    c.formatpattern,
+    c.valuemin,
+    c.valuemax,
+    c.ad_process_id,
+    p.value AS jp_process_value,
+    c.istoolbarbutton,
+    c.ad_chart_id,
+    ch.name AS jp_chart_name,
+    c.pa_dashboardcontent_id,
+    dc.name AS jp_dashboardcontent_name,
+    c.fkconstraintname,
+    c.fkconstrainttype,
+    c.placeholder AS jp_column_placeholder,
+    c.defaultvalue,
+    c.readonlylogic,
+    c.mandatorylogic,
+    c.isautocomplete,
+    c.isallowcopy,
+    c.isallowlogging,
+    c.issecure,
+    c.ishtml,
+    c.istranslated,
+    c.callout,
+    c.entitytype,
+    c.entitytype AS jp_column_entitytype,
+    c.created,
+    c.updated,
+    t.ad_table_id,
+    t.ad_table_uu,
+    t.tablename,
+    t.name AS jp_table_name,
+    t.description AS jp_table_description,
+    t.help AS jp_table_help,
+    t.isview,
+    t.accesslevel,
+    t.accesslevel AS jp_accesslevel_value,
+    t.ad_window_id,
+    w.name AS jp_window_name,
+    t.po_window_id,
+    wp.name AS jp_po_window_name,
+    t.isdeleteable,
+    t.ishighvolume,
+    t.ischangelog,
+    t.iscentrallymaintained,
+    t.entitytype AS jp_table_entitytype,
+    c.ad_element_id,
+    e.ad_element_uu,
+    e.name AS jp_element_name,
+    e.printname AS jp_element_printname,
+    e.description AS jp_element_description,
+    e.help AS jp_element_help,
+    e.po_name AS jp_element_po_name,
+    e.po_printname AS jp_element_po_printname,
+    e.po_description AS jp_element_po_description,
+    e.po_help AS jp_element_po_help,
+    e.placeholder AS jp_element_placeholder,
+    e.entitytype AS jp_element_entitytype,
+    trl.ad_language,
+    trl.ad_element_trl_uu,
+    trl.name AS jp_element_trl_name,
+    trl.printname AS jp_element_trl_printname,
+    trl.description AS jp_element_trl_description,
+    trl.help AS jp_element_trl_help,
+    trl.po_name AS jp_element_trl_po_name,
+    trl.po_printname AS jp_element_trl_po_printname,
+    trl.po_description AS jp_element_trl_po_description,
+    trl.po_help AS jp_element_trl_po_help,
+    trl.placeholder AS jp_element_trl_placeholder
+   FROM adempiere.ad_column c
+     JOIN adempiere.ad_reference r ON c.ad_reference_id = r.ad_reference_id
+     LEFT JOIN adempiere.ad_reference rv ON c.ad_reference_value_id = rv.ad_reference_id
+     LEFT JOIN adempiere.ad_val_rule dv ON c.ad_val_rule_id = dv.ad_val_rule_id
+     LEFT JOIN adempiere.ad_process p ON c.ad_process_id = p.ad_process_id
+     LEFT JOIN adempiere.ad_chart ch ON c.ad_chart_id = ch.ad_chart_id
+     LEFT JOIN adempiere.pa_dashboardcontent dc ON c.pa_dashboardcontent_id = dc.pa_dashboardcontent_id
+     JOIN adempiere.ad_table t ON c.ad_table_id = t.ad_table_id
+     LEFT JOIN adempiere.ad_window w ON t.ad_window_id = w.ad_window_id
+     LEFT JOIN adempiere.ad_window wp ON t.po_window_id = wp.ad_window_id
+     JOIN adempiere.ad_element e ON c.ad_element_id = e.ad_element_id
+     LEFT JOIN adempiere.ad_element_trl trl ON e.ad_element_id = trl.ad_element_id;
+
+ALTER TABLE adempiere.jp_rv_tablecolumn
+    OWNER TO postgres;
+

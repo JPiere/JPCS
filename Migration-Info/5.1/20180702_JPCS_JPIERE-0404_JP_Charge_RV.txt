@@ -1,0 +1,27 @@
+CREATE OR REPLACE VIEW adempiere.JP_Charge_RV AS
+SELECT
+ c.AD_Client_ID AS AD_Client_ID
+ ,c.AD_Org_ID AS AD_Org_ID
+ ,c.Name AS Name
+ ,c.Description AS Description
+ ,c.C_ChargeType_ID AS C_ChargeType_ID
+ ,c.C_TaxCategory_ID AS C_TaxCategory_ID
+ ,c.IsSameTax
+ ,c.IsTaxIncluded
+ ,c.C_BPartner_ID AS C_BPartner_ID
+ ,c.ChargeAmt AS ChargeAmt
+ ,ca.C_AcctSchema_ID AS C_AcctSchema_ID
+ ,ev1.C_ElementValue_ID AS C_ElementValue_ID
+ ,ev1.Value AS JP_Ch_Expense_Acct_Value
+ ,ev1.Name AS JP_Ch_Expense_Acct_Name
+ ,c.IsActive
+ ,c.C_Charge_ID AS C_Charge_ID
+From adempiere.C_Charge c
+        INNER JOIN adempiere.AD_Org org ON(c.AD_Org_ID = org.AD_Org_ID)
+        INNER JOIN adempiere.C_Charge_Acct ca ON (c.C_Charge_ID=ca.C_Charge_ID)
+        INNER JOIN adempiere.C_AcctSchema a ON (ca.C_AcctSchema_ID = a.C_AcctSchema_ID)
+        INNER JOIN adempiere.C_ValidCombination v1 ON (ca.Ch_Expense_Acct = v1.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev1 ON (v1.Account_ID = ev1.C_ElementValue_ID);
+
+ALTER TABLE adempiere.JP_Charge_RV
+    OWNER TO adempiere;

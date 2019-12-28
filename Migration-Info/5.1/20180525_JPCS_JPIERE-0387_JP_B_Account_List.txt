@@ -1,0 +1,64 @@
+CREATE OR REPLACE VIEW adempiere.JP_B_Account_List AS
+
+SELECT
+ ba.AD_Client_ID
+ ,ba.AD_Org_ID
+ ,b.C_Bank_ID
+ ,b.Name AS JP_Bank_Name
+ ,b.JP_BankName_Kana
+ ,b.RoutingNo
+ ,b.SwiftCode
+ ,ba.C_BankAccount_ID
+ ,ba.Value
+ ,ba.Name AS JP_B_Account_Name
+ ,ba.JP_BranchCode
+ ,ba.JP_BranchName_Kana
+ ,ba.AccountNo
+ ,ba.JP_RequesterCode
+ ,ba.JP_RequesterName
+ ,ba.BBAN
+ ,ba.IBAN
+ ,ba.Description
+ ,ba.IsActive
+ ,ba.IsDefault
+ ,ba.C_Currency_ID
+ ,ba.BankAccountType
+ ,ba.PaymentExportClass
+ ,baa.C_AcctSchema_ID
+ ,ev1.C_ElementValue_ID AS B_Asset_Acct
+ ,ev1.Value AS JP_B_Asset_Acct_Value
+ ,ev1.Name AS JP_B_Asset_Acct_Name
+ ,ev2.C_ElementValue_ID AS B_InTransit_Acct
+ ,ev2.Value AS JP_InTransit_Acct_Value
+ ,ev2.Name AS JP_InTransit_Acct_Name
+ ,ev3.C_ElementValue_ID AS B_PaymentSelect_Acct
+ ,ev3.Value AS JP_PaymentSelect_Value
+ ,ev3.Name AS JP_PaymentSelect_Name
+ ,ev4.C_ElementValue_ID AS B_UnallocatedCash_Acct
+ ,ev4.Value AS JP_UnallocatedCash_Value
+ ,ev4.Name AS JP_UnallocatedCash_Name
+ ,ev5.C_ElementValue_ID AS B_InterestExp_Acct
+ ,ev5.Value AS JP_InterestExp_Acct_Value
+ ,ev5.Name AS JP_InterestExp_Acct_Name
+ ,ev6.C_ElementValue_ID AS B_InterestRev_Acct
+ ,ev6.Value AS JP_InterestRev_Acct_Value
+ ,ev6.Name AS JP_InterestRev_Acct_Name
+From adempiere.C_Bank b
+ INNER JOIN adempiere.C_BankAccount ba ON (b.C_Bank_ID=ba.C_Bank_ID)
+ INNER JOIN adempiere.C_BankAccount_Acct baa ON (ba.C_BankAccount_ID=baa.C_BankAccount_ID)
+ INNER JOIN adempiere.C_ValidCombination v1 ON (baa.B_Asset_Acct = v1.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev1 ON (v1.Account_ID = ev1.C_ElementValue_ID)
+ INNER JOIN adempiere.C_ValidCombination v2 ON (baa.B_InTransit_Acct = v2.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev2 ON (v2.Account_ID = ev2.C_ElementValue_ID) 
+ INNER JOIN adempiere.C_ValidCombination v3 ON (baa.B_PaymentSelect_Acct = v3.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev3 ON (v3.Account_ID = ev3.C_ElementValue_ID) 
+ INNER JOIN adempiere.C_ValidCombination v4 ON (baa.B_UnallocatedCash_Acct = v4.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev4 ON (v4.Account_ID = ev4.C_ElementValue_ID)  
+ INNER JOIN adempiere.C_ValidCombination v5 ON (baa.B_InterestExp_Acct = v5.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev5 ON (v5.Account_ID = ev5.C_ElementValue_ID)  
+  INNER JOIN adempiere.C_ValidCombination v6 ON (baa.B_InterestRev_Acct = v6.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev6 ON (v6.Account_ID = ev6.C_ElementValue_ID)   ;
+
+ALTER TABLE adempiere.JP_B_Account_List
+    OWNER TO adempiere;
+

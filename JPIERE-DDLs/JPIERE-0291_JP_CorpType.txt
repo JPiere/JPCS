@@ -1,0 +1,20 @@
+CREATE TABLE adempiere.JP_CorpType
+(
+  AD_Client_ID numeric(10,0) NOT NULL,
+  AD_Org_ID numeric(10,0) NOT NULL,
+  JP_CorpType_ID numeric(10,0) NOT NULL,
+  Createdby numeric(10,0) NOT NULL,
+  Updatedby numeric(10,0) NOT NULL,
+  Created timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+  Updated timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+
+
+  IsActive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+  JP_CorpType_UU character varying(36) DEFAULT NULL::character varying,
+
+  Description character varying(255) DEFAULT NULL::character varying,
+  Name character varying(120) NOT NULL,
+  Value character varying(40) NOT NULL,
+
+  CONSTRAINT JP_CorpType_key PRIMARY KEY (JP_CorpType_ID)
+)

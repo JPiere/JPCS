@@ -1,0 +1,19 @@
+■Add JP_DocTypeMM_ID Column 	to C_DocType Table	English Name:MM DocType / Japanese Name:在庫移動伝票タイプ
+
+
+■Add JP_Locator_ID Column 	to C_OrderLine Table	English Name:Locator / Japanese Name:保管場所
+■Add JP_LocatorFrom_ID Column 	to C_OrderLine Table	English Name:Locator(From) / Japanese Name:移動元保管場所
+■Add JP_LocatorTo_ID Column 	to C_OrderLine Table	English Name:Locator(To) / Japanese Name:移動先保管場所
+■Add JP_ASI_From_ID Column 	to C_OrderLine Table	English Name:Attribute Set Instance(From) / Japanese Name:属性セットインスタンス(From)
+■Add JP_ASI_To_ID Column 	to C_OrderLine Table	English Name:Attribute Set Instance(To) / Japanese Name:属性セットインスタンス(To)
+■Add JP_MovementLine_ID Column to C_OrderLine Table	English Name:Movement Line / Japanese Name:在庫移動伝票明細
+
+
+■Add JP_Order_ID Column 	to M_Movement Table	English Name:Sales Order / Japanese Name:受注伝票
+
+
+■Add JP_Location_ID　Column 	to M_LocatorType Table	English Name:Location / Japanese Name:住所
+
+
+■Add IsCommonLocatorJP Column 	to M_Locator Table	English Name:Common Locator / Japanese Name:共通保管場所
+

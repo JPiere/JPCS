@@ -1,0 +1,68 @@
+
+CREATE TABLE adempiere.I_BP_BankAccountJP
+(
+    I_BP_BankAccountJP_ID numeric(10,0) NOT NULL,
+    I_BP_BankAccountJP_UU character varying(36) DEFAULT NULL::character varying,
+
+    AD_Client_ID numeric(10,0),
+    AD_Org_ID numeric(10,0),
+    IsActive character(1) DEFAULT 'Y'::bpchar,
+    Created timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+    CreatedBy numeric(10,0),
+    Updated timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+    UpdatedBy numeric(10,0),
+
+    I_IsImported character(1) NOT NULL DEFAULT 'N'::bpchar,
+    I_ErrorMsg character varying(2000) ,
+    Processing character(1) DEFAULT 'N'::bpchar,
+    Processed character(1) DEFAULT 'N'::bpchar,
+
+    C_BP_BankAccount_ID numeric(10,0) ,
+    JP_Org_Value character varying(40),
+ 
+    C_BPartner_ID numeric(10,0),
+    JP_BPartner_Value character varying(40),
+    C_Bank_ID numeric(10,0),
+    JP_Bank_Name  character varying(60),
+
+    IsACH character(1) NOT NULL DEFAULT 'N'::bpchar,
+    BankAccountType character(1) ,
+
+    RoutingNo character varying(20) ,
+    AccountNo character varying(20) ,
+    CreditCardType character(1) ,
+    CreditCardNumber character varying(20) ,
+    CreditCardVV character varying(4),
+    creditcardexpmm numeric(10,0),
+    creditcardexpyy numeric(10,0),
+    A_Name character varying(60) ,
+    A_street character varying(60),
+    A_city character varying(60) ,
+    A_State character varying(40),
+    A_zip character varying(20) ,
+    A_ident_dl character varying(20) ,
+    A_email character varying(60) ,
+    a_ident_ssn character varying(20) ,
+    r_avsaddr character(1),
+    r_avszip character(1),
+    a_country character varying(40) ,
+    AD_User_ID numeric(10,0),
+    JP_User_Value character varying(40),
+    JP_User_Name character varying(60),
+    JP_User_EMail character varying(60),
+
+    bpbankacctuse character(1) ,
+    customerpaymentprofileid character varying(60) DEFAULT NULL::character varying,
+    c_paymentprocessor_id numeric(10,0) DEFAULT NULL::numeric,
+    jp_branchcode character varying(3) DEFAULT NULL::character varying,
+    jp_branchname_kana character varying(15) DEFAULT NULL::character varying,
+    jp_a_name_kana character varying(30) DEFAULT NULL::character varying,
+    isdefault character(1) DEFAULT 'N'::bpchar,
+    iban character varying(40) DEFAULT NULL::character varying,
+
+    CONSTRAINT I_BP_BankAccountJP_Pkey PRIMARY KEY (I_BP_BankAccountJP_ID)
+);
+
+
+ALTER TABLE adempiere.I_BP_BankAccountJP
+    OWNER to adempiere;

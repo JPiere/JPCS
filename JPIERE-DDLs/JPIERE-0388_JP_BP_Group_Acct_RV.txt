@@ -1,0 +1,59 @@
+CREATE OR REPLACE VIEW adempiere.JP_BP_Group_Acct_RV AS
+SELECT
+ bpga.AD_Client_ID
+ ,bpga.AD_Org_ID
+ ,bpg.C_BP_Group_ID
+ ,bpg.Value
+ ,bpg.Name
+ ,bpg.Description
+ ,bpg.IsActive
+ ,bpga.C_AcctSchema_ID
+
+ ,ev1.C_ElementValue_ID AS NotInvoicedReceipts_Acct
+ ,ev1.Value AS JP_NotInvoicedReceipts_Value
+ ,ev1.Name AS JP_NotInvoicedReceipts_Name
+ ,ev2.C_ElementValue_ID AS PayDiscount_Exp_Acct
+ ,ev2.Value AS JP_PayDiscount_Exp_Value
+ ,ev2.Name AS JP_PayDiscount_Exp_Name
+ ,ev3.C_ElementValue_ID AS PayDiscount_Rev_Acct
+ ,ev3.Value AS JP_PayDiscount_Rev_Value
+ ,ev3.Name AS JP_PayDiscount_Rev_Name
+ ,ev4.C_ElementValue_ID AS WriteOff_Acct
+ ,ev4.Value AS JP_WriteOff_Acct_Value
+ ,ev4.Name AS JP_WriteOff_Acct_Name
+ ,ev5.C_ElementValue_ID AS C_PrePayment_Acct
+ ,ev5.Value AS JP_C_PrePayment_Acct_Value
+ ,ev5.Name AS JP_C_PrePayment_Acct_Name
+ ,ev6.C_ElementValue_ID AS C_Receivable_Acct
+ ,ev6.Value AS JP_Receivable_Acct_Value
+ ,ev6.Name AS JP_Receivable_Acct_Name
+ ,ev7.C_ElementValue_ID AS V_PrePayment_Acct
+ ,ev7.Value AS JP_V_PrePayment_Acct_Value
+ ,ev7.Name AS JP_V_PrePayment_Acct_Name
+ ,ev8.C_ElementValue_ID AS V_Liability_Acct
+ ,ev8.Value AS JP_Liability_Acct_Value
+ ,ev8.Name AS JP_Liability_Acct_Name
+From adempiere.C_BP_Group bpg
+ INNER JOIN adempiere.C_BP_Group_Acct bpga ON (bpg.C_BP_Group_ID=bpga.C_BP_Group_ID)
+ INNER JOIN adempiere.C_ValidCombination v1 ON (bpga.NotInvoicedReceipts_Acct = v1.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev1 ON (v1.Account_ID = ev1.C_ElementValue_ID)
+ INNER JOIN adempiere.C_ValidCombination v2 ON (bpga.PayDiscount_Exp_Acct = v2.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev2 ON (v2.Account_ID = ev2.C_ElementValue_ID)
+ INNER JOIN adempiere.C_ValidCombination v3 ON (bpga.PayDiscount_Rev_Acct = v3.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev3 ON (v3.Account_ID = ev3.C_ElementValue_ID)
+ INNER JOIN adempiere.C_ValidCombination v4 ON (bpga.WriteOff_Acct = v4.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev4 ON (v4.Account_ID = ev4.C_ElementValue_ID)
+ INNER JOIN adempiere.C_ValidCombination v5 ON (bpga.C_PrePayment_Acct = v5.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev5 ON (v5.Account_ID = ev5.C_ElementValue_ID)
+ INNER JOIN adempiere.C_ValidCombination v6 ON (bpga.C_Receivable_Acct = v6.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev6 ON (v6.Account_ID = ev6.C_ElementValue_ID)
+ INNER JOIN adempiere.C_ValidCombination v7 ON (bpga.V_PrePayment_Acct = v7.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev7 ON (v7.Account_ID = ev7.C_ElementValue_ID)
+ INNER JOIN adempiere.C_ValidCombination v8 ON (bpga.V_Liability_Acct = v8.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev8 ON (v8.Account_ID = ev8.C_ElementValue_ID)   
+    ;
+
+
+ALTER TABLE adempiere.JP_BP_Group_Acct_RV
+    OWNER TO adempiere;
+

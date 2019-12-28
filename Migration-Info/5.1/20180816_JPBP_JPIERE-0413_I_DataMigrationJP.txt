@@ -1,0 +1,182 @@
+CREATE TABLE adempiere.I_DataMigrationJP
+(
+    I_DataMigrationJP_ID numeric(10,0) NOT NULL,
+    I_DataMigrationJP_UU character varying(36) DEFAULT NULL::character varying,
+
+    I_ErrorMsg character varying(2000),
+    I_IsImported character(1) DEFAULT 'N'::bpchar,
+    processing character(1),
+    processed character(1) DEFAULT 'N'::bpchar,
+
+    AD_Client_ID numeric(10,0),
+    AD_Org_ID numeric(10,0),
+    IsActive character(1) DEFAULT 'Y'::bpchar,
+    Created timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+    CreatedBy numeric(10,0),
+    Updated timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+    UpdatedBy numeric(10,0),
+
+
+    --Header Info
+    JP_Org_Value character varying(40),
+    JP_DataMigration_ID numeric(10,0), 
+    JP_DataMigrationLine_ID numeric(10,0),
+
+    TableName  character varying(60) DEFAULT NULL::character varying,
+    AD_Table_ID numeric(10,0),
+    JP_DataMigration_Identifier character varying(40) NOT NULL, 
+    JP_Order_DocumentNo character varying(30),
+
+    JP_DocType_Name character varying(60) DEFAULT NULL::character varying,
+    DocBaseType character(3),
+    DocumentNo character varying(30),
+    POReference character varying(20),
+    DateDoc timestamp without time zone,
+
+    JP_SalesRep_Value character varying(40) DEFAULT NULL,
+    JP_SalesRep_Name character varying(60) DEFAULT NULL,
+    JP_SalesRep_EMail character varying(60) DEFAULT NULL,
+    SalesRep_ID numeric(10,0),
+    Name character varying(60), 
+    Description character varying(255),
+    IsSOTrx character(1) DEFAULT 'Y'::bpchar,
+
+
+    --BP Info
+    JP_BPartner_Value character varying(40),
+    C_BPartner_ID numeric(10,0),
+    JP_BPartner_Location_Name character varying(60) DEFAULT NULL::character varying,
+    C_BPartner_Location_ID numeric(10,0),
+
+    JP_User_Value character varying(40) DEFAULT NULL::character varying,
+    JP_User_Name character varying(60),
+    JP_User_EMail character varying(60),
+    AD_User_ID numeric(10,0),
+
+
+    --In Out Info
+    JP_Warehouse_Value character varying(40),
+    M_Warehouse_ID numeric(10,0),
+    JP_Locator_Value character varying(40),
+    M_Locator_ID  numeric(10,0),
+    JP_DropShip_BP_Value  character varying(40),
+    DropShip_BPartner_ID numeric(10,0),
+    JP_DropShip_BP_Location_Name character varying(60),
+    DropShip_Location_ID numeric(10,0),
+    JP_DropShip_User_Value character varying(40),
+    JP_DropShip_User_Name character varying(60),
+    JP_DropShip_User_EMail character varying(60),
+    DropShip_User_ID numeric(10,0),
+    DeliveryViaRule character(1),
+    JP_Shipper_Name character varying(60),
+    M_Shipper_ID numeric(10,0),
+    M_FreightCategory_ID numeric(10,0),
+    FreightCostRule character(1) ,
+    FreightAmt numeric,
+
+    --Invoice Info
+    JP_PriceList_Name character varying(60) DEFAULT NULL::character varying,
+    M_PriceList_ID numeric(10,0),
+    C_Currency_ID numeric(10,0),
+
+    PaymentRule character(1) COLLATE pg_catalog."default" DEFAULT NULL::bpchar,
+    JP_PaymentTerm_Value character varying(40),
+    C_PaymentTerm_ID numeric(10,0),
+
+    --Bank Account Info
+    JP_Bank_Name character varying(60),
+    JP_BankAccount_Value character varying(40),
+    C_BankAccount_ID numeric(10,0),
+
+
+    --Reference
+    JP_OrgTrx_Value character varying(40) DEFAULT NULL::character varying,
+    AD_OrgTrx_ID numeric(10,0),
+    JP_Project_Value character varying(40) DEFAULT NULL::character varying,
+    C_Project_ID numeric(10,0),
+    JP_Activity_Value character varying(40) DEFAULT NULL::character varying,
+    C_Activity_ID numeric(10,0),
+    JP_Campaign_Value character varying(40) DEFAULT NULL::character varying,
+    C_Campaign_ID numeric(10,0), 
+    JP_UserElement2_Value character varying(40) DEFAULT NULL::character varying,
+    JP_UserElement1_value character varying(40) DEFAULT NULL::character varying,
+    User1_ID numeric(10,0) DEFAULT NULL::numeric,
+    User2_ID numeric(10,0) DEFAULT NULL::numeric,   
+
+    --Status
+    TotalLines numeric,
+    GrandTotal numeric,
+    JP_DataMigration_DocStatus character(2) ,
+
+    --Other
+    JP_Link_Order_DocumentNo character varying(30),
+    JP_Ref_Order_DocumentNo character varying(30),
+
+
+    --Line Info
+    Line numeric(10,0) DEFAULT (0)::numeric,
+    JP_LocatorFrom_Value character varying(40),
+    JP_LocatorFrom_ID numeric(10,0), 
+    JP_LocatorTo_Value character varying(40),
+    JP_LocatorTo_ID numeric(10,0), 
+    LineDescription character varying(255),
+
+    JP_Product_Value character varying(40),
+    M_Product_ID numeric(10,0),
+    JP_Charge_Name character varying(60),
+    C_Charge_ID  numeric(10,0),
+ 
+    TaxIndicator character varying(10) ,
+    C_Tax_ID numeric(10,0),
+    
+    x12de355 character varying(4) DEFAULT NULL::character varying,
+    C_UOM_ID numeric(10,0),
+
+    Qty numeric,
+
+    --Amount
+    Price numeric,
+    LineNetAmt numeric,
+    PayAmt numeric,
+    DiscountAmt numeric,
+    WriteOffAmt numeric,
+    OverUnderAmt numeric,
+    StmtAmt numeric,
+    TrxAmt  numeric,
+    ChargeAmt  numeric,
+    InterestAmt  numeric,
+
+    --Allocation Info
+    JP_Invoice_DocumentNo character varying(30),
+    JP_Payment_DocumentNo character varying(30),
+
+    --Other
+    DeliveryRule character(1) DEFAULT NULL::bpchar,
+    JP_Line_Campaign_Value character varying(40) DEFAULT NULL::character varying,
+    JP_Line_Campaign_ID numeric(10,0) DEFAULT NULL::numeric,
+    JP_Line_Activity_Value character varying(40) DEFAULT NULL::character varying,
+    JP_Line_Activity_ID numeric(10,0) DEFAULT NULL::numeric,
+    JP_Line_OrgTrx_Value character varying(40) DEFAULT NULL::character varying,
+    JP_Line_OrgTrx_ID numeric(10,0) DEFAULT NULL::numeric,
+    JP_Line_Project_Value character varying(40) DEFAULT NULL::character varying,
+    JP_Line_Project_ID numeric(10,0) DEFAULT NULL::numeric,
+    JP_Line_User1_ID numeric(10,0) DEFAULT NULL::numeric,
+    JP_Line_user2_ID numeric(10,0) DEFAULT NULL::numeric,
+    JP_Line_UserElement1_value character varying(40) DEFAULT NULL::character varying,
+    JP_Line_UserElement2_value character varying(40) DEFAULT NULL::character varying,
+    PriorityRule character(1) DEFAULT NULL::bpchar,
+    IsDropShip character(1) DEFAULT NULL::bpchar,
+    JP_PhysicalWarehouse_ID numeric(10,0) DEFAULT NULL::numeric,
+    JP_PhysicalWarehouse_Value character varying(40) DEFAULT NULL::character varying,
+    QtyCount numeric,
+    QtyBook numeric,
+    ISO_Code character varying(3) DEFAULT NULL::character varying,
+    JP_Line_BPartner_Value character varying(40) DEFAULT NULL::character varying,
+    JP_Line_BPartner_ID numeric(10,0) DEFAULT NULL::numeric,
+
+    CONSTRAINT I_DataMigrationJP_Pkey PRIMARY KEY (I_DataMigrationJP_ID)
+);
+
+
+ALTER TABLE adempiere.I_DataMigrationJP
+    OWNER to adempiere;

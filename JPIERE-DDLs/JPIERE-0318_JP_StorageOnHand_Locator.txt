@@ -1,0 +1,10 @@
+CREATE OR REPLACE VIEW adempiere.JP_StorageOnHand_Locator AS
+SELECT 
+ s.AD_Client_ID AS AD_Client_ID, 
+ s.AD_Org_ID AS AD_Org_ID,
+ s.M_Locator_ID AS M_Locator_ID, 
+ s.M_Product_ID AS M_Product_ID, 
+ s.IsActive,
+ SUM(s.QtyOnHand) AS QtyOnHand
+FROM adempiere.m_storageonhand s 
+GROUP BY s.AD_Client_ID, s.AD_Org_ID, s.M_Locator_ID, s.M_Product_ID,s.IsActive

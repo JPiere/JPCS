@@ -1,0 +1,36 @@
+CREATE TABLE adempiere.JP_BankDataSchema
+(
+  AD_Client_ID numeric(10,0) NOT NULL,
+  AD_Org_ID numeric(10,0) NOT NULL,
+  JP_BankDataSchema_ID numeric(10,0) NOT NULL,
+  Createdby numeric(10,0) NOT NULL,
+  Updatedby numeric(10,0) NOT NULL,
+  C_Charge_ID numeric(10,0) ,
+  C_Tax_ID numeric(10,0) ,
+  JP_PaymentDocType_ID numeric(10,0) ,
+  JP_AcceptableDiffAmt numeric NOT NULL DEFAULT 0,
+
+  Created timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+  Updated timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+
+  IsActive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+  IsDefault character(1) NOT NULL DEFAULT 'N'::bpchar,
+  IsReceipt character(1) NOT NULL DEFAULT 'N'::bpchar,
+  JP_BankDataSchema_UU character varying(36) DEFAULT NULL::character varying,
+
+  Description character varying(255) DEFAULT NULL::character varying,
+  Name character varying(120) NOT NULL,
+  Value character varying(40) NOT NULL,
+  JP_BankDataImportClass character varying(255),
+  JP_BankDataMatchBPClass character varying(255),
+  JP_BankDataMatchInvClass character varying(255),
+  JP_BankDataMatchBillClass character varying(255),
+  JP_BankDataMatchPaymentClass character varying(255),
+  JP_BankDataMatchOrderClass character varying(255),
+  JP_BankDataCreateDocClass character varying(255),
+  JP_Payment_DocAction character(2),
+  JP_BankStmt_DocAction character(2),
+
+
+  CONSTRAINT JP_BankDataSchema_pkey PRIMARY KEY (JP_BankDataSchema_ID)
+)

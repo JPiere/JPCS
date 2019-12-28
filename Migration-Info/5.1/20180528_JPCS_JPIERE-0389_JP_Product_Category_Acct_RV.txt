@@ -1,0 +1,95 @@
+CREATE OR REPLACE VIEW adempiere.JP_Product_Category_Acct_RV AS
+SELECT
+ pca.AD_Client_ID
+ ,pca.AD_Org_ID
+ ,pc.M_Product_Category_ID
+ ,pc.Value
+ ,pc.Name
+ ,pc.Description
+ ,pc.IsActive
+ ,l1.JP_ProductCategoryL1_ID
+ ,l1.Value AS JP_ProductCategoryL1_Value
+ ,l1.Name AS JP_ProductCategoryL1_Name
+ ,l2.JP_ProductCategoryL2_ID
+ ,l2.Value AS JP_ProductCategoryL2_Value
+ ,l2.Name AS JP_ProductCategoryL2_Name
+ ,pca.C_AcctSchema_ID
+ ,pca.CostingMethod
+ ,pca.CostingLevel
+
+ ,ev1.C_ElementValue_ID AS P_Asset_Acct
+ ,ev1.Value AS JP_P_Asset_Acct_Value
+ ,ev1.Name AS JP_P_Asset_Acct_Name
+ ,ev2.C_ElementValue_ID AS P_Expense_Acct
+ ,ev2.Value AS JP_P_Expense_Acct_Value
+ ,ev2.Name AS JP_P_Expense_Acct_Name
+ ,ev3.C_ElementValue_ID AS P_CostAdjustment_Acct
+ ,ev3.Value AS JP_CostAdjustment_Value
+ ,ev3.Name AS JP_CostAdjustment_Name
+ ,ev4.C_ElementValue_ID AS P_InventoryClearing_Acct
+ ,ev4.Value AS JP_InventoryClearing_Value
+ ,ev4.Name AS JP_InventoryClearing_Name
+ ,ev5.C_ElementValue_ID AS P_COGS_Acct
+ ,ev5.Value AS JP_COGS_Acct_Value
+ ,ev5.Name AS JP_COGS_Acct_Name
+ ,ev6.C_ElementValue_ID AS P_Revenue_Acct
+ ,ev6.Value AS JP_P_Revenue_Acct_Value
+ ,ev6.Name AS JP_P_Revenue_Acct_Name
+ ,ev7.C_ElementValue_ID AS P_PurchasePriceVariance_Acct
+ ,ev7.Value AS JP_PO_PriceVariance_Value
+ ,ev7.Name AS JP_PO_PriceVariance_Name
+ ,ev8.C_ElementValue_ID AS P_InvoicePriceVariance_Acct
+ ,ev8.Value AS JP_InvoicePriceVariance_Value
+ ,ev8.Name AS JP_InvoicePriceVariance_Name
+ ,ev9.C_ElementValue_ID AS P_TradeDiscountRec_Acct
+ ,ev9.Value AS JP_P_TradeDiscountRec_Value
+ ,ev9.Name AS JP_P_TradeDiscountRec_Name
+ ,ev10.C_ElementValue_ID AS P_TradeDiscountGrant_Acct
+ ,ev10.Value AS JP_P_TradeDiscountGrant_Value
+ ,ev10.Name AS JP_P_TradeDiscountGrant_Name
+ ,ev11.C_ElementValue_ID AS P_RateVariance_Acct
+ ,ev11.Value AS JP_RateVariance_Acct_Value
+ ,ev11.Name AS JP_RateVariance_Acct_Name
+ ,ev12.C_ElementValue_ID AS P_AverageCostVariance_Acct
+ ,ev12.Value AS JP_AverageCostVariance_Value
+ ,ev12.Name AS JP_AverageCostVariance_Name
+ ,ev13.C_ElementValue_ID AS P_LandedCostClearing_Acct
+ ,ev13.Value AS JP_LandedCostClearing_Value
+ ,ev13.Name AS JP_LandedCostClearing_Name
+
+From adempiere.M_Product_Category pc
+ LEFT OUTER JOIN adempiere.JP_ProductCategoryL1 l1 ON (pc.JP_ProductCategoryL1_ID = l1.JP_ProductCategoryL1_ID)
+ 		LEFT OUTER JOIN adempiere.JP_ProductCategoryL2 l2 ON(l1.JP_ProductCategoryL2_ID = l2.JP_ProductCategoryL2_ID)
+ INNER JOIN adempiere.M_Product_Category_Acct pca ON (pc.M_Product_Category_ID=pca.M_Product_Category_ID)
+ INNER JOIN adempiere.C_ValidCombination v1 ON (pca.P_Asset_Acct = v1.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev1 ON (v1.Account_ID = ev1.C_ElementValue_ID)
+ INNER JOIN adempiere.C_ValidCombination v2 ON (pca.P_Expense_Acct = v2.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev2 ON (v2.Account_ID = ev2.C_ElementValue_ID)
+ INNER JOIN adempiere.C_ValidCombination v3 ON (pca.P_CostAdjustment_Acct = v3.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev3 ON (v3.Account_ID = ev3.C_ElementValue_ID)
+ INNER JOIN adempiere.C_ValidCombination v4 ON (pca.P_InventoryClearing_Acct = v4.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev4 ON (v4.Account_ID = ev4.C_ElementValue_ID)
+ INNER JOIN adempiere.C_ValidCombination v5 ON (pca.P_COGS_Acct = v5.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev5 ON (v5.Account_ID = ev5.C_ElementValue_ID)
+ INNER JOIN adempiere.C_ValidCombination v6 ON (pca.P_Revenue_Acct = v6.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev6 ON (v6.Account_ID = ev6.C_ElementValue_ID)
+ INNER JOIN adempiere.C_ValidCombination v7 ON (pca.P_PurchasePriceVariance_Acct = v7.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev7 ON (v7.Account_ID = ev7.C_ElementValue_ID)
+ INNER JOIN adempiere.C_ValidCombination v8 ON (pca.P_InvoicePriceVariance_Acct = v8.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev8 ON (v8.Account_ID = ev8.C_ElementValue_ID) 
+ INNER JOIN adempiere.C_ValidCombination v9 ON (pca.P_TradeDiscountRec_Acct = v9.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev9 ON (v9.Account_ID = ev9.C_ElementValue_ID) 
+ INNER JOIN adempiere.C_ValidCombination v10 ON (pca.P_TradeDiscountGrant_Acct = v10.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev10 ON (v10.Account_ID = ev10.C_ElementValue_ID) 
+ INNER JOIN adempiere.C_ValidCombination v11 ON (pca.P_RateVariance_Acct = v11.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev11 ON (v11.Account_ID = ev11.C_ElementValue_ID) 
+ INNER JOIN adempiere.C_ValidCombination v12 ON (pca.P_AverageCostVariance_Acct = v12.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev12 ON (v12.Account_ID = ev12.C_ElementValue_ID) 
+ INNER JOIN adempiere.C_ValidCombination v13 ON (pca.P_LandedCostClearing_Acct = v13.C_ValidCombination_ID)
+	INNER JOIN adempiere.C_ElementValue ev13 ON (v13.Account_ID = ev13.C_ElementValue_ID) 
+    ;
+
+
+ALTER TABLE adempiere.JP_Product_Category_Acct_RV
+    OWNER TO adempiere;
+

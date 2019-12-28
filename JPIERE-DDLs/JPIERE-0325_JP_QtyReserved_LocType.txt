@@ -1,0 +1,21 @@
+CREATE OR REPLACE VIEW adempiere.JP_QtyReserved_LocType AS
+SELECT
+ AD_Client_ID
+ ,AD_Org_ID
+ ,M_LocatorType_ID
+ ,M_Product_ID
+ ,sum(QtyReserved)AS QtyReserved
+ ,sum(QtyToDeliver) AS QtyToDeliver
+FROM(
+SELECT 
+ ol.AD_Client_ID AS AD_Client_ID
+ ,0 AS AD_Org_ID
+ ,loc.M_LocatorType_ID
+ ,ol.M_Product_ID AS M_Product_ID
+ ,CASE WHEN o.IsSOTrx='Y' THEN ol.QtyReserved ELSE 0 END AS QtyReserved
+ ,CASE WHEN o.IsSOTrx='N' THEN ol.QtyReserved ELSE 0 END AS QtyToDeliver
+FROM adempiere.C_OrderLine ol 
+	INNER JOIN adempiere.C_Order o ON (ol.C_Order_ID = o.C_Order_ID)
+        LEFT OUTER JOIN adempiere.M_Locator loc ON (ol.JP_Locator_ID = loc.M_Locator_ID)
+WHERE  ol.QtyReserved <> 0 
+) line GROUP BY AD_Client_ID,AD_Org_ID,M_LocatorType_ID, M_Product_ID

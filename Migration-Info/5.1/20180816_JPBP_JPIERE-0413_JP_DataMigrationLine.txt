@@ -1,0 +1,69 @@
+
+CREATE TABLE adempiere.JP_DataMigrationLine
+(
+    JP_DataMigrationLine_ID numeric(10,0) NOT NULL,
+    JP_DataMigrationLine_UU character varying(36) DEFAULT NULL::character varying,
+
+    AD_Client_ID numeric(10,0),
+    AD_Org_ID numeric(10,0),
+    IsActive character(1) DEFAULT 'Y'::bpchar,
+    Created timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+    CreatedBy numeric(10,0),
+    Updated timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+    UpdatedBy numeric(10,0),
+
+    JP_DataMigration_ID numeric(10,0) NOT NULL,
+
+    --Line Info
+    Line numeric(10,0) DEFAULT (0)::numeric,
+    M_Locator_ID numeric(10,0), 
+    M_LocatorTo_ID numeric(10,0), 
+    Description character varying(255),
+
+    M_Product_ID numeric(10,0),
+    C_Charge_ID numeric(10,0),
+    C_Tax_ID numeric(10,0),
+    
+    C_UOM_ID numeric(10,0),
+
+    Qty numeric,
+    Price numeric,
+
+    --Allocation Info
+    JP_Order_DocumentNo character varying(30),
+    C_Order_ID numeric(10,0),
+    JP_Invoice_DocumentNo character varying(30),
+    JP_DataMigration_Invoice_ID numeric(10,0),
+    JP_Payment_DocumentNo character varying(30),
+    JP_DataMigration_Payment_ID numeric(10,0),
+
+    --Reference
+
+    AD_OrgTrx_ID numeric(10,0),
+    C_Project_ID numeric(10,0),
+    C_Activity_ID numeric(10,0),
+    C_Campaign_ID numeric(10,0), 
+    User1_ID numeric(10,0) DEFAULT NULL::numeric,
+    User2_ID numeric(10,0) DEFAULT NULL::numeric,   
+
+    --Status
+    LineNetAmt numeric,
+    Amount numeric,
+    DiscountAmt numeric,
+    WriteOffAmt numeric,
+    OverUnderAmt numeric,
+    StmtAmt numeric,
+    TrxAmt  numeric,
+    ChargeAmt  numeric,
+    InterestAmt  numeric,
+
+    QtyCount numeric,
+    QtyBook numeric,
+    C_BPartner_ID numeric(10,0) DEFAULT NULL::numeric,
+
+    CONSTRAINT JP_DataMigrationLine_Pkey PRIMARY KEY (JP_DataMigrationLine_ID)
+);
+
+
+ALTER TABLE adempiere.JP_DataMigrationLine
+    OWNER to adempiere;

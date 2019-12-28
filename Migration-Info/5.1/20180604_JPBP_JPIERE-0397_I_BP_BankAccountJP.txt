@@ -1,0 +1,75 @@
+-- Table: adempiere.I_BankAccountJP
+
+-- DROP TABLE adempiere.I_BankAccountJP;
+
+CREATE TABLE adempiere.I_BankAccountJP
+(
+  i_errormsg character varying(2000),
+  i_isimported character(1) DEFAULT 'N'::bpchar,
+  processing character(1),
+
+  processed character(1) DEFAULT 'N'::bpchar,
+
+  I_BankAccountJP_ID numeric(10,0) NOT NULL,
+  I_BankAccountJP_UU character varying(36) DEFAULT NULL::character varying,
+  AD_Client_ID numeric(10,0) NOT NULL DEFAULT 0 ,
+  AD_Org_ID numeric(10,0) NOT NULL DEFAULT 0 ,
+  IsActive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+  Created timestamp without time zone NOT NULL DEFAULT now(),
+  CreatedBy numeric(10,0) NOT NULL,
+  Updated timestamp without time zone NOT NULL DEFAULT now(),
+  UpdatedBy numeric(10,0) NOT NULL,
+
+  JP_Org_Value character varying(40) DEFAULT NULL::character varying,
+  JP_Bank_Name character varying(60) ,
+  C_Bank_ID numeric(10,0),
+
+  Value character varying(40) ,
+  C_BankAccount_ID numeric(10,0),
+  Name character varying(60),
+  IsDefault character(1)  NOT NULL DEFAULT 'N'::bpchar,
+  
+  ISO_Code character(3),
+  C_Currency_ID numeric(10,0),
+  BankAccountType character(1),
+  AccountNo character varying(20),
+  CurrentBalance numeric NOT NULL DEFAULT 0,
+  CreditLimit numeric NOT NULL DEFAULT 0,
+  IBAN character varying(40) ,
+  Description character varying(255) ,
+  BBAN character varying(40) ,
+
+  JP_RequesterCode character varying(10) DEFAULT NULL::character varying,
+  JP_RequesterName character varying(40) DEFAULT NULL::character varying,
+  JP_BranchCode character varying(3) DEFAULT NULL::character varying,
+  JP_BranchName_Kana character varying(15) DEFAULT NULL::character varying,
+
+
+ --âÔåvèÓïÒ
+  JP_AcctSchema_Name character varying(60),
+  C_AcctSchema_ID numeric(10,0),
+
+  JP_B_Asset_Acct_Value character varying(40),
+  B_Asset_Acct numeric(10,0),
+ 
+  JP_InTransit_Acct_Value character varying(40),
+  B_InTransit_Acct numeric(10,0),
+
+  JP_InterestExp_Acct_Value character varying(40),
+  B_InterestExp_Acct numeric(10,0),
+
+  JP_InterestRev_Acct_Value character varying(40),
+  B_InterestRev_Acct numeric(10,0),
+
+  JP_PaymentSelect_Value character varying(40),
+  B_PaymentSelect_Acct numeric(10,0),
+
+  JP_UnallocatedCash_Value character varying(40),
+  B_UnallocatedCash_Acct numeric(10,0),
+ I_IsActiveJP character(1) NOT NULL DEFAULT 'Y'::bpchar,
+
+  CONSTRAINT I_BankAccountJP_pkey PRIMARY KEY (I_BankAccountJP_ID)
+);
+
+ALTER TABLE adempiere.I_BankAccountJP
+    OWNER to adempiere;

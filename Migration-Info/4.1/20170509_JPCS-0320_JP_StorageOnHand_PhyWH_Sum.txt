@@ -1,0 +1,16 @@
+CREATE OR REPLACE VIEW adempiere.JP_StorageOnHand_PhyWH_Sum AS
+SELECT 
+ s.AD_Client_ID AS AD_Client_ID, 
+ 0 AS AD_Org_ID,
+ l.JP_PhysicalWarehouse_ID AS JP_PhysicalWarehouse_ID, 
+ s.M_Product_ID AS M_Product_ID, 
+ p.M_Product_Category_ID,
+ p.C_UOM_ID,
+ org.JP_Corporation_ID,
+ sum(s.QtyOnHand) AS QtyOnHand
+
+FROM adempiere.m_storageonhand s 
+	INNER JOIN adempiere.M_Locator l ON (s.M_Locator_ID = l.M_Locator_ID)
+	INNER JOIN adempiere.M_Product p ON (s.M_Product_ID = p.M_Product_ID)
+	INNER JOIN adempiere.AD_OrgInfo org ON (s.AD_Org_ID = org.AD_Org_ID)
+GROUP BY s.AD_Client_ID, s.M_Product_ID, l.JP_PhysicalWarehouse_ID, p.M_Product_Category_ID,p.C_UOM_ID,org.JP_Corporation_ID

@@ -1,0 +1,46 @@
+-- Table: adempiere.JP_PivotWindowField
+
+-- DROP TABLE adempiere.JP_PivotWindowField;
+
+CREATE TABLE adempiere.JP_PivotWindowField
+(
+    JP_PivotWindowField_ID numeric(10) NOT NULL,
+    JP_PivotWindow_ID numeric(10) NOT NULL,
+    AD_Client_ID numeric(10) NOT NULL,
+    AD_Org_ID numeric(10) NOT NULL,
+    CreatedBy numeric(10) NOT NULL,
+    UpdatedBy numeric(10) NOT NULL,
+    Created timestamp without time zone NOT NULL DEFAULT now(),
+    Updated timestamp without time zone NOT NULL DEFAULT now(),
+    JP_PivotWindowField_UU character varying(36) DEFAULT NULL::character varying,
+    IsActive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+
+    Name character varying(60) NOT NULL,
+    Description character varying(255),
+    Help character varying(2000),
+    SelectClause character varying(2000),
+    IsDisplayed character(1) NOT NULL DEFAULT 'Y'::bpchar,
+    IsQueryCriteria character(1) NOT NULL DEFAULT 'N'::bpchar,
+
+    Seqno numeric(10) NOT NULL DEFAULT 0, 
+    SeqNoSelection numeric(10) DEFAULT (0)::numeric,
+    AD_Element_ID numeric(10),
+    AD_Reference_ID numeric(10) NOT NULL,
+    AD_Reference_Value_ID numeric(10) DEFAULT NULL::numeric,
+    AD_Val_Rule_ID numeric(10) DEFAULT NULL::numeric,
+    IsCentrallyMaintained character(1) NOT NULL DEFAULT 'Y'::bpchar,
+    Displaylogic character varying(2000) DEFAULT NULL::character varying,
+    Columnname character varying(30) NOT NULL,
+    QueryOperator character varying(10) DEFAULT NULL::character varying,
+    QueryFunction character varying(255) DEFAULT NULL::character varying,
+    DefaultValue character varying(2000) DEFAULT NULL::character varying,
+    MandatoryLogic character varying(2000) DEFAULT NULL::character varying,
+    IsMandatory character(1) NOT NULL DEFAULT 'N'::bpchar,
+
+    CONSTRAINT JP_PivotWindowField_Pkey PRIMARY KEY (JP_PivotWindowField_ID)
+
+);
+
+
+ALTER TABLE adempiere.JP_PivotWindowField
+    OWNER to adempiere;

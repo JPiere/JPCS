@@ -1,0 +1,4 @@
+Å°Add JP_AR_ClosingDate Column 	to C_PaymentTerm Table
+Å°Add JP_AP_ClosingDate Column 	to C_PaymentTerm Table
+
+

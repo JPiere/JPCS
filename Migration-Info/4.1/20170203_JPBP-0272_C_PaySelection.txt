@@ -1,0 +1,1 @@
+■Add JP_DownloadNum Column 	to C_PaySelection Table	 English Name:Download Num of Times / Japanese Name:ダウンロード回数

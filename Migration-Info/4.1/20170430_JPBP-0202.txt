@@ -1,0 +1,5 @@
+Add JP_ScheduledCostTotalLines Column to C_Order and JP_Estimation Tables
+
+Add JP_ScheduledCost Column to C_OrderLine and JP_EstimationLine Tables
+
+Add JP_ScheduledCostLineAmt Column to C_OrderLine and JP_EstimationLine Tables

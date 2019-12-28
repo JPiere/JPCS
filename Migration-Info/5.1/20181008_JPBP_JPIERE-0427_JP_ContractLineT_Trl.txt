@@ -1,0 +1,19 @@
+CREATE TABLE adempiere.JP_ContractLineT_Trl
+(
+  JP_ContractLineT_ID numeric(10,0) NOT NULL,
+  AD_Language character varying(6) NOT NULL,
+  JP_ContractLineT_Trl_uu character varying(36) DEFAULT NULL::character varying,
+  AD_Client_ID numeric(10,0) NOT NULL,
+  AD_Org_ID numeric(10,0) NOT NULL,
+  IsActive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+  Created timestamp without time zone NOT NULL DEFAULT now(),
+  CreatedBy numeric(10,0) NOT NULL,
+  Updated timestamp without time zone NOT NULL DEFAULT now(),
+  UpdatedBy numeric(10,0) NOT NULL,
+
+  IsTranslated character(1) NOT NULL DEFAULT 'N'::bpchar,
+  Name character varying(60) NOT NULL,
+  Description character varying(255),
+
+  CONSTRAINT JP_ContractLineT_Trl_pkey PRIMARY KEY (JP_ContractLineT_ID, AD_Language)
+);

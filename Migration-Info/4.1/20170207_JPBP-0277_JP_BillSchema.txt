@@ -1,0 +1,3 @@
+Add Classname Column to JP_BillSchema Table
+
+Add C_BankAccount_ID Column to JP_BillSchema Table

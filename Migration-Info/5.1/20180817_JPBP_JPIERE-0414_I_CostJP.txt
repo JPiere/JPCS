@@ -1,0 +1,53 @@
+
+CREATE TABLE adempiere.I_CostJP
+(
+    I_CostJP_ID numeric(10,0) NOT NULL,
+    I_CostJP_UU character varying(36) DEFAULT NULL::character varying,
+
+    AD_Client_ID numeric(10,0),
+    AD_Org_ID numeric(10,0),
+    IsActive character(1) DEFAULT 'Y'::bpchar,
+    Created timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+    CreatedBy numeric(10,0),
+    Updated timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+    UpdatedBy numeric(10,0),
+
+    I_IsImported character(1) NOT NULL DEFAULT 'N'::bpchar,
+    I_ErrorMsg character varying(2000) ,
+    Processing character(1) DEFAULT 'N'::bpchar,
+    Processed character(1) DEFAULT 'N'::bpchar,
+
+    JP_Org_Value character varying(40),
+    JP_AcctSchema_Name character varying(60),
+    C_AcctSchema_ID numeric(10,0),
+    M_AttributeSetInstance_ID numeric(10,0),
+
+    JP_CostType_Name character varying(60),
+    M_CostType_ID numeric(10,0),
+
+    JP_CostElement_Name character varying(60),
+    M_CostElement_ID numeric(10,0),
+
+    JP_Product_Value  character varying(40),
+    M_Product_ID numeric(10,0),
+
+    Description character varying(255),
+
+    CurrentCostPrice numeric DEFAULT 0,
+    FutureCostPrice numeric DEFAULT 0,
+
+    CurrentCostPriceLL numeric DEFAULT 0,
+    FutureCostPriceLL numeric DEFAULT 0,
+
+    CurrentQty numeric NOT NULL DEFAULT 0,
+    CumulatedAmt numeric DEFAULT 0,
+    CumulatedQty numeric DEFAULT 0,
+
+    IsCostFrozen character(1) DEFAULT 'N'::bpchar,
+
+    CONSTRAINT I_CostJP_Pkey PRIMARY KEY (I_CostJP_ID)
+);
+
+
+ALTER TABLE adempiere.I_CostJP
+    OWNER to adempiere;

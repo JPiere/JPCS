@@ -1,0 +1,8 @@
+CREATE OR REPLACE VIEW adempiere.JP_StorageOnHand_Client AS
+SELECT 
+ AD_Client_ID
+ ,0 AS AD_Org_ID
+ ,M_Product_ID
+ ,SUM(QtyOnHand) AS QtyOnHand
+FROM adempiere.M_StorageOnHand
+GROUP BY AD_Client_ID, M_Product_ID;

@@ -1,0 +1,9 @@
+Add JP_ProcPeriod_Lump_Date Column to JP_ContractLine Table
+Add JP_ProcPeriod_Start_Date Column to JP_ContractLine Table
+Add JP_ProcPeriod_End_Date Column to JP_ContractLine Table
+Add JP_ProcPeriod_Lump_InOut_Date Column to JP_ContractLine Table
+Add JP_ProcPeriod_Start_InOut_Date Column to JP_ContractLine Table
+Add JP_ProcPeriod_End_InOut_Date Column to JP_ContractLine Table
+Add JP_ProcPeriod_Lump_Inv_Date Column to JP_ContractLine Table
+Add JP_ProcPeriod_Start_Inv_Date Column to JP_ContractLine Table
+Add JP_ProcPeriod_End_Inv_Date Column to JP_ContractLine Table

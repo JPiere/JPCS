@@ -1,0 +1,3 @@
+Add IsDueDateBizDayOnlyJP Column to C_PaymentTerm Table
+Add IsDueDateHolidayNextBizDayJP Column to C_PaymentTerm Table
+Add JP_Calendar_ID Column to C_PaymentTerm Table

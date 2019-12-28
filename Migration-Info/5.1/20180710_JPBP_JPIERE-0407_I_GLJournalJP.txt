@@ -1,0 +1,142 @@
+-- Table: adempiere.I_GLJournalJP
+
+-- DROP TABLE adempiere.I_GLJournalJP;
+
+CREATE TABLE adempiere.I_GLJournalJP
+(
+
+-- Mandetory Column
+
+  I_ErrorMsg character varying(2000),
+  I_IsImported character(1) DEFAULT 'N'::bpchar,
+  processing character(1),
+  processed character(1) DEFAULT 'N'::bpchar,
+
+  I_GLJournalJP_ID numeric(10,0) NOT NULL,
+  I_GLJournalJP_UU character varying(36) DEFAULT NULL::character varying,
+  AD_Client_ID numeric(10,0) DEFAULT 0,
+  AD_Org_ID numeric(10,0) DEFAULT 0,
+  IsActive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+  Created timestamp without time zone NOT NULL DEFAULT now(),
+  CreatedBy numeric(10,0) NOT NULL,
+  Updated timestamp without time zone NOT NULL DEFAULT now(),
+  UpdatedBy numeric(10,0) NOT NULL,
+
+
+-- Header Info
+
+  GL_Journal_ID numeric(10,0), 
+
+  JP_Org_Value character varying(40),
+  AD_OrgTrx_ID numeric(10,0),
+  JP_OrgTrx_Value character varying(40),
+
+  C_AcctSchema_ID numeric(10,0),
+  JP_AcctSchema_Name character varying(60),
+
+  C_DocType_ID numeric(10,0),
+  JP_DocType_Name character varying(60),
+  GL_Category_ID numeric(10,0),
+  JP_GL_Category_Name character varying(60),
+
+  PostingType character(1) ,
+  GL_Budget_ID numeric(10,0),
+  JP_GL_Budget_Name character varying(60),
+
+  DocumentNo character varying(30),
+  DateTrx timestamp without time zone,
+  DateAcct timestamp without time zone,
+  C_Period_ID numeric(10,0),
+
+  C_Currency_ID numeric(10,0) NOT NULL,
+  ISO_Code character(3),
+  C_ConversionType_ID numeric(10,0),
+  JP_ConversionType_Value character varying(40) ,
+  CurrencyRate numeric DEFAULT 0,
+
+  JP_Description_Header character varying(255),
+
+  JP_Order_ID numeric(10,0),
+  JP_Order_DocumentNo character varying(30), 
+
+  JP_ContractContent_ID numeric(10,0),
+  JP_ContractContent_DocNo character varying(30) ,
+
+  JP_DataMigration_Identifier character varying(40),
+
+
+--Line Info
+
+  GL_JournalLine_ID numeric(10,0), 
+  Line numeric(10,0),
+
+  Account_ID numeric(10,0),
+  JP_ElementValue_Value character varying(40),
+
+  C_SubAcct_ID numeric(10,0),
+  JP_SubAcct_Value character varying(40),
+
+  C_BPartner_ID numeric(10,0),
+  JP_BPartner_Value character varying(40),
+
+  M_Product_ID numeric(10,0),
+  JP_Product_Value character varying(40),
+
+  C_Project_ID numeric(10,0),
+  JP_Project_Value character varying(40),
+  C_ProjectPhase_ID numeric(10,0),
+  JP_ProjectPhase_Name character varying(60),
+  C_ProjectTask_ID numeric(10,0),
+  JP_ProjectTask_Name character varying(60),
+
+  C_SalesRegion_ID numeric(10,0),
+  JP_SalesRegion_Value character varying(40),
+
+  C_Campaign_ID numeric(10,0),
+  JP_Campaign_Value character varying(40),
+
+  C_LocFrom_ID numeric(10,0),
+  JP_LocFrom_Label character varying(255),
+
+  C_LocTo_ID numeric(10,0),
+  JP_LocTo_Label  character varying(255),
+
+  User1_id numeric(10,0),
+  User2_id numeric(10,0),
+
+  UserElement1_ID numeric(10,0),
+  JP_UserElement1_Value  character varying(40),
+  UserElement2_ID numeric(10,0),
+  JP_UserElement2_Value  character varying(40),
+
+  C_Activity_ID numeric(10,0),
+  JP_Activity_Value  character varying(40),
+
+  A_Asset_ID numeric(10,0),
+  JP_Asset_Value  character varying(40),
+
+  C_Tax_ID numeric(10,0), 
+  JP_Tax_Name character varying(60),
+
+  M_Locator_ID numeric(10,0),
+  JP_Locator_Value  character varying(40),
+
+  AmtSourceDr numeric NOT NULL DEFAULT 0,
+  AmtSourceCr numeric NOT NULL DEFAULT 0,
+  AmtAcctDr numeric NOT NULL DEFAULT 0,
+  AmtAcctcr numeric NOT NULL DEFAULT 0,
+
+  C_UOM_ID numeric(10,0),
+  X12DE355 character varying(4),
+
+  Qty numeric DEFAULT 0,
+
+  JP_Description_Line character varying(255),
+  JP_Description_Line character varying(255) COLLATE pg_catalog."default",
+
+  CONSTRAINT I_GLJournalJP_pkey PRIMARY KEY (I_GLJournalJP_ID)
+);
+
+ALTER TABLE adempiere.I_GLJournalJP
+    OWNER to adempiere;
+

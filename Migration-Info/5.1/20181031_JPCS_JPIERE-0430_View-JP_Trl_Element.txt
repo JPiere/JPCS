@@ -1,0 +1,38 @@
+CREATE OR REPLACE VIEW adempiere.JP_Trl_Element AS
+
+SELECT 
+	t.AD_Language
+	,t.JP_Trl_Name
+	,t.JP_Trl_PrintName
+	,t.JP_Trl_Description
+	,t.JP_Trl_PO_Name
+	,t.JP_Trl_PO_PrintName
+	,t.JP_Trl_PO_Description
+	, a.* 
+	
+FROM adempiere.AD_Element a INNER JOIN
+(
+SELECT 
+    trl.AD_Element_ID AS AD_Element_ID
+    , trl.AD_Language AS AD_Language
+    , trl.Name AS JP_Trl_Name
+    , trl.PrintName AS JP_Trl_PrintName
+    , trl.Description AS JP_Trl_Description
+    , trl.PO_Name AS JP_Trl_PO_Name
+	, trl.PO_PrintName AS JP_Trl_PO_PrintName
+	, trl.PO_Description AS JP_Trl_PO_Description
+FROM adempiere.AD_Element_Trl trl
+ 
+UNION ALL
+ 
+SELECT  
+    p.AD_Element_ID AS AD_Element_ID
+    ,(SELECT AD_Language FROM adempiere.AD_Language WHERE IsBaseLanguage = 'Y' ) AS AD_Language
+    ,p.Name AS JP_Trl_Name
+    ,p.PrintName AS JP_Trl_PrintName
+    ,p.Description AS JP_Trl_Description
+    ,p.PO_Name AS JP_Trl_PO_Name
+	,p.PO_PrintName AS JP_Trl_PO_PrintName
+	,p.PO_Description AS JP_Trl_PO_Description
+FROM adempiere.AD_Element p 
+) t ON (a.AD_Element_ID = t.AD_Element_ID) 

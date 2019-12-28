@@ -1,0 +1,21 @@
+CREATE OR REPLACE VIEW adempiere.JP_Trl_Campaign AS
+
+SELECT t.AD_Language, t.JP_Trl_Name, t.JP_Trl_Description, a.* FROM adempiere.C_Campaign a INNER JOIN
+(
+SELECT 
+    trl.C_Campaign_ID AS C_Campaign_ID
+    , trl.AD_Language AS AD_Language
+    , trl.Name AS JP_Trl_Name
+    , Trl.Description AS JP_Trl_Description
+ 
+ FROM adempiere.C_Campaign_Trl trl
+ 
+UNION ALL
+ 
+SELECT  
+    p.C_Campaign_ID AS C_Tax_ID
+    ,(SELECT AD_Language FROM adempiere.AD_Language WHERE IsBaseLanguage = 'Y' ) AS AD_Language
+    ,p.Name AS JP_Trl_Name
+    ,p.Description AS JP_Trl_Description
+FROM adempiere.C_Campaign p 
+) t ON (a.C_Campaign_ID = t.C_Campaign_ID) 

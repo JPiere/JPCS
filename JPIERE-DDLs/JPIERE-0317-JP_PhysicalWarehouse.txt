@@ -1,0 +1,20 @@
+CREATE TABLE adempiere.JP_PhysicalWarehouse
+(
+  JP_PhysicalWarehouse_ID numeric(10,0) NOT NULL,
+  JP_PhysicalWarehouse_uu character varying(36) DEFAULT NULL::character varying,
+  AD_Client_ID numeric(10,0) NOT NULL,
+  AD_Org_ID numeric(10,0) NOT NULL,
+  IsActive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+  Created timestamp without time zone NOT NULL DEFAULT now(),
+  CreatedBy numeric(10,0) NOT NULL,
+  Updated timestamp without time zone NOT NULL DEFAULT now(),
+  UpdatedBy numeric(10,0) NOT NULL,
+
+  Value character varying(40) NOT NULL,
+  Name character varying(120) NOT NULL,
+  Description character varying(255),
+  
+  C_Location_ID numeric(10,0) NOT NULL,
+
+  CONSTRAINT JP_PhysicalWarehouse_pkey PRIMARY KEY (JP_PhysicalWarehouse_ID)
+)

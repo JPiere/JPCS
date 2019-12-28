@@ -1,0 +1,3 @@
+バリデーション名称:JP C_DocType Payments/Receipts
+バリデーションコード:
+C_DocType.DocBaseType IN ('ARR', 'APP')  AND C_DocType.AD_Client_ID=@#AD_Client_ID@ AND C_DocType.IsSOTrx = '@IsReceipt@'

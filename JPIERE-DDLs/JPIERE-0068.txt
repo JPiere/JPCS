@@ -1,0 +1,3 @@
+バリデーション名称:JP C_Invoice of Payment(Not in Same Payment)
+バリデーションコード：
+C_Invoice.DocStatus IN ('CO', 'CL') AND C_Invoice.C_Currency_ID=@C_Currency_ID@ AND C_Invoice.C_BPartner_ID=@C_BPartner_ID@ AND C_Invoice.IsSOTrx='@IsReceipt@' AND C_Invoice.C_Invoice_ID NOT IN(SELECT C_Invoice_ID FROM C_PaymentAllocate p WHERE p.C_Payment_ID = @C_Payment_ID@)

@@ -1,0 +1,46 @@
+-- View: adempiere.JP_SoPoDocNoSearch
+
+-- DROP VIEW adempiere.JP_SoPoDocNoSearch;
+
+CREATE OR REPLACE VIEW adempiere.JP_SoPoDocNoSearch AS
+
+SELECT 1000080::numeric as AD_Table_ID, JP_Estimation_ID as Record_ID
+,DocumentNo, POReference, C_DocTypeTarget_ID AS C_DocType_ID, C_BPartner_ID ,Description, SalesRep_ID
+,DateAcct, JP_EstimationDate AS DateDoc, DocStatus, C_Currency_ID , TotalLines, GrandTotal
+,AD_Client_ID, AD_Org_ID, Created, CreatedBy, Updated, UpdatedBy
+FROM adempiere.JP_Estimation
+
+UNION ALL
+
+SELECT 259::numeric as AD_Table_ID, C_Order_ID as Record_ID
+,DocumentNo, POReference, C_DocTypeTarget_ID AS C_DocType_ID, C_BPartner_ID ,Description, SalesRep_ID
+,DateAcct, DateOrdered AS DateDoc, DocStatus, C_Currency_ID , TotalLines, GrandTotal
+,AD_Client_ID, AD_Org_ID, Created, CreatedBy, Updated, UpdatedBy
+FROM adempiere.C_Order
+
+UNION ALL
+
+SELECT 319::numeric as AD_Table_ID,  M_InOut_ID as Record_ID, DocumentNo,POReference, C_DocType_ID,  C_BPartner_ID ,Description, SalesRep_ID
+,DateAcct, MovementDate AS DateDoc, DocStatus, null as C_Currency_ID , 0 as TotalLines, 0 as GrandTotal
+,AD_Client_ID, AD_Org_ID, Created, CreatedBy, Updated, UpdatedBy
+From adempiere.M_InOut
+
+UNION ALL
+
+SELECT 318::numeric as AD_Table_ID, C_Invoice_ID as Record_ID, DocumentNo,POReference, C_DocTypeTarget_ID AS C_DocType_ID,  C_BPartner_ID  ,Description, SalesRep_ID
+,DateAcct, DateInvoiced AS DateDoc, DocStatus, C_Currency_ID , TotalLines, GrandTotal
+,AD_Client_ID, AD_Org_ID, Created, CreatedBy, Updated, UpdatedBy
+From adempiere.C_Invoice
+
+UNION ALL
+
+SELECT 1000032::numeric as AD_Table_ID, JP_Bill_ID as Record_ID
+,DocumentNo, null as POReference, C_DocType_ID, C_BPartner_ID ,Description, SalesRep_ID
+,DateAcct, JPDateBilled AS DateDoc, DocStatus, C_Currency_ID , TotalLines, GrandTotal
+,AD_Client_ID, AD_Org_ID, Created, CreatedBy, Updated, UpdatedBy
+FROM adempiere.JP_Bill
+
+;
+
+ALTER TABLE adempiere.JP_SoPoDocNoSearch
+    OWNER TO adempiere;

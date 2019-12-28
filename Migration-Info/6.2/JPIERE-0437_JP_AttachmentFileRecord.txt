@@ -1,0 +1,68 @@
+-- Table: adempiere.jp_attachmentfilerecord
+
+-- DROP TABLE adempiere.jp_attachmentfilerecord;
+
+CREATE TABLE adempiere.jp_attachmentfilerecord
+(
+    jp_attachmentfilerecord_id numeric(10,0) NOT NULL,
+    jp_attachmentfilerecord_uu character varying(36) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    ad_client_id numeric(10,0) NOT NULL,
+    ad_org_id numeric(10,0) NOT NULL,
+    created timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+    createdby numeric(10,0) NOT NULL,
+    updated timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+    updatedby numeric(10,0) NOT NULL,
+    isactive character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'Y'::bpchar,
+    ad_table_id numeric(10,0) DEFAULT NULL::numeric,
+    record_id numeric(10,0) DEFAULT NULL::numeric,
+    jp_attachmentfilename character varying(120) COLLATE pg_catalog."default" NOT NULL,
+    jp_attachmentfilepath character varying(255) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_attachmentfiledescription character varying(255) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    value character varying(60) COLLATE pg_catalog."default",
+    name character varying(120) COLLATE pg_catalog."default",
+    name2 character varying(120) COLLATE pg_catalog."default",
+    description character varying(255) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    documentno character varying(40) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    poreference character varying(40) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    ad_orgtrx_id numeric(10,0),
+    dateacct timestamp without time zone,
+    datedoc timestamp without time zone,
+    issotrx character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'N'::bpchar,
+    line numeric(10,0),
+    c_bpartner_id numeric(10,0),
+    ad_user_id numeric(10,0),
+    salesrep_id numeric(10,0),
+    m_product_id numeric(10,0),
+    c_order_id numeric(10,0),
+    m_inout_id numeric(10,0),
+    c_invoice_id numeric(10,0),
+    c_payment_id numeric(10,0),
+    jp_estimation_id numeric(10,0),
+    jp_contract_id numeric(10,0),
+    jp_contractcontent_id numeric(10,0),
+    jp_mediaformat character varying(30) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_mediacontenttype character varying(255) COLLATE pg_catalog."default",
+    isdeleteable character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'Y'::bpchar,
+    jp_processing1 character(1) COLLATE pg_catalog."default" DEFAULT NULL::bpchar,
+    jp_processing2 character(1) COLLATE pg_catalog."default" DEFAULT NULL::bpchar,
+    CONSTRAINT jp_attachmentfilerecord_key PRIMARY KEY (jp_attachmentfilerecord_id),
+    CONSTRAINT jp_attachmentfilerecord_uu_idx UNIQUE (jp_attachmentfilerecord_uu)
+,
+    CONSTRAINT jp_attachmentfilerecord_isdeleteable_check CHECK (isdeleteable = ANY (ARRAY['Y'::bpchar, 'N'::bpchar]))
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE adempiere.jp_attachmentfilerecord
+    OWNER to adempiere;
+
+-- Index: jp_attachmentfilerecord_idx
+
+-- DROP INDEX adempiere.jp_attachmentfilerecord_idx;
+
+CREATE UNIQUE INDEX jp_attachmentfilerecord_idx
+    ON adempiere.jp_attachmentfilerecord USING btree
+    (ad_table_id, record_id, jp_attachmentfilename COLLATE pg_catalog."default")
+    TABLESPACE pg_default;

@@ -1,0 +1,31 @@
+-- Table: adempiere.JP_PivotWindowField_Trl
+
+-- DROP TABLE adempiere.JP_PivotWindowField_Trl;
+
+CREATE TABLE adempiere.JP_PivotWindowField_Trl
+(
+    JP_PivotWindowField_ID numeric(10) NOT NULL,
+
+    AD_Client_ID numeric(10) NOT NULL,
+    AD_Org_ID numeric(10) NOT NULL,
+    CreatedBy numeric(10) NOT NULL,
+    UpdatedBy numeric(10) NOT NULL,
+    Created timestamp without time zone NOT NULL DEFAULT now(),
+    Updated timestamp without time zone NOT NULL DEFAULT now(),
+    JP_PivotWindowField_Trl_UU character varying(36) DEFAULT NULL::character varying,
+    IsActive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+    IsTranslated character(1) NOT NULL DEFAULT 'N'::bpchar,
+    AD_Language character varying(6) NOT NULL,
+
+    Name character varying(60) NOT NULL,
+    Description character varying(255),
+    Help character varying(2000),
+
+
+    CONSTRAINT JP_PivotWindowField_Trl_Pkey PRIMARY KEY (JP_PivotWindowField_ID, AD_Language)
+
+);
+
+
+ALTER TABLE adempiere.JP_PivotWindowField_Trl
+    OWNER to adempiere;

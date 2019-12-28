@@ -1,0 +1,14 @@
+CREATE TABLE adempiere.JP_ReferenceTest
+(
+  JP_ReferenceTest_ID numeric(10,0) NOT NULL,
+  JP_ReferenceTest_uu character varying(36) DEFAULT NULL::character varying,
+  AD_Client_ID numeric(10,0) NOT NULL,
+  AD_Org_ID numeric(10,0) NOT NULL,
+  IsActive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+  Created timestamp without time zone NOT NULL DEFAULT now(),
+  CreatedBy numeric(10,0) NOT NULL,
+  Updated timestamp without time zone NOT NULL DEFAULT now(),
+  UpdatedBy numeric(10,0) NOT NULL,
+
+  CONSTRAINT JP_ReferenceTest_pkey PRIMARY KEY (JP_ReferenceTest_ID)
+)

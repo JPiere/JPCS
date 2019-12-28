@@ -1,0 +1,98 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:_0="http://idempiere.org/ADInterface/1_0">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <_0:compositeOperation>
+         <_0:CompositeRequest>
+            <_0:ADLoginRequest>
+               <_0:user>superuser@oss-erp.co.jp</_0:user>
+               <_0:pass>System</_0:pass>
+               <_0:lang>165</_0:lang>
+               <_0:ClientID>1000000</_0:ClientID>
+               <_0:RoleID>1000000</_0:RoleID>
+               <_0:OrgID>0</_0:OrgID>
+               <_0:WarehouseID>0</_0:WarehouseID>
+               <_0:stage>0</_0:stage>
+            </_0:ADLoginRequest>
+            <_0:serviceType>SalesOrderComposite</_0:serviceType>
+            <_0:operations>
+             <_0:operation preCommit="false" postCommit="false">
+                  <_0:TargetPort>createUpdateData</_0:TargetPort>
+                  <_0:ModelCRUD>
+                     <_0:serviceType>CreateUpdateSalesOrderHeader</_0:serviceType>
+                     <_0:TableName>C_Order</_0:TableName>
+                     <_0:RecordID>0</_0:RecordID>
+                     <_0:Action>CreateUpdate</_0:Action>
+                     <_0:DataRow>
+				 	  <_0:field column="AD_Org_ID" lval="本社" />
+				 	  <_0:field column="M_Warehouse_ID" lval="OES本社倉庫" />
+       				  <_0:field column="C_DocTypeTarget_ID">
+       				  		 <_0:val>1000032</_0:val>
+              			   </_0:field>
+                		 <_0:field column="C_BPartner_ID" lval="得意先01" />
+                		 <_0:field column="DocumentNo">
+                		     <_0:val>SOO-WS-1000000</_0:val>
+               		 </_0:field>
+                     </_0:DataRow>
+                  </_0:ModelCRUD>
+               </_0:operation>
+                <_0:operation preCommit="false" postCommit="false">
+                  <_0:TargetPort>createUpdateData</_0:TargetPort>
+                  <_0:ModelCRUD>
+                     <_0:serviceType>CreateUpdateSalesOrderLine</_0:serviceType>
+                     <_0:TableName>C_OrderLine</_0:TableName>
+                     <_0:RecordID>0</_0:RecordID>
+                     <_0:Action>CreateUpdate</_0:Action>
+                     <_0:DataRow>
+                           <_0:field column="AD_Org_ID" lval="本社" />
+       				  <_0:field column="C_Order_ID">
+       				  		 <_0:val>@C_Order.C_Order_ID</_0:val>
+              			   </_0:field>
+                		 <_0:field column="Line"> <_0:val>10</_0:val> </_0:field>
+               		 <_0:field column="M_Product_ID" lval="I0001" />
+               		 <_0:field column="C_UOM_ID"><_0:val>100</_0:val> </_0:field>
+                		 <_0:field column="QtyEntered"><_0:val>10</_0:val> </_0:field>
+                		 <_0:field column="QtyOrdered"><_0:val>10</_0:val> </_0:field>
+                 		 <_0:field column="PriceEntered"><_0:val>1000</_0:val> </_0:field>
+              			 <_0:field column="PriceActual"><_0:val>1000</_0:val> </_0:field>
+              			 <_0:field column="C_Tax_ID" lval="8%-課税取引" />
+                     </_0:DataRow>
+                  </_0:ModelCRUD>
+               </_0:operation>
+                <_0:operation preCommit="false" postCommit="false">
+                  <_0:TargetPort>createUpdateData</_0:TargetPort>
+                  <_0:ModelCRUD>
+                     <_0:serviceType>CreateUpdateSalesOrderLine</_0:serviceType>
+                     <_0:TableName>C_OrderLine</_0:TableName>
+                     <_0:RecordID>0</_0:RecordID>
+                     <_0:Action>CreateUpdate</_0:Action>
+                     <_0:DataRow>
+                           <_0:field column="AD_Org_ID" lval="本社" />
+       				  <_0:field column="C_Order_ID">
+       				  		 <_0:val>@C_Order.C_Order_ID</_0:val>
+              			   </_0:field>
+                		 <_0:field column="Line"><_0:val>20</_0:val> </_0:field>
+               		 <_0:field column="M_Product_ID" lval="I0002" />
+               		 <_0:field column="C_UOM_ID"><_0:val>100</_0:val> </_0:field>
+                		 <_0:field column="QtyEntered"><_0:val>20</_0:val> </_0:field>
+              			 <_0:field column="QtyOrdered"><_0:val>20</_0:val> </_0:field>
+                		 <_0:field column="PriceEntered"><_0:val>1500</_0:val> </_0:field>
+               		 <_0:field column="PriceActual"><_0:val>1500</_0:val></_0:field>
+               		 <_0:field column="C_Tax_ID" lval="8%-課税取引" />
+                     </_0:DataRow>
+                  </_0:ModelCRUD>
+               </_0:operation>
+ 		     <_0:operation preCommit="false" postCommit="false">
+ 		       <_0:TargetPort>setDocAction</_0:TargetPort>
+                  <_0:ModelSetDocAction>
+                        	 <_0:serviceType>CompleteSalesOrder</_0:serviceType>
+            		   	<_0:tableName>C_Order</_0:tableName>
+              			 <_0:recordID>0</_0:recordID>
+              			 <_0:recordIDVariable>@C_Order.C_Order_ID</_0:recordIDVariable>
+              			 <_0:docAction>CO</_0:docAction>
+                  </_0:ModelSetDocAction>
+   			</_0:operation>
+            </_0:operations>
+         </_0:CompositeRequest>
+      </_0:compositeOperation>
+   </soapenv:Body>
+</soapenv:Envelope>

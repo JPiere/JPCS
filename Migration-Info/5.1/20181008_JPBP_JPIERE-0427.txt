@@ -1,0 +1,11 @@
+Add JP_ContractType Column to JP_ContractContentT Table
+Add JP_ContractType Column to JP_Trl_ContractContentT View
+Add Name Column to JP_ContractLineT Table
+Add JP_ContractType Column to JP_ContractLineT Table
+Add DocBaseType Column to JP_ContractLineT Table
+Add JP_CreateDerivativeDocPolicy Column to JP_ContractLineT Table
+Add OrderType Column to JP_ContractLineT Table
+Add M_PriceList_ID Column to JP_ContractLineT Table
+Add C_Currency_ID Column to JP_ContractLineT Table
+Add IsSOTrx Column to JP_ContractLineT Table
+Add IsTaxIncluded Column to JP_ContractLineT Table

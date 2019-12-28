@@ -1,0 +1,43 @@
+-- Table: adempiere.I_LocationJP
+
+-- DROP TABLE adempiere.I_LocationJP;
+
+CREATE TABLE adempiere.I_LocationJP
+(
+  i_errormsg character varying(2000),
+  i_isimported character(1) DEFAULT 'N'::bpchar,
+  processing character(1),
+
+  processed character(1) DEFAULT 'N'::bpchar,
+  I_LocationJP_ID numeric(10,0) NOT NULL,
+  AD_Client_ID numeric(10,0) DEFAULT 0,
+  AD_Org_ID numeric(10,0) DEFAULT 0,
+  IsActive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+  Created timestamp without time zone NOT NULL DEFAULT now(),
+  CreatedBy numeric(10,0) NOT NULL,
+  Updated timestamp without time zone NOT NULL DEFAULT now(),
+  UpdatedBy numeric(10,0) NOT NULL,
+
+  JP_OPrg_Value character varying(40) DEFAULT NULL::character varying,
+   JP_Location_Label character varying(255) DEFAULT NULL::numeric,
+   C_Location_ID numeric(10,0) DEFAULT NULL::numeric,
+   CountryCode character varying(2),
+   C_Country_ID numeric(10,0) DEFAULT NULL::numeric,
+   Postal character varying(10)  DEFAULT NULL::character varying,
+   Postal_add character varying(10) DEFAULT NULL::character varying,
+   RegionName character varying(40) DEFAULT NULL::character varying,
+   C_Region_ID numeric(10,0) DEFAULT NULL::numeric,
+   City character varying(60) DEFAULT NULL::character varying,
+   C_City_ID numeric(10,0) DEFAULT NULL::numeric,
+   Address1 character varying(60) DEFAULT NULL::character varying,
+   Address2 character varying(60) DEFAULT NULL::character varying,
+   Address3 character varying(60) DEFAULT NULL::character varying,
+   Address4 character varying(60) DEFAULT NULL::character varying,
+   Address5 character varying(60) DEFAULT NULL::character varying,
+   Comments character varying(2000) DEFAULT NULL::character varying,
+
+  I_LocationJP_UU character varying(36) DEFAULT NULL::character varying,
+  I_IsActiveJP character(1) NOT NULL DEFAULT 'Y'::bpchar,
+
+  CONSTRAINT I_LocationJP_pkey PRIMARY KEY (I_LocationJP_ID)
+)

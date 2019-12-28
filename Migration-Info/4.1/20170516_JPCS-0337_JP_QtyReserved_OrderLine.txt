@@ -1,0 +1,73 @@
+CREATE OR REPLACE VIEW adempiere.JP_QtyReserved_OrderLine AS
+SELECT
+ ol.AD_Client_ID AS AD_Client_ID
+ ,ol.AD_Org_ID AS AD_Org_ID
+ ,info.JP_Corporation_ID AS JP_OrgInfo_Corporation_ID
+ ,CASE WHEN loc.M_Warehouse_ID IS NOT NULL THEN loc.M_Warehouse_ID ELSE o.M_Warehouse_ID END AS M_Warehouse_ID
+ ,ol.JP_Locator_ID AS JP_Locator_ID
+ ,loc.JP_PhysicalWarehouse_ID AS JP_PhysicalWarehouse_ID
+ ,loc.M_LocatorType_ID AS M_LocatorType_ID
+ ,loc.IsCommonLocatorJP AS IsCommonLocatorJP
+ ,loc.x AS x
+ ,loc.y AS y
+ ,loc.z AS z
+ ,loc.PriorityNo AS PriorityNo
+ ,o.C_Order_ID AS C_Order_ID
+ ,o.IsSOTrx AS IsSOTrx
+ ,o.IsTaxIncluded AS IsTaxIncluded
+ ,o.C_DocTypeTarget_ID AS C_DocTypeTarget_ID
+ ,o.C_DocType_ID AS C_DocType_ID
+ ,o.C_BPartner_ID AS C_BPartner_ID
+ ,o.SalesRep_ID AS SalesRep_ID
+ ,o.M_PriceList_ID AS M_PriceList_ID
+ ,o.DocumentNo AS DocumentNo
+ ,o.POReference AS POReference
+ ,o.DocStatus AS DocStatus
+ ,ol.C_OrderLine_ID AS C_OrderLine_ID
+ ,ol.Line AS Line
+ ,ol.DateOrdered AS DateOrdered
+ ,ol.DatePromised AS DatePromised
+ ,ol.JP_DateReserved AS JP_DateReserved
+ ,ol.C_Charge_ID AS C_Charge_ID
+ ,ol.M_Product_ID AS M_Product_ID
+ ,ol.M_AttributeSetInstance_ID AS M_AttributeSetInstance_ID
+ ,ol.S_ResourceAssignment_ID AS S_ResourceAssignment_ID
+ ,ol.C_UOM_ID AS JP_OrderLine_UOM_ID
+ ,ol.C_Tax_ID AS C_Tax_ID
+ ,ol.C_Currency_ID AS C_Currency_ID
+ ,ol.JP_LocatorFrom_ID AS JP_LocatorFrom_ID
+ ,ol.JP_ASI_From_ID AS JP_ASI_From_ID
+ ,ol.JP_LocatorTo_ID AS JP_LocatorTo_ID
+ ,ol.JP_ASI_To_ID AS JP_ASI_To_ID
+ ,ol.Description AS Description
+ ,ol.QtyEntered AS QtyEntered
+ ,ol.QtyOrdered AS QtyOrdered
+ ,ol.QtyReserved AS QtyReserved
+ ,ol.QtyDelivered AS QtyDelivered
+ ,ol.QtyInvoiced AS QtyInvoiced
+ ,ol.PriceEntered AS PriceEntered
+ ,ol.PriceActual AS PriceActual
+ ,ol.PriceList AS PriceList
+ ,ol.LineNetAmt AS LineNetAmt
+ ,ol.JP_TaxBaseAmt AS JP_TaxBaseAmt
+ ,ol.JP_TaxAmt AS JP_TaxAmt
+ ,ol.JP_ScheduledCost AS JP_ScheduledCost
+ ,ol.JP_ScheduledCostLineAmt AS JP_ScheduledCostLineAmt
+ ,p.C_UOM_ID AS M_Product_C_UOM_ID
+ ,p.Discontinued AS Discontinued
+ ,p.ProductType AS ProductType
+ ,p.IsStocked AS IsStocked
+ ,p.IsBOM
+ ,p.IsDropShip
+ ,p.M_Product_Category_ID AS M_Product_Category_ID
+ ,pc.JP_ProductCategoryL1_ID AS JP_ProductCategoryL1_ID
+ ,pl1.JP_ProductCategoryL2_ID AS JP_ProductCategoryL2_ID
+
+FROM adempiere.C_OrderLine ol 
+	INNER JOIN adempiere.C_Order o ON (ol.C_Order_ID = o.C_Order_ID)
+        INNER JOIN adempiere.AD_OrgInfo info ON (ol.AD_Org_ID = info.AD_Org_ID)
+        INNER JOIN adempiere.M_Product p ON (ol.M_Product_ID =p.M_Product_ID )
+		INNER JOIN adempiere.M_Product_Category pc ON (p.M_Product_Category_ID=pc.M_Product_Category_ID)
+		LEFT OUTER JOIN adempiere.JP_ProductCategoryL1 pl1 ON (pc.JP_ProductCategoryL1_ID=pl1.JP_ProductCategoryL1_ID)
+        LEFT OUTER JOIN adempiere.M_Locator loc ON (ol.JP_Locator_ID = loc.M_Locator_ID)
+WHERE  ol.QtyReserved <> 0 

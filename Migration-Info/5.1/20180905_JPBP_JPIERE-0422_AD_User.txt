@@ -1,0 +1,14 @@
+Add JP_FirstName Column to AD_User Table
+Add JP_MiddleName Column to AD_User Table
+Add JP_LastName Column to AD_User Table
+Add JP_FirstName_Kana Column to AD_User Table
+Add JP_MiddleName_Kana Column to AD_User Table
+Add JP_LastName_Kana Column to AD_User Table
+
+Add JP_FirstName Column to I_UserJP Table
+Add JP_MiddleName Column to I_UserJP Table
+Add JP_LastName Column to I_UserJP Table
+Add JP_FirstName_Kana Column to I_UserJP Table
+Add JP_MiddleName_Kana Column to I_UserJP Table
+Add JP_LastName_Kana Column to I_UserJP Table
+

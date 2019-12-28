@@ -1,0 +1,19 @@
+CREATE OR REPLACE VIEW adempiere.JP_Trl_PriceList_Version AS
+
+SELECT t.AD_Language, t.JP_Trl_Name, a.* FROM adempiere.M_PriceList_Version a INNER JOIN
+(
+SELECT 
+    trl.M_PriceList_Version_ID AS M_PriceList_Version_ID
+    , trl.AD_Language AS AD_Language
+    , trl.Name AS JP_Trl_Name
+ 
+ FROM adempiere.M_PriceList_Version_Trl trl
+ 
+UNION ALL
+ 
+SELECT  
+    p.M_PriceList_Version_ID AS M_PriceList_Version_ID
+    ,(SELECT AD_Language FROM adempiere.AD_Language WHERE IsBaseLanguage = 'Y' ) AS AD_Language
+    ,p.Name AS JP_Trl_Name
+FROM adempiere.M_PriceList_Version p 
+) t ON (a.M_PriceList_Version_ID = t.M_PriceList_Version_ID) 

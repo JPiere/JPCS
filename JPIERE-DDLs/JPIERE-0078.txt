@@ -1,0 +1,3 @@
+バリデーション名称：JP GL Category Restricted by DocType
+バリデーションコード:
+GL_Category.GL_Category_ID =(SELECT C_DocType.GL_Category_ID FROM C_DocType WHERE C_DocType.C_DocType_ID=@C_DocType_ID@)

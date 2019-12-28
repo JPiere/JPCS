@@ -1,0 +1,53 @@
+CREATE TABLE adempiere.JP_BankDataLine
+(
+  AD_Client_ID numeric(10,0) NOT NULL,
+  AD_Org_ID numeric(10,0) NOT NULL,
+  AD_OrgTrx_ID numeric(10,0),
+  JP_BankData_ID numeric(10,0) NOT NULL,
+  JP_BankDataLine_ID numeric(10,0) NOT NULL,
+  C_BankStatementLine_ID numeric(10,0), 
+  C_Charge_ID numeric(10,0) ,
+  C_Tax_ID numeric(10,0),
+  C_BPartner_ID numeric(10,0),
+  C_Invoice_ID numeric(10,0),
+  C_Order_ID numeric(10,0),
+  JP_Bill_ID numeric(10,0),
+  C_Payment_ID numeric(10,0),
+      
+  Createdby numeric(10,0) NOT NULL,
+  Updatedby numeric(10,0) NOT NULL,
+  Line  numeric(10) NOT NULL DEFAULT 0,
+  
+  StmtAmt numeric NOT NULL DEFAULT 0,
+  TrxAmt numeric NOT NULL DEFAULT 0,
+  ChargeAmt numeric NOT NULL DEFAULT 0,
+  InterestAmt numeric NOT NULL DEFAULT 0,
+  
+  Created timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+  Updated timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+  StatementLineDate timestamp without time zone NOT NULL,
+  DateAcct timestamp without time zone NOT NULL,
+  ValutaDate timestamp without time zone NOT NULL,
+
+  IsActive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+  IsMatchedJP character(1) NOT NULL DEFAULT 'N'::bpchar,
+  JP_BankDataLine_UU character varying(36) DEFAULT NULL::character varying,
+
+  Description character varying(255) DEFAULT NULL::character varying,
+  I_ErrorMsg character varying(2000) ,
+  
+  JP_BankDataType_Line  character varying(1),
+  RoutingNo  character varying(4),
+  JP_BankName_Kana  character varying(15),
+  JP_BranchCode  character varying(3),
+  JP_BranchName_Kana  character varying(15),
+  JP_ClearingHouse  character varying(4),
+  JP_BankAccountType  character varying(1),
+  AccountNo  character varying(7),
+  JP_A_Name_Kana  character varying(30),
+  JP_BankDataNewCode character varying(1),
+  JP_BankDataCustomerCode1 character varying(10),
+  JP_BankDataCustomerCode2 character varying(10),
+  
+  CONSTRAINT JP_BankDataLine_pkey PRIMARY KEY (JP_BankDataLine_ID)
+)

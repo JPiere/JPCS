@@ -1,0 +1,1 @@
+Å°Add JP_BankStatement_ID Column to C_PaymentBatch Table that refer to C_BankStatement table	 

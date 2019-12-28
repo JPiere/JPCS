@@ -1,0 +1,9 @@
+Add JP_IndustryType_ID Column to JP_Corporation Table
+
+Add JP_CorpType Column to JP_Corporation Table
+
+Add C_Greeting_ID Column to JP_Corporation Table
+
+Add URL Column to JP_Corporation Table
+
+Add URL JP_Capital to JP_Corporation Table

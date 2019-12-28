@@ -1,0 +1,43 @@
+CREATE OR REPLACE VIEW adempiere.JP_Trl_ContractLineT AS
+SELECT t.ad_language,
+    t.JP_Trl_Name,
+    t.JP_Trl_Description,
+    a.JP_ContractLineT_ID,
+    a.JP_ContractContentT_ID,
+    a.AD_Client_ID,
+    a.AD_Org_ID,
+    a.IsActive,
+    a.AD_OrgTrx_ID,
+    a.Name,
+    a.Description,
+    a.JP_ContractType,
+    a.DocBaseType,
+    a.JP_CreateDerivativeDocPolicy,
+    a.OrderType,
+    a.M_PriceList_ID,
+    a.C_Currency_ID,
+    a.IsSOTrx,
+    a.IsTaxIncluded,
+    a.Line,
+    a.M_Product_ID,
+    a.C_Charge_ID
+
+FROM adempiere.JP_ContractLineT a 
+INNER JOIN(
+	SELECT 
+    trl.JP_ContractLineT_ID AS JP_ContractLineT_ID
+    , trl.AD_Language AS AD_Language
+    , trl.Name AS JP_Trl_Name
+    , Trl.Description AS JP_Trl_Description
+ 
+ 	FROM adempiere.JP_ContractLineT_Trl trl
+ 
+UNION ALL
+ 
+SELECT  
+    p.JP_ContractLineT_ID AS JP_ContractLineT_ID
+    ,(SELECT AD_Language FROM adempiere.AD_Language WHERE IsBaseLanguage = 'Y' ) AS AD_Language
+    ,p.Name AS JP_Trl_Name
+    ,p.Description AS JP_Trl_Description
+FROM adempiere.JP_ContractLineT p 
+) t ON (a.JP_ContractLineT_ID = t.JP_ContractLineT_ID) 

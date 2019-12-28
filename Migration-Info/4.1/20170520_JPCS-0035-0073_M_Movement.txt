@@ -1,0 +1,4 @@
+Add JP_WarehouseFrom_ID Column to M_Movement Table
+Add JP_WarehouseTo_ID Column to M_Movement Table
+Add JP_PhysicalWarehouseFrom_ID Column to M_Movement Table
+Add JP_PhysicalWarehouseTo_ID Column to M_Movement Table

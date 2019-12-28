@@ -1,0 +1,2 @@
+ŸAdd column JP_OpenRowNodeDepth @to JP_PivotWindowDefault Table
+ŸAdd column JP_OpenColumnNodeDepth to JP_PivotWindowDefault Table
