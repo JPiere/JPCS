@@ -1,0 +1,29 @@
+CREATE TABLE adempiere.JP_BulkCreateEstimation
+(
+    JP_BulkCreateEstimation_ID numeric(10,0) NOT NULL,
+    JP_BulkCreateEstimation_UU character varying(36) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    Name character varying(120) COLLATE pg_catalog."default" NOT NULL,
+    Description character varying(255) COLLATE pg_catalog."default",
+    IsActive character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'Y'::bpchar,
+    AD_Client_ID numeric(10,0) NOT NULL,
+    AD_Org_ID numeric(10,0) NOT NULL,
+    Created timestamp without time zone NOT NULL DEFAULT now(),
+    CreatedBy numeric(10,0) NOT NULL,
+    Updated timestamp without time zone NOT NULL DEFAULT now(),
+    UpdatedBy numeric(10,0) NOT NULL,
+    StartNo numeric(10,0) NOT NULL DEFAULT (1000000)::numeric,
+    Prefix character varying(255) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    Suffix character varying(255) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    JP_RegistrationQty numeric(10,0) NOT NULL DEFAULT 0,
+    JP_CommitRecords numeric(10,0) NOT NULL DEFAULT (0)::numeric,
+    JP_CResetRecords numeric(10,0) NOT NULL DEFAULT (0)::numeric,
+    
+    JP_Estimation_ID numeric(10,0) NOT NULL,
+    C_Period_ID numeric(10,0) ,
+    DocAction character(2),
+    C_BP_Group_ID numeric(10,0) ,
+    M_PriceList_ID numeric(10,0),
+    CONSTRAINT JP_BulkCreateEstimation_PKey PRIMARY KEY (JP_BulkCreateEstimation_ID)
+)
+
+

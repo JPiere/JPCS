@@ -1,0 +1,2 @@
+Add JP_HTML_Width Colunm to AD_PrintFormatItem Table
+Add JP_HTML_LengthUOM Colunm to AD_PrintFormatItem Table

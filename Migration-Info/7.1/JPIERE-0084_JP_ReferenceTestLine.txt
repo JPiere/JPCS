@@ -1,0 +1,58 @@
+-- Table: adempiere.jp_referencetestline
+
+-- DROP TABLE adempiere.jp_referencetestline;
+
+CREATE TABLE adempiere.jp_referencetestline
+(
+    ad_client_id numeric(10,0) NOT NULL,
+    ad_org_id numeric(10,0) NOT NULL,
+    created timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+    createdby numeric(10,0) NOT NULL,
+    description character varying(255) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    isactive character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'Y'::bpchar,
+    jp_referencetestline_id numeric(10,0) NOT NULL,
+    jp_referencetestline_uu character varying(36) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_referencetest_id numeric(10,0) DEFAULT NULL::numeric,
+    line numeric(10,0) DEFAULT NULL::numeric,
+    name character varying(60) COLLATE pg_catalog."default" NOT NULL,
+    updated timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+    updatedby numeric(10,0) NOT NULL,
+    CONSTRAINT jp_referencetestline_key PRIMARY KEY (jp_referencetestline_id),
+    CONSTRAINT jp_referencetestline_uu_idx UNIQUE (jp_referencetestline_uu)
+,
+    CONSTRAINT adclient_jpreferencetestline FOREIGN KEY (ad_client_id)
+        REFERENCES adempiere.ad_client (ad_client_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED
+        NOT VALID,
+    CONSTRAINT adorg_jpreferencetestline FOREIGN KEY (ad_org_id)
+        REFERENCES adempiere.ad_org (ad_org_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED
+        NOT VALID,
+    CONSTRAINT jpreferencetest_jpreferencetes FOREIGN KEY (jp_referencetest_id)
+        REFERENCES adempiere.jp_referencetest (jp_referencetest_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED
+        NOT VALID,
+    CONSTRAINT jp_referencetestline_isactive_check CHECK (isactive = ANY (ARRAY['Y'::bpchar, 'N'::bpchar]))
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE adempiere.jp_referencetestline
+    OWNER to adempiere;
+
+-- Index: jp_referencetestline_index
+
+-- DROP INDEX adempiere.jp_referencetestline_index;
+
+CREATE UNIQUE INDEX jp_referencetestline_index
+    ON adempiere.jp_referencetestline USING btree
+    (jp_referencetest_id, line)
+    TABLESPACE pg_default;

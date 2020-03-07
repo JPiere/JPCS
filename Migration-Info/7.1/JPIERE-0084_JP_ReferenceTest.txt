@@ -1,0 +1,8 @@
+Add below Column to JP_ReferenceTest Table
+
+・JP_BPartner_Multi
+・JP_Product_Multi
+・JP_Multi_List
+・JP_Multi_Grid
+
+

@@ -1,0 +1,28 @@
+CREATE TABLE adempiere.JP_BulkCreateContract
+(
+    JP_BulkCreateContract_ID numeric(10,0) NOT NULL,
+    JP_BulkCreateContract_UU character varying(36) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    Name character varying(120) COLLATE pg_catalog."default" NOT NULL,
+    Description character varying(255) COLLATE pg_catalog."default",
+    IsActive character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'Y'::bpchar,
+    AD_Client_ID numeric(10,0) NOT NULL,
+    AD_Org_ID numeric(10,0) NOT NULL,
+    Created timestamp without time zone NOT NULL DEFAULT now(),
+    CreatedBy numeric(10,0) NOT NULL,
+    Updated timestamp without time zone NOT NULL DEFAULT now(),
+    UpdatedBy numeric(10,0) NOT NULL,
+    
+    StartNo numeric(10,0) NOT NULL DEFAULT (1000000)::numeric,
+    Prefix character varying(255) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    Suffix character varying(255) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    JP_RegistrationQty numeric(10,0) NOT NULL DEFAULT 0,
+    JP_CommitRecords numeric(10,0) NOT NULL DEFAULT (0)::numeric,
+    JP_CResetRecords numeric(10,0) NOT NULL DEFAULT (0)::numeric,
+    
+    JP_Contract_ID numeric(10,0) NOT NULL,
+    DocAction character(2),
+    C_BP_Group_ID numeric(10,0) ,
+    JP_Contract_DocAction character varying(2),
+    JP_ContractContent_DocAction character varying(2),
+    CONSTRAINT JP_BulkCreateContract_PKey PRIMARY KEY (JP_BulkCreateContract_ID)
+)
