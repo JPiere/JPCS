@@ -1,0 +1,2 @@
+Add JP_Memo Colunm to AD_ImpFormat Table
+Add JP_Memo to AD_ImportTemplate Table
