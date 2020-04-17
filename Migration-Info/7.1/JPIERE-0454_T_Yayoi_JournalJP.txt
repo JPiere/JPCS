@@ -1,0 +1,92 @@
+-- Table: adempiere.t_yayoi_journaljp
+
+-- DROP TABLE adempiere.t_yayoi_journaljp;
+
+CREATE TABLE adempiere.t_yayoi_journaljp
+(
+    ad_client_id numeric(10,0) NOT NULL,
+    ad_org_id numeric(10,0) NOT NULL,
+    ad_pinstance_id numeric(10,0) NOT NULL,
+    dateacct timestamp without time zone NOT NULL,
+    jp_yayoi_bango character varying(10) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_yayoi_chousei character varying(10) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_yayoi_cracct character varying(24) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_yayoi_cramt numeric(10,0) NOT NULL DEFAULT 0,
+    jp_yayoi_crorg character varying(24) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_yayoi_crsubacct character varying(24) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_yayoi_crtax character varying(40) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_yayoi_crtaxamt numeric(10,0) DEFAULT NULL::numeric,
+    jp_yayoi_dateacct character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    jp_yayoi_docno numeric(10,0) DEFAULT NULL::numeric,
+    jp_yayoi_dracct character varying(24) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_yayoi_dramt numeric(10,0) NOT NULL DEFAULT 0,
+    jp_yayoi_drorg character varying(24) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_yayoi_drsubacct character varying(24) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_yayoi_drtax character varying(40) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_yayoi_drtaxamt numeric(10,0) DEFAULT NULL::numeric,
+    jp_yayoi_fusen1 numeric(10,0) DEFAULT NULL::numeric,
+    jp_yayoi_fusen2 numeric(10,0) DEFAULT NULL::numeric,
+    jp_yayoi_identifierflag character varying(4) COLLATE pg_catalog."default" NOT NULL,
+    jp_yayoi_kessan character varying(4) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_yayoi_kijitu character varying(10) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_yayoi_seiseimoto character varying(5) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_yayoi_shiwakememo character varying(180) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_yayoi_tekiyou character varying(64) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_yayoi_type numeric(10,0) NOT NULL DEFAULT 0,
+    c_acctschema_id numeric(10,0) NOT NULL,
+    postingtype character(1) COLLATE pg_catalog."default" NOT NULL,
+    t_yayoi_journaljp_id numeric(10,0) NOT NULL,
+    t_yayoi_journaljp_uu character varying(36) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    fact_acct_id numeric(10,0) NOT NULL,
+    created timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+    createdby numeric(10,0) NOT NULL,
+    updated timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+    updatedby numeric(10,0) NOT NULL,
+    isactive character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'Y'::bpchar,
+    ad_table_id numeric(10,0) NOT NULL,
+    record_id numeric(10,0) NOT NULL,
+    CONSTRAINT t_yayoi_journaljp_key PRIMARY KEY (t_yayoi_journaljp_id),
+    CONSTRAINT t_yayoi_journaljp_uu_idx UNIQUE (t_yayoi_journaljp_uu)
+,
+    CONSTRAINT adpinstance_tyayoijournaljp FOREIGN KEY (ad_pinstance_id)
+        REFERENCES adempiere.ad_pinstance (ad_pinstance_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+        DEFERRABLE INITIALLY DEFERRED
+        NOT VALID,
+    CONSTRAINT adtable_tyayoijournaljp FOREIGN KEY (ad_table_id)
+        REFERENCES adempiere.ad_table (ad_table_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED
+        NOT VALID,
+    CONSTRAINT cacctschema_tyayoijournaljp FOREIGN KEY (c_acctschema_id)
+        REFERENCES adempiere.c_acctschema (c_acctschema_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+        DEFERRABLE INITIALLY DEFERRED
+        NOT VALID,
+    CONSTRAINT factacct_tyayoijournaljp FOREIGN KEY (fact_acct_id)
+        REFERENCES adempiere.fact_acct (fact_acct_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED
+        NOT VALID,
+    CONSTRAINT t_yayoi_journaljp_isactive_check CHECK (isactive = ANY (ARRAY['Y'::bpchar, 'N'::bpchar]))
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE adempiere.t_yayoi_journaljp
+    OWNER to adempiere;
+
+-- Index: t_yayoi_journaljp_pinstance
+
+-- DROP INDEX adempiere.t_yayoi_journaljp_pinstance;
+
+CREATE INDEX t_yayoi_journaljp_pinstance
+    ON adempiere.t_yayoi_journaljp USING btree
+    (ad_pinstance_id)
+    TABLESPACE pg_default;
