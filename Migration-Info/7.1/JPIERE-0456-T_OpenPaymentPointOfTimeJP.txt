@@ -1,0 +1,41 @@
+-- Table: adempiere.T_OpenPaymentPointOfTimeJP
+
+-- DROP TABLE adempiere.T_OpenPaymentPointOfTimeJP;
+
+CREATE TABLE adempiere.T_OpenPaymentPointOfTimeJP
+(
+  AD_Pinstance_ID numeric(10,0) NOT NULL,
+  C_Payment_ID numeric(10,0) NOT NULL,
+  C_Order_ID numeric(10,0),
+  AD_Client_ID numeric(10,0) NOT NULL,
+  AD_Org_ID numeric(10,0) NOT NULL,
+  AD_OrgTrx_ID numeric(10,0),
+  C_BPartner_ID numeric(10,0) NOT NULL,
+  JP_Corporation_ID numeric(10,0),
+  C_Currency_ID numeric(10,0) NOT NULL,
+  JP_CurrencyTo_ID numeric(10,0),
+  C_AcctSchema_ID  numeric(10,0) ,
+  Account_ID numeric(10,0) ,
+  C_DocType_ID numeric(10,0) NOT NULL,
+  DocBaseType character(3) NOT NULL,
+  DocumentNo character varying(30) NOT NULL,
+  DocStatus character(2) NOT NULL,
+  DateTrx timestamp without time zone,
+  DateAcct timestamp without time zone,
+  JP_PointOfTime timestamp without time zone,
+  IsAllocated character(1) NOT NULL DEFAULT 'N'::bpchar,
+  IsReceipt character(1) NOT NULL DEFAULT 'N'::bpchar,
+  PayAmt numeric NOT NULL DEFAULT 0,
+  OpenAmt numeric NOT NULL DEFAULT 0,
+  JP_OpenAmtPointOfTime numeric NOT NULL DEFAULT 0,
+  JP_ExchangedPayAmt numeric NOT NULL DEFAULT 0,
+  JP_ExchangedOpenAmt numeric NOT NULL DEFAULT 0,
+  JP_ExchangedOpenAmtPOT numeric NOT NULL DEFAULT 0,
+  Rate numeric NOT NULL DEFAULT 0 ,
+  C_BankAccount_ID numeric(10,0)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE adempiere.T_OpenPaymentPointOfTimeJP
+  OWNER TO adempiere;
