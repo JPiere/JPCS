@@ -1,0 +1,169 @@
+CREATE OR REPLACE VIEW adempiere.JP_ContractLine_RV
+ AS
+SELECT 
+  c.JP_Contract_ID
+  ,c.AD_Client_ID
+  ,c.AD_Org_ID	AS AD_Org_ID
+  ,c.AD_Org_ID	AS JP_Contract_Org_ID
+  ,c.JP_ContractType
+  ,c.JP_ContractCategory_ID
+  ,c.JP_Contract_Parent_ID
+  ,c.JP_ContractT_id
+  ,c.C_DocType_ID AS JP_Contract_DocType_ID
+  ,c.DocumentNo AS JP_Contract_DocumentNo
+  ,c.JP_ContractNo
+  ,c.DateDoc AS JP_Contract_DateDoc
+  ,c.DateAcct AS JP_Contract_DateAcct
+  ,c.JP_ContractPeriodDate_From
+  ,c.JP_ContractPeriodDate_To
+  ,c.SalesRep_ID  AS JP_Contract_SalesRep_ID
+  ,c.Name AS JP_Contract_Name
+  ,c.Description  AS JP_Contract_Description
+  ,c.C_BPartner_ID AS JP_Contract_BPartner_ID
+  ,c.C_BPartner_Location_ID AS JP_Contract_BP_Location_ID
+  ,c.AD_User_ID AS JP_Contract_User_ID
+  ,c.C_Opportunity_ID AS JP_Contract_Opportunity_ID
+  ,c.JP_Estimation_ID AS JP_Contract_Estimation_ID
+  ,c.POReference AS JP_Contract_POReference
+  ,c.IsAutomaticUpdateJP AS IsContractAutomaticUpdateJP
+  ,c.JP_ContractCancelTerm_ID
+  ,c.JP_ContractExtendPeriod_ID
+  ,c.JP_ContractCancelDate
+  ,c.JP_ContractCancelOfferDate
+  ,c.JP_ContractCancelDeadline
+  ,c.JP_ContractCancel_SalesRep_ID
+  ,c.JP_ContractCancel_User_ID
+  ,c.JP_ContractCancelCause_ID
+  ,c.JP_ContractCancelMemo
+  ,c.JP_ContractDocDate
+  ,c.JP_ContractBPNo
+  ,c.JP_CounterContract_ID
+  ,c.JP_ContractDocDate_From
+  ,c.JP_ContractDocDate_To
+  ,c.JP_Contract_Link_ID
+  ,c.C_Currency_ID AS JP_Contract_Currency_ID
+  ,c.JP_ContractDocLocator
+  ,c.JP_ContractDocAmt
+  ,c.JP_ContractMonthlyRevenueAmt
+  ,c.JP_ContractMonthlyExpenseAmt
+  ,c.Help
+  ,c.DocStatus AS JP_Contract_DocStatus
+  ,c.JP_ContractStatus
+  ,c.JP_ContractStatus_UC_Date
+  ,c.JP_ContractStatus_EC_Date
+  ,c.JP_ContractStatus_IN_Date
+  ,cc.JP_ContractContent_ID
+  ,cc.AD_Org_ID AS JP_CContent_Org_ID
+  ,cc.JP_PreContractContent_ID
+  ,cc.JP_CounterContractContent_ID
+  ,cc.JP_ContractContentT_ID
+  ,cc.C_DocType_ID AS JP_CContent_DocType_ID
+  ,cc.DocumentNo AS JP_CContent_DocumentNo
+  ,cc.DateDoc AS JP_CContent_DateDoc
+  ,cc.DateAcct AS JP_CContent_DateAcct
+  ,cc.DateOrdered
+  ,cc.DatePromised
+  ,cc.DateInvoiced
+  ,cc.DocBaseType
+  ,cc.JP_BaseDocDocType_ID
+  ,cc.JP_CreateDerivativeDocPolicy
+  ,cc.JP_ContractCalender_ID
+  ,cc.JP_ContractProcDate_From
+  ,cc.JP_ContractProcDate_To
+  ,cc.JP_ContractProcess_ID
+  ,cc.DeliveryTime_Promised
+  ,cc.IsAutomaticUpdateJP AS IsCContentAutomaticUpdateJP
+  ,cc.IsRenewedContractContentJP
+  ,cc.JP_Contract_Acct_ID
+  ,cc.JP_ContractProcessMethod
+  ,cc.JP_ContractC_AutoUpdatePolicy
+  ,cc.Name AS JP_CContent_Name
+  ,cc.SalesRep_ID AS JP_CContent_SalesRep_ID
+  ,cc.Description AS JP_CContent_Description
+  ,cc.C_BPartner_ID AS JP_CContent_BPartner_ID
+  ,cc.C_BPartner_Location_ID AS JP_CContent_BP_Location_ID
+  ,cc.AD_User_ID AS JP_CContent_User_ID
+  ,cc.C_Opportunity_ID AS JP_CContent_Opportunity_ID
+  ,cc.JP_Estimation_ID AS JP_CContent_Estimation_ID
+  ,cc.POReference AS JP_CContent_POReference
+  ,cc.M_Warehouse_ID
+  ,cc.JP_Locator_ID
+  ,cc.IsDropShip
+  ,cc.DropShip_BPartner_ID
+  ,cc.DropShip_Location_ID
+  ,cc.DropShip_User_ID
+  ,cc.DeliveryRule
+  ,cc.PriorityRule
+  ,cc.DeliveryViaRule
+  ,cc.M_Shipper_ID
+  ,cc.M_FreightCategory_ID
+  ,cc.FreightCostRule
+  ,cc.FreightAmt
+  ,cc.Bill_BPartner_ID
+  ,cc.Bill_Location_ID
+  ,cc.Bill_User_ID
+  ,cc.InvoiceRule
+  ,cc.M_PriceList_ID
+  ,cc.C_Currency_ID AS JP_CContent_Currency_ID
+  ,cc.C_ConversionType_ID
+  ,cc.PaymentRule
+  ,cc.C_PaymentTerm_ID
+  ,cc.C_Project_ID
+  ,cc.C_Campaign_ID
+  ,cc.C_Activity_ID
+  ,cc.TotalLines
+  ,cc.IsTaxIncluded
+  ,cc.JP_ContractProcStatus
+  ,cc.IsSOTrx
+  ,cc.DocStatus AS JP_CContent_DocStatus
+  ,cc.IsScheduleCreatedJP
+  ,cl.JP_ContractLine_ID
+  ,cl.Line
+  ,cl.JP_ContractLineT_ID
+  ,cl.JP_CounterContractLine_ID
+  ,cl.M_Product_ID
+  ,cl.C_Charge_ID
+  ,cl.Description AS JP_CLine_Description
+  ,cl.IsCreateDocLineJP
+  ,cl.JP_ContractL_AutoUpdatePolicy
+  ,cl.QtyEntered
+  ,cl.C_UOM_ID
+  ,cl.QtyOrdered
+  ,cl.JP_BaseDocLinePolicy
+  ,cl.JP_ProcPeriod_Lump_Date
+  ,cl.JP_ProcPeriod_Start_Date
+  ,cl.JP_ProcPeriod_End_Date
+  ,cl.JP_ProcPeriod_Lump_ID
+  ,cl.JP_ProcPeriod_Start_ID
+  ,cl.JP_ProcPeriod_End_ID
+  ,cl.JP_DerivativeDocPolicy_InOut
+  ,cl.JP_ContractCalender_InOut_ID
+  ,cl.JP_ProcPeriod_Lump_InOut_Date
+  ,cl.JP_ProcPeriod_Start_InOut_Date
+  ,cl.JP_ProcPeriod_End_InOut_Date
+  ,cl.JP_ProcPeriod_Lump_InOut_ID
+  ,cl.JP_ProcPeriod_Start_InOut_ID
+  ,cl.JP_ProcPeriod_End_InOut_ID
+  ,cl.MovementQty
+  ,cl.JP_ContractProcess_InOut_ID
+  ,cl.JP_DerivativeDocPolicy_Inv
+  ,cl.JP_ContractCalender_Inv_ID
+  ,cl.JP_ProcPeriod_Lump_Inv_Date
+  ,cl.JP_ProcPeriod_Start_Inv_Date
+  ,cl.JP_ProcPeriod_End_Inv_Date
+  ,cl.JP_ProcPeriod_Lump_Inv_ID
+  ,cl.JP_ProcPeriod_Start_Inv_ID
+  ,cl.JP_ProcPeriod_End_Inv_ID
+  ,cl.QtyInvoiced
+  ,cl.JP_ContractProcess_Inv_ID
+  ,cl.PriceEntered
+  ,cl.PriceActual
+  ,cl.PriceLimit
+  ,cl.C_Tax_ID
+  ,cl.Discount
+  ,cl.PriceList
+  ,cl.LineNetAmt
+
+From adempiere.JP_Contract c 
+	INNER JOIN adempiere.JP_ContractContent cc ON (c.JP_Contract_ID = cc.JP_Contract_ID)
+	INNER JOIN adempiere.JP_ContractLine cl ON (cc.JP_ContractContent_ID = cl.JP_ContractContent_ID)
