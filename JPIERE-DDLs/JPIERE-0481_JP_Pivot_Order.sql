@@ -46,7 +46,7 @@ o.C_Order_ID AS C_Order_ID
 ,ol.M_Product_ID AS M_Product_ID
 ,p.Value || '_' ||  p.Name AS JP_Product_VN
 ,pc.M_Product_Category_ID AS M_Product_Category_ID
-,pc.Value || '_' ||  p.Name AS JP_Product_Category_VN
+,pc.Value || '_' ||  pc.Name AS JP_Product_Category_VN
 ,ol.JP_Locator_ID AS JP_Locator_ID
 ,lc.Value AS JP_Locator_Value
 ,lc.JP_PhysicalWarehouse_ID AS JP_PhysicalWarehouse_ID
