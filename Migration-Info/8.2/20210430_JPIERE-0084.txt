@@ -9,3 +9,4 @@ Classification
 C_Calendar_ID
 C_Year_ID
 C_Period_ID
+color
