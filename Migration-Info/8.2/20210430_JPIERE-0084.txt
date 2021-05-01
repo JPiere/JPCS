@@ -1,0 +1,11 @@
+Add below column to JP_ReferenceTest Table
+
+C_BP_Group_ID
+PromotionCode 
+Note
+Name
+Name2
+Classification
+C_Calendar_ID
+C_Year_ID
+C_Period_ID
