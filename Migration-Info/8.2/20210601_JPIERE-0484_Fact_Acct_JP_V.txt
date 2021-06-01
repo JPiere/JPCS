@@ -1,0 +1,128 @@
+CREATE OR REPLACE VIEW adempiere.Fact_Acct_JP_V AS
+SELECT 
+ fas.AD_Client_ID AS AD_Client_ID
+ ,fas.AD_OrgTrx_ID AS AD_OrgTrx_ID
+ ,otrx.Value || '_' ||   otrx.Name AS JP_OrgTrx_VN
+ ,fas.AD_Org_ID AS AD_Org_ID
+ ,org.Value || '_' ||   org.Name AS JP_Org_VN
+ ,oif.JP_Corporation_ID AS JP_Org_Corporation_ID
+ ,ocrp.Value  || '_' ||  ocrp.Name AS JP_Org_Corporation_VN
+ ,oif.JP_BusinessUnit_ID AS JP_BusinessUnit_ID
+ ,bu.Value || '_' ||  bu.Name AS JP_BusinessUnit_VN
+ 
+ ,fas.C_AcctSchema_ID AS C_AcctSchema_ID
+ ,fas.PostingType AS PostingType
+ ,fas.Account_ID AS Account_ID
+ ,ev.Value || '_' ||   ev.Name AS JP_Account_VN
+ ,fas.C_SubAcct_ID AS C_SubAcct_ID
+ ,sub.Value || '_' ||  sub.Name AS JP_SubAcct_VN
+ ,fas.Description AS Description
+ ,fas.AD_Table_ID AS AD_Table_ID
+ ,tab.TableName AS TableName
+ ,fas.Record_ID AS Record_ID
+ ,fas.Fact_Acct_ID AS Fact_Acct_ID
+ ,fas.DateAcct AS DateAcct
+ ,fas.DateTrx AS DateTrx
+ ,fas.IsActive AS IsActive
+ ,fas.C_Period_ID AS C_Period_ID
+ ,priod.Name AS JP_Period_Name
+ 
+ ,fas.C_Currency_ID AS C_Currency_ID
+ ,cry.ISO_Code AS ISO_Code
+ ,fas.AmtSourceCr AS AmtSourceCr
+ ,fas.AmtSourceDr AS AmtSourceDr
+ ,CASE WHEN ev.AccountType = 'A' THEN fas.AmtSourceDr - fas.AmtSourceCr
+ 		WHEN ev.AccountType = 'L'  THEN fas.AmtSourceCr - fas.AmtSourceDr
+ 		WHEN ev.AccountType = 'O'  THEN fas.AmtSourceCr - fas.AmtSourceDr
+ 		WHEN ev.AccountType = 'R'  THEN fas.AmtSourceCr - fas.AmtSourceDr
+ 		WHEN ev.AccountType = 'E' THEN fas.AmtSourceDr - fas.AmtSourceCr
+ 		ELSE fas.AmtSourceDr - fas.AmtSourceCr 
+ 		END AS JP_FluctuationAmtSource
+ ,fas.AmtAcctCr AS AmtAcctCr
+ ,fas.AmtAcctDr AS AmtAcctDr
+ ,CASE WHEN ev.AccountType = 'A' THEN fas.AmtAcctDr - fas.AmtAcctCr
+ 		WHEN ev.AccountType = 'L'  THEN fas.AmtAcctCr - fas.AmtAcctDr
+ 		WHEN ev.AccountType = 'O'  THEN fas.AmtAcctCr - fas.AmtAcctDr
+ 		WHEN ev.AccountType = 'R'  THEN fas.AmtAcctCr - fas.AmtAcctDr
+ 		WHEN ev.AccountType = 'E' THEN fas.AmtAcctDr - fas.AmtAcctCr
+ 		ELSE fas.AmtAcctDr - fas.AmtAcctCr 
+ 		END AS JP_FluctuationAmtAcct
+ ,ev.AccountType AS AccountType
+ ,fas.Qty AS Qty
+ ,fas.C_UOM_ID AS C_UOM_ID
+ ,uom.UOMSymbol AS UOMSymbol
+
+ ,fas.C_Activity_ID AS C_Activity_ID
+ ,act.Value || '_' ||   act.Name AS JP_Activity_VN
+ ,fas.C_BPartner_ID AS C_BPartner_ID
+ ,bp.Value  || '_' ||   bp.Name AS JP_BPartner_VN
+ ,bpg.C_BP_Group_ID AS C_BP_Group_ID
+ ,bpg.Value || '_' ||  bpg.Name AS JP_BP_Group_VN
+ ,bp.JP_Corporation_ID AS JP_Corporation_ID
+ ,crp.Value  || '_' ||  crp.Name AS JP_Corporation_VN
+ ,fas.C_Campaign_ID AS C_Campaign_ID
+ ,cmp.Value || '_' ||  cmp.Name AS JP_Campaign_VN
+
+ ,fas.C_ProjectPhase_ID AS C_ProjectPhase_ID
+ ,pjp.Name AS JP_ProjectPhase_Name
+ ,fas.C_Project_ID AS C_Project_ID
+ ,pj.Value || '_' ||  pj.Name AS JP_Project_VN
+ ,fas.C_SalesRegion_ID AS C_SalesRegion_ID
+ ,sr.Value || '_' ||  sr.Name AS JP_SalesRegion_VN
+ ,fas.GL_Budget_ID AS GL_Budget_ID
+ ,bdgt.Name AS JP_Budget_Name
+ ,fas.M_Product_ID AS M_Product_ID
+ ,p.Value || '_' ||  p.Name AS JP_Product_VN
+ ,pc.M_Product_Category_ID AS M_Product_Category_ID
+ ,pc.Value || '_' ||  p.Name AS JP_Product_Category_VN
+ ,fas.GL_Category_ID AS GL_Category_ID
+ ,glc.Name AS JP_GL_Category_Name
+ ,fas.C_Tax_ID AS C_Tax_ID
+ ,tax.Name AS JP_Tax_Name
+ ,tax.C_TaxCategory_ID AS C_TaxCategory_ID
+ ,taxc.Name AS JP_TaxCategory_Name
+ 
+ ,cc.JP_ContractContent_ID AS JP_ContractContent_ID
+ ,cc.DocumentNo AS JP_ContractContent_DocNo
+ ,cnt.JP_Contract_ID AS JP_Contract_ID
+ ,cnt.DocumentNo AS JP_Contract_DocNo
+ ,fas.JP_Order_ID AS C_Order_ID
+ ,ord.DocumentNo AS JP_Order_DocumentNo
+  
+ FROM adempiere.Fact_Acct fas
+ 		LEFT OUTER JOIN adempiere.AD_Org otrx ON (fas.AD_OrgTrx_ID = otrx.AD_Org_ID)
+ 		INNER JOIN adempiere.AD_Org org ON (fas.AD_Org_ID = org.AD_Org_ID)
+ 			INNER JOIN adempiere.AD_OrgInfo oif ON (org.AD_Org_ID = oif.AD_Org_ID)
+ 				LEFT OUTER JOIN adempiere.JP_Corporation ocrp ON (oif.JP_Corporation_ID = ocrp.JP_Corporation_ID)
+ 				LEFT OUTER JOIN adempiere.JP_BusinessUnit bu ON (oif.JP_BusinessUnit_ID = bu.JP_BusinessUnit_ID)
+ 		INNER JOIN adempiere.C_ElementValue ev ON (fas.Account_ID = ev.C_ElementValue_ID)
+ 		LEFT OUTER JOIN adempiere.C_SubAcct sub ON (fas.C_SubAcct_ID = sub.C_SubAcct_ID)
+ 		INNER JOIN adempiere.AD_Table tab ON (fas.AD_Table_ID = tab.AD_Table_ID)
+ 		INNER JOIN adempiere.C_Currency cry ON (fas.C_Currency_ID = cry.C_Currency_ID)
+ 		LEFT OUTER JOIN adempiere.C_UOM uom ON (fas.C_UOM_ID = uom.C_UOM_ID)
+ 		
+		LEFT OUTER JOIN adempiere.C_Activity act ON (fas.C_Activity_ID = act.C_Activity_ID)
+		LEFT OUTER JOIN adempiere.C_BPartner bp ON (fas.C_BPartner_ID = bp.C_BPartner_ID)
+			LEFT OUTER JOIN adempiere.C_BP_Group bpg ON (bp.C_BP_Group_ID = bpg.C_BP_Group_ID)
+			LEFT OUTER JOIN adempiere.JP_Corporation crp ON (bp.JP_Corporation_ID = crp.JP_Corporation_ID)
+		LEFT OUTER JOIN adempiere.C_Campaign cmp ON (fas.C_Campaign_ID = cmp.C_Campaign_ID)
+		INNER JOIN adempiere.C_Period priod ON (fas.C_Period_ID = priod.C_Period_ID)
+		LEFT OUTER JOIN adempiere.C_ProjectPhase pjp ON (fas.C_ProjectPhase_ID = pjp.C_ProjectPhase_ID)
+		LEFT OUTER JOIN adempiere.C_Project pj ON (fas.C_Project_ID = pj.C_Project_ID)
+		LEFT OUTER JOIN adempiere.C_SalesRegion sr ON (fas.C_SalesRegion_ID = sr.C_SalesRegion_ID)
+		LEFT OUTER JOIN adempiere.GL_Budget bdgt ON (fas.GL_Budget_ID = bdgt.GL_Budget_ID)
+		LEFT OUTER JOIN adempiere.M_Product p ON (fas.M_Product_ID = p.M_Product_ID)
+			LEFT OUTER JOIN adempiere.M_Product_Category pc ON (p.M_Product_Category_ID = pc.M_Product_Category_ID)
+
+		LEFT OUTER JOIN adempiere.GL_Category glc On (fas.GL_Category_ID = glc.GL_Category_ID)
+		LEFT OUTER JOIN adempiere.C_Tax tax On (fas.C_Tax_ID = tax.C_Tax_ID)
+			LEFT OUTER JOIN adempiere.C_TaxCategory taxc ON (tax.C_TaxCategory_ID = taxc.C_TaxCategory_ID)
+
+		LEFT OUTER JOIN adempiere.JP_ContractContent cc ON (fas.JP_ContractContent_ID = cc.JP_ContractContent_ID )
+			LEFT OUTER JOIN adempiere.JP_Contract cnt ON (cc.JP_Contract_ID = cnt.JP_Contract_ID )
+		LEFT OUTER JOIN adempiere.C_Order ord ON (fas.JP_Order_ID = ord.C_Order_ID )
+;
+
+ALTER TABLE adempiere.Fact_Acct_JP_V
+    OWNER TO adempiere;
+
