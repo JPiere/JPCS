@@ -1,0 +1,89 @@
+-- Table: adempiere.jp_user_location
+
+-- DROP TABLE adempiere.jp_user_location;
+
+CREATE TABLE adempiere.jp_user_location
+(
+    ad_client_id numeric(10,0) NOT NULL,
+    ad_org_id numeric(10,0) NOT NULL,
+    ad_user_id numeric(10,0) DEFAULT NULL::numeric,
+    address1 character varying(60) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    address2 character varying(60) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    address3 character varying(60) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    address4 character varying(60) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    address5 character varying(60) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    c_city_id numeric(10,0) DEFAULT NULL::numeric,
+    c_country_id numeric(10,0) NOT NULL,
+    c_region_id numeric(10,0) DEFAULT NULL::numeric,
+    city character varying(60) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    comments character varying(2000) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    created timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+    createdby numeric(10,0) NOT NULL,
+    isactive character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'Y'::bpchar,
+    isdefault character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'N'::bpchar,
+    jp_location_label character varying(255) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_user_location_id numeric(10,0) NOT NULL,
+    jp_user_location_uu character varying(36) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    postal character varying(10) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    postal_add character varying(10) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    regionname character varying(40) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    updated timestamp without time zone NOT NULL DEFAULT statement_timestamp(),
+    updatedby numeric(10,0) NOT NULL,
+    CONSTRAINT jp_user_location_key PRIMARY KEY (jp_user_location_id),
+    CONSTRAINT jp_user_location_uu_idx UNIQUE (jp_user_location_uu)
+,
+    CONSTRAINT adclient_jpuserlocation FOREIGN KEY (ad_client_id)
+        REFERENCES adempiere.ad_client (ad_client_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED
+        NOT VALID,
+    CONSTRAINT adorg_jpuserlocation FOREIGN KEY (ad_org_id)
+        REFERENCES adempiere.ad_org (ad_org_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED
+        NOT VALID,
+    CONSTRAINT aduser_jpuserlocation FOREIGN KEY (ad_user_id)
+        REFERENCES adempiere.ad_user (ad_user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED
+        NOT VALID,
+    CONSTRAINT ccity_jpuserlocation FOREIGN KEY (c_city_id)
+        REFERENCES adempiere.c_city (c_city_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED
+        NOT VALID,
+    CONSTRAINT ccountry_jpuserlocation FOREIGN KEY (c_country_id)
+        REFERENCES adempiere.c_country (c_country_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED
+        NOT VALID,
+    CONSTRAINT cregion_jpuserlocation FOREIGN KEY (c_region_id)
+        REFERENCES adempiere.c_region (c_region_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED
+        NOT VALID,
+    CONSTRAINT jp_user_location_isactive_check CHECK (isactive = ANY (ARRAY['Y'::bpchar, 'N'::bpchar])),
+    CONSTRAINT jp_user_location_isdefault_check CHECK (isdefault = ANY (ARRAY['Y'::bpchar, 'N'::bpchar]))
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE adempiere.jp_user_location
+    OWNER to adempiere;
+
+-- Index: jp_user_location_index
+
+-- DROP INDEX adempiere.jp_user_location_index;
+
+CREATE INDEX jp_user_location_index
+    ON adempiere.jp_user_location USING btree
+    (ad_user_id)
+    TABLESPACE pg_default;
