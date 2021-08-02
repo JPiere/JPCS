@@ -1,0 +1,4 @@
+Add below column to JP_PivotWindow Table
+
+IsCollapsedByDefault
+
