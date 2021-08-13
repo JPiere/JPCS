@@ -1,26 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.14.0.final using JasperReports Library version 6.14.0-2ab0d8625be255bf609c78e1181801213e51db8f  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="JPIERE-0492_手書請求書鑑" pageWidth="554" pageHeight="802" columnWidth="554" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0434304a-b4e8-469e-80c3-627cc4eb857e">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="JPIERE-0495_注文請書鑑" pageWidth="554" pageHeight="802" columnWidth="554" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0434304a-b4e8-469e-80c3-627cc4eb857e">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQL-JPiere82"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="RECORD_ID" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[1000023]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[1000389]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
-		<defaultValueExpression><![CDATA["C:\\Users\\hhagi\\OneDrive\\src-git\\jpiere-dev\\JPCS\\JasperReports\\IDEMPIERE-0492\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\Users\\hhagi\\OneDrive\\src-git\\jpiere-dev\\JPCS\\JasperReports\\JPIERE-0495\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT 
-e.JP_BP_Address AS JP_BP_Address ,
-e.JP_BP_Name AS JP_BP_Name,
-e.JP_BP_User_Name AS JP_BP_User_Name,
-e.JP_EstimationDate AS JP_EstimationDate,
-e.DocumentNo AS DocumentNo,
-e.GrandTotal AS GrandTotal,
-e.JP_Subject AS Subject, 
-e.Description AS Description,
-e.JP_Remarks AS Remarks,
-jp_paymenttermduedate(e.c_paymentterm_id, e.JP_EstimationDate ) AS duedate,
+l.Postal AS Postal,
+l.Postal_Add AS Postal_Add,
+l.RegionName AS RegionName,
+l.City AS City,
+l.Address1 AS Address1,
+COALESCE(l.Address2,'') AS Address2,
+COALESCE(o.AD_User_ID, 0) AS AD_Uer_ID,
+COALESCE(u.Title,'') AS UserTitle,
+CASE
+	WHEN u.JP_LastName IS NULL THEN u.Name
+	ELSE COALESCE(u.JP_LastName,'') || COALESCE(u.JP_FirstName,'') 
+END AS UserName,
+o.DateOrdered AS DateOrdered,
+o.DocumentNo AS DocumentNo,
+o.GrandTotal AS GrandTotal,
+bp.Name2 AS BPartnerName,
+COALESCE(g.Greeting, '御中' ) AS Greeting,
+o.JP_Subject AS Subject, 
+o.Description AS Description,
+o.JP_Remarks AS Remarks,
+jp_paymenttermduedate(o.c_paymentterm_id, o.dateOrdered) AS duedate,
 s.Title AS SalesRepTitle,
 CASE
 	WHEN s.JP_LastName IS NULL THEN s.Name
@@ -28,55 +39,107 @@ CASE
 END AS SalesRepName,
 s.Phone AS SalesRepPhon,
 s.EMail AS SalesRepEMail,
-e.DocStatus AS DocStatus
-FROM JP_Estimation e 
-LEFT OUTER JOIN AD_User s ON ( e.SalesRep_ID = s.AD_User_ID )
-WHERE e.JP_Estimation_ID = $P{RECORD_ID}]]>
+o.DocStatus AS DocStatus,
+COALESCE(l2.Address1,'') AS DeliAddress1,
+COALESCE(l2.Address2,'') AS DeliAddress2,
+COALESCE(l3.Address1,'') AS BillAddress1,
+COALESCE(l3.Address2,'') AS BillAddress2,
+o.C_BPartner_Location_ID  AS C_BPartner_Location_ID, 
+COALESCE(o.Dropship_Location_ID,o.C_BPartner_Location_ID) AS Dropship_Location_ID,
+COALESCE(o.Bill_Location_ID,o.C_BPartner_Location_ID) AS Bill_Location_ID
+FROM C_Order o 
+INNER JOIN C_BPartner bp ON (o.C_BPartner_ID = bp.C_BPartner_ID)
+LEFT OUTER JOIN C_Greeting g ON ( bp.C_Greeting_ID = g.C_Greeting_ID )
+INNER JOIN C_BPartner_Location bpl ON (o.C_BPartner_Location_ID = bpl.C_BPartner_Location_ID)
+INNER JOIN  C_Location l ON (bpl. C_Location_ID=l.C_Location_ID)
+LEFT OUTER JOIN AD_User u ON ( o.AD_User_ID = u.AD_User_ID )
+LEFT OUTER JOIN AD_User s ON ( o.SalesRep_ID = s.AD_User_ID )
+LEFT OUTER JOIN C_BPartner_Location dl ON (o.Dropship_Location_ID =dl.C_BPartner_Location_ID)
+LEFT OUTER JOIN  C_Location l2 ON (dl. C_Location_ID=l2.C_Location_ID)
+LEFT OUTER JOIN C_BPartner_Location bl ON (o.Bill_Location_ID = bl.C_BPartner_Location_ID)
+LEFT OUTER JOIN  C_Location l3 ON (bl. C_Location_ID=l3.C_Location_ID)
+WHERE o.C_Order_ID = $P{RECORD_ID}]]>
 	</queryString>
-	<field name="jp_bp_address" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="jp_bp_address"/>
-		<property name="com.jaspersoft.studio.field.label" value="jp_bp_address"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="jp_estimation"/>
+	<field name="postal" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="postal"/>
+		<property name="com.jaspersoft.studio.field.label" value="postal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_location"/>
 	</field>
-	<field name="jp_bp_name" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="jp_bp_name"/>
-		<property name="com.jaspersoft.studio.field.label" value="jp_bp_name"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="jp_estimation"/>
+	<field name="postal_add" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="postal_add"/>
+		<property name="com.jaspersoft.studio.field.label" value="postal_add"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_location"/>
 	</field>
-	<field name="jp_bp_user_name" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="jp_bp_user_name"/>
-		<property name="com.jaspersoft.studio.field.label" value="jp_bp_user_name"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="jp_estimation"/>
+	<field name="regionname" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="regionname"/>
+		<property name="com.jaspersoft.studio.field.label" value="regionname"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_location"/>
 	</field>
-	<field name="jp_estimationdate" class="java.sql.Timestamp">
-		<property name="com.jaspersoft.studio.field.name" value="jp_estimationdate"/>
-		<property name="com.jaspersoft.studio.field.label" value="jp_estimationdate"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="jp_estimation"/>
+	<field name="city" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="city"/>
+		<property name="com.jaspersoft.studio.field.label" value="city"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_location"/>
+	</field>
+	<field name="address1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="address1"/>
+		<property name="com.jaspersoft.studio.field.label" value="address1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_location"/>
+	</field>
+	<field name="address2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="address2"/>
+		<property name="com.jaspersoft.studio.field.label" value="address2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_location"/>
+	</field>
+	<field name="ad_uer_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ad_uer_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="ad_uer_id"/>
+	</field>
+	<field name="usertitle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="usertitle"/>
+		<property name="com.jaspersoft.studio.field.label" value="usertitle"/>
+	</field>
+	<field name="username" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="username"/>
+		<property name="com.jaspersoft.studio.field.label" value="username"/>
+	</field>
+	<field name="dateordered" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="dateordered"/>
+		<property name="com.jaspersoft.studio.field.label" value="dateordered"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_order"/>
 	</field>
 	<field name="documentno" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="documentno"/>
 		<property name="com.jaspersoft.studio.field.label" value="documentno"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="jp_estimation"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_order"/>
 	</field>
 	<field name="grandtotal" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.name" value="grandtotal"/>
 		<property name="com.jaspersoft.studio.field.label" value="grandtotal"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="jp_estimation"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_order"/>
+	</field>
+	<field name="bpartnername" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="bpartnername"/>
+		<property name="com.jaspersoft.studio.field.label" value="bpartnername"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_bpartner"/>
+	</field>
+	<field name="greeting" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="greeting"/>
+		<property name="com.jaspersoft.studio.field.label" value="greeting"/>
 	</field>
 	<field name="subject" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="subject"/>
 		<property name="com.jaspersoft.studio.field.label" value="subject"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="jp_estimation"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_order"/>
 	</field>
 	<field name="description" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="description"/>
 		<property name="com.jaspersoft.studio.field.label" value="description"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="jp_estimation"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_order"/>
 	</field>
 	<field name="remarks" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="remarks"/>
 		<property name="com.jaspersoft.studio.field.label" value="remarks"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="jp_estimation"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_order"/>
 	</field>
 	<field name="duedate" class="java.sql.Timestamp">
 		<property name="com.jaspersoft.studio.field.name" value="duedate"/>
@@ -104,7 +167,40 @@ WHERE e.JP_Estimation_ID = $P{RECORD_ID}]]>
 	<field name="docstatus" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="docstatus"/>
 		<property name="com.jaspersoft.studio.field.label" value="docstatus"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="jp_estimation"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_order"/>
+	</field>
+	<field name="deliaddress1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="deliaddress1"/>
+		<property name="com.jaspersoft.studio.field.label" value="deliaddress1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_location"/>
+	</field>
+	<field name="deliaddress2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="deliaddress2"/>
+		<property name="com.jaspersoft.studio.field.label" value="deliaddress2"/>
+	</field>
+	<field name="billaddress1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="billaddress1"/>
+		<property name="com.jaspersoft.studio.field.label" value="billaddress1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_location"/>
+	</field>
+	<field name="billaddress2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="billaddress2"/>
+		<property name="com.jaspersoft.studio.field.label" value="billaddress2"/>
+	</field>
+	<field name="c_bpartner_location_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="c_bpartner_location_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="c_bpartner_location_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_order"/>
+	</field>
+	<field name="dropship_location_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="dropship_location_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="dropship_location_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_order"/>
+	</field>
+	<field name="bill_location_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="bill_location_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="bill_location_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_order"/>
 	</field>
 	<variable name="SumTax" class="java.math.BigDecimal" calculation="System"/>
 	<title>
@@ -119,7 +215,7 @@ WHERE e.JP_Estimation_ID = $P{RECORD_ID}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="IPAex明朝" size="24" isBold="true"/>
 				</textElement>
-				<text><![CDATA[御 請 求 書]]></text>
+				<text><![CDATA[注 文 請 書]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="425" y="172" width="120" height="16" uuid="473fc0c6-8588-4d48-b411-c366e68df564">
@@ -137,8 +233,18 @@ WHERE e.JP_Estimation_ID = $P{RECORD_ID}]]>
 				<box padding="2">
 					<pen lineWidth="0.75" lineStyle="Dotted" lineColor="#888888"/>
 				</box>
+				<textField>
+					<reportElement x="10" y="5" width="240" height="16" uuid="0b7686bc-aa30-4f53-baf6-131047a373fd">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="IPAex明朝"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{postal} == null ? (""):("〒" + $F{postal} + " - " +$F{postal_add})]]></textFieldExpression>
+				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="10" y="6" width="240" height="32" uuid="c9f9c68d-d28c-45fa-90f3-f0bc3c2b095f">
+					<reportElement x="10" y="20" width="240" height="32" uuid="c9f9c68d-d28c-45fa-90f3-f0bc3c2b095f">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -147,26 +253,26 @@ WHERE e.JP_Estimation_ID = $P{RECORD_ID}]]>
 					<textElement>
 						<font fontName="IPAex明朝" size="9"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{jp_bp_address} == null ? (""):($F{jp_bp_address})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{address1} == null? ("") : ($F{address1} + $F{address2})]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont">
-					<reportElement x="10" y="40" width="240" height="20" uuid="7b340268-3460-4bec-97c2-a8afc1d0e4e7">
+					<reportElement x="10" y="52" width="240" height="20" uuid="7b340268-3460-4bec-97c2-a8afc1d0e4e7">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					</reportElement>
 					<textElement verticalAlignment="Middle">
-						<font fontName="IPAex明朝" size="12"/>
+						<font fontName="IPAex明朝" size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{jp_bp_name} == null ? (""):($F{jp_bp_name})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{ad_uer_id}>0 ? ($F{bpartnername}) : ($F{bpartnername} + " " +$F{greeting} )]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
 					<reportElement x="54" y="72" width="196" height="28" uuid="c954dd05-253f-46f9-a6ca-82b538bea58c"/>
 					<box padding="2"/>
-					<textElement textAlignment="Right">
+					<textElement>
 						<font fontName="IPAex明朝"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{jp_bp_user_name} == null ? ("御中"):($F{jp_bp_user_name} + " 様")]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{ad_uer_id} > 0 ?  ($F{usertitle}+" " + $F{username}+" 様") : ("")]]></textFieldExpression>
 				</textField>
 			</frame>
 			<image hAlign="Center" vAlign="Bottom">
@@ -197,14 +303,14 @@ WHERE e.JP_Estimation_ID = $P{RECORD_ID}]]>
 				<textElement verticalAlignment="Middle">
 					<font fontName="IPA明朝" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{jp_bp_name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{bpartnername}+" "+$F{greeting}]]></textFieldExpression>
 			</textField>
 			<subreport>
 				<reportElement x="82" y="463" width="400" height="80" uuid="fdaaf36e-61d1-4d98-bf44-fcb3262e25f1"/>
 				<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<returnValue subreportVariable="TaxSum" toVariable="SumTax"/>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "JPIERE-0492_手書請求書消費税明細.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "JPIERE-0495_注文請書消費税明細.jasper"]]></subreportExpression>
 			</subreport>
 			<rectangle>
 				<reportElement x="15" y="232" width="300" height="2" backcolor="#023894" uuid="9869ac71-9e59-491e-9dba-485a88ed08c9">
@@ -222,14 +328,14 @@ WHERE e.JP_Estimation_ID = $P{RECORD_ID}]]>
 				<textElement verticalAlignment="Middle">
 					<font fontName="IPAex明朝"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{jp_estimationdate}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{dateordered}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="325" y="156" width="100" height="16" uuid="0ec6e1d8-b570-4234-ab0f-6f333210616d"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="IPAex明朝"/>
 				</textElement>
-				<text><![CDATA[請求日付：]]></text>
+				<text><![CDATA[注文日付：]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="325" y="172" width="100" height="16" uuid="8dcd196d-c2ce-4f41-8884-d14a83c637c2">
@@ -238,7 +344,7 @@ WHERE e.JP_Estimation_ID = $P{RECORD_ID}]]>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="IPAex明朝"/>
 				</textElement>
-				<text><![CDATA[請求番号：]]></text>
+				<text><![CDATA[注文番号：]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="325" y="188" width="100" height="16" uuid="7b4acf18-4e55-412d-9a43-4a4afb063874">
@@ -331,7 +437,7 @@ WHERE e.JP_Estimation_ID = $P{RECORD_ID}]]>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="IPAex明朝" size="12"/>
 				</textElement>
-				<text><![CDATA[下記の通り、御請求申し上げます。]]></text>
+				<text><![CDATA[下記の通り、御注文をお請け致しました。]]></text>
 			</staticText>
 			<textField textAdjust="ScaleFont">
 				<reportElement x="15" y="322" width="527" height="30" uuid="e0eed940-e974-439c-be9d-fec5adf1aac3"/>
@@ -362,10 +468,10 @@ WHERE e.JP_Estimation_ID = $P{RECORD_ID}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="IPAex明朝" size="20"/>
 				</textElement>
-				<text><![CDATA[御 請 求 金 額]]></text>
+				<text><![CDATA[御 注 文 金 額]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="10" y="618" width="100" height="30" backcolor="#90BEE6" uuid="f4253c87-f78a-4700-86d8-3f168f88dc11">
+				<reportElement mode="Opaque" x="10" y="618" width="100" height="60" backcolor="#90BEE6" uuid="f4253c87-f78a-4700-86d8-3f168f88dc11">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -379,12 +485,13 @@ WHERE e.JP_Estimation_ID = $P{RECORD_ID}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="IPAex明朝" size="12"/>
 				</textElement>
-				<text><![CDATA[支払期限]]></text>
+				<text><![CDATA[納品先住所]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="10" y="648" width="100" height="90" backcolor="#90BEE6" uuid="1a8ff1a2-10ab-4936-91b3-b1a971d51177">
+				<reportElement mode="Opaque" x="10" y="678" width="100" height="60" backcolor="#90BEE6" uuid="1a8ff1a2-10ab-4936-91b3-b1a971d51177">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<box padding="2">
 					<pen lineStyle="Solid" lineColor="#666666"/>
@@ -396,24 +503,7 @@ WHERE e.JP_Estimation_ID = $P{RECORD_ID}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="IPAex明朝" size="12"/>
 				</textElement>
-				<text><![CDATA[口座情報]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="110" y="648" width="180" height="90" uuid="25faac88-0e6d-4ba3-a22d-d54a25f21a61">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<box>
-					<pen lineColor="#666666"/>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="IPAex明朝" size="12"/>
-				</textElement>
-				<text><![CDATA[]]></text>
+				<text><![CDATA[請求先住所]]></text>
 			</staticText>
 			<textField evaluationTime="Report" pattern="#,##0.##円" isBlankWhenNull="true">
 				<reportElement x="268" y="411" width="275" height="30" uuid="b620fa3e-0b91-4f42-a6ff-ec89cb861eb4">
@@ -454,39 +544,6 @@ WHERE e.JP_Estimation_ID = $P{RECORD_ID}]]>
 				</textElement>
 				<text><![CDATA[【消費税内訳】]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="110" y="648" width="180" height="30" uuid="847e49e2-1cbe-4de6-8086-89ccbd346d5a">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<box padding="2"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="IPAex明朝" size="12"/>
-				</textElement>
-				<text><![CDATA[〇×△銀行XXX支店]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="110" y="678" width="180" height="30" uuid="343acace-05c7-4095-8f24-4343e0e44869">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<box padding="2"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="IPAex明朝" size="12"/>
-				</textElement>
-				<text><![CDATA[普通預金1234567]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="110" y="708" width="180" height="30" uuid="29260aed-0688-41db-bfdf-a8319e175bf4">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<box padding="2"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="IPAex明朝" size="10"/>
-				</textElement>
-				<text><![CDATA[株式会社OSS ERP Solutions]]></text>
-			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement x="10" y="550" width="532" height="60" uuid="7a5a9f94-c488-4e5f-ba59-7c3e4dd865cd">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -500,22 +557,6 @@ WHERE e.JP_Estimation_ID = $P{RECORD_ID}]]>
 					<font fontName="IPAex明朝"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
-			</textField>
-			<textField pattern="yyyy年MM月dd日">
-				<reportElement x="110" y="618" width="180" height="30" uuid="819d54b8-e3c6-4169-b7c3-83e8514073bd">
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<box padding="2">
-					<pen lineColor="#666666"/>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="IPAex明朝" size="14" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{duedate}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement mode="Opaque" x="302" y="618" width="240" height="20" backcolor="#90BEE6" uuid="f637469f-6da9-428b-a243-796e8b01f5c9">
@@ -532,7 +573,7 @@ WHERE e.JP_Estimation_ID = $P{RECORD_ID}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="IPAex明朝" size="12"/>
 				</textElement>
-				<text><![CDATA[請求内容やお支払に関するお問い合わせ]]></text>
+				<text><![CDATA[ご注文に関するお問い合わせ]]></text>
 			</staticText>
 			<rectangle>
 				<reportElement x="302" y="638" width="240" height="100" uuid="1285b4c9-8e70-466b-9bbf-0eb1c669f5dd">
@@ -587,6 +628,34 @@ WHERE e.JP_Estimation_ID = $P{RECORD_ID}]]>
 					<font fontName="IPAex明朝"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Eメール：" + $F{salesrepemail}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="618" width="180" height="60" uuid="b38da0f5-588f-4184-ac2f-7cfad18c6e9d"/>
+				<box padding="2">
+					<pen lineColor="#666666"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="IPAex明朝"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{c_bpartner_location_id}.intValue() == $F{dropship_location_id}.intValue() ?  ("同上")  : ($F{deliaddress1} + $F{deliaddress2})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="678" width="180" height="60" uuid="6d771126-93d5-4685-a7ff-91fd687072d3"/>
+				<box padding="2">
+					<pen lineColor="#666666"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="IPAex明朝"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{c_bpartner_location_id}.intValue() == $F{bill_location_id}.intValue() ? ("同上") : ($F{billaddress1} + $F{billaddress2})]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
