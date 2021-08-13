@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.14.0.final using JasperReports Library version 6.14.0-2ab0d8625be255bf609c78e1181801213e51db8f  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="JPIERE-0495_注文請書消費税明細" pageWidth="400" pageHeight="80" columnWidth="400" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d7cc2be2-1255-45e1-a11c-297edf160b21">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQL-JPiere82"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="RECORD_ID" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[1000389]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:\\Users\\hhagi\\OneDrive\\src-git\\jpiere-dev\\JPCS\\JasperReports\\IDEMPIERE-0495\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+tax.Name,
+tax.TaxIndicator,
+tax.Rate,
+ot.TaxBaseAmt,
+ot.TaxAmt
+FROM C_OrderTax ot 
+	INNER JOIN C_Tax tax ON (ot.C_Tax_ID = tax.C_Tax_ID) 
+WHERE ot.C_Order_ID= $P{RECORD_ID}
+ORDER BY tax.rate DESC]]>
+	</queryString>
+	<field name="name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="name"/>
+		<property name="com.jaspersoft.studio.field.label" value="name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_tax"/>
+	</field>
+	<field name="taxindicator" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="taxindicator"/>
+		<property name="com.jaspersoft.studio.field.label" value="taxindicator"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_tax"/>
+	</field>
+	<field name="rate" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="rate"/>
+		<property name="com.jaspersoft.studio.field.label" value="rate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_tax"/>
+	</field>
+	<field name="taxbaseamt" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="taxbaseamt"/>
+		<property name="com.jaspersoft.studio.field.label" value="taxbaseamt"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_ordertax"/>
+	</field>
+	<field name="taxamt" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="taxamt"/>
+		<property name="com.jaspersoft.studio.field.label" value="taxamt"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_ordertax"/>
+	</field>
+	<variable name="TaxSum" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{taxamt}]]></variableExpression>
+	</variable>
+	<columnHeader>
+		<band height="20" splitType="Prevent">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="160" height="20" backcolor="#DEEBF7" uuid="d53d148c-014f-425b-b55d-5d9a5bb29052">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d8fe3e1b-a3c3-4536-8ca6-f6e1a08ecceb"/>
+				</reportElement>
+				<box padding="2">
+					<pen lineColor="#666666"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAex明朝"/>
+				</textElement>
+				<text><![CDATA[税率]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="160" y="0" width="120" height="20" backcolor="#DEEBF7" uuid="99090113-f31e-4ce5-87bd-aed086defff6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2a4cadf8-aad0-4ae6-b4e4-fd0dff694661"/>
+				</reportElement>
+				<box padding="2">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAex明朝"/>
+				</textElement>
+				<text><![CDATA[税抜金額(課税標準額)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="280" y="0" width="120" height="20" backcolor="#DEEBF7" uuid="c0017830-33f7-4635-a9f3-79310d330da4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2b5ffa5a-b5af-4905-a006-e78e71abd1a4"/>
+				</reportElement>
+				<box padding="2">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAex明朝"/>
+				</textElement>
+				<text><![CDATA[消費税額]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="160" height="20" uuid="d87e3cc2-a036-4aaa-a81b-2995bc9650c8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d8fe3e1b-a3c3-4536-8ca6-f6e1a08ecceb"/>
+				</reportElement>
+				<box padding="2">
+					<pen lineColor="#666666"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="IPAex明朝"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{taxindicator}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.##円">
+				<reportElement x="160" y="0" width="120" height="20" uuid="f94909c2-53b6-4523-b165-ce656f379310">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2a4cadf8-aad0-4ae6-b4e4-fd0dff694661"/>
+				</reportElement>
+				<box padding="2">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="IPAex明朝"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{taxbaseamt}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.##円">
+				<reportElement x="280" y="0" width="120" height="20" uuid="7d82d71d-43ec-459c-87d6-35fd25e2a53c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2b5ffa5a-b5af-4905-a006-e78e71abd1a4"/>
+				</reportElement>
+				<box padding="2">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="IPAex明朝"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{taxamt}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="30" y="10" width="350" height="30" uuid="5ca4a660-b183-4e48-a927-608d4ff6e403"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAex明朝" size="20"/>
+				</textElement>
+				<text><![CDATA[データがありません。]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

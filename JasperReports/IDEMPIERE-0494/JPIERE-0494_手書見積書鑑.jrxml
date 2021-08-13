@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.14.0.final using JasperReports Library version 6.14.0-2ab0d8625be255bf609c78e1181801213e51db8f  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="JPIERE-0494_手書見積書鑑" pageWidth="554" pageHeight="802" columnWidth="554" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0434304a-b4e8-469e-80c3-627cc4eb857e">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQL-JPiere82"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="RECORD_ID" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[1000023]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:\\Users\\hhagi\\OneDrive\\src-git\\jpiere-dev\\JPCS\\JasperReports\\IDEMPIERE-0494\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+e.JP_BP_Address AS JP_BP_Address ,
+e.JP_BP_Name AS JP_BP_Name,
+e.JP_BP_User_Name AS JP_BP_User_Name,
+e.JP_EstimationDate AS JP_EstimationDate,
+e.DocumentNo AS DocumentNo,
+e.GrandTotal AS GrandTotal,
+e.JP_Subject AS Subject, 
+e.Description AS Description,
+e.JP_Remarks AS Remarks,
+jp_paymenttermduedate(e.c_paymentterm_id, e.JP_EstimationDate ) AS duedate,
+s.Title AS SalesRepTitle,
+CASE
+	WHEN s.JP_LastName IS NULL THEN s.Name
+	ELSE COALESCE(s.JP_LastName,'') || COALESCE(s.JP_FirstName,'') 
+END AS SalesRepName,
+s.Phone AS SalesRepPhon,
+s.EMail AS SalesRepEMail,
+e.DocStatus AS DocStatus,
+e.version AS version
+FROM JP_Estimation e 
+LEFT OUTER JOIN AD_User s ON ( e.SalesRep_ID = s.AD_User_ID )
+WHERE e.JP_Estimation_ID = $P{RECORD_ID}]]>
+	</queryString>
+	<field name="jp_bp_address" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="jp_bp_address"/>
+		<property name="com.jaspersoft.studio.field.label" value="jp_bp_address"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="jp_estimation"/>
+	</field>
+	<field name="jp_bp_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="jp_bp_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="jp_bp_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="jp_estimation"/>
+	</field>
+	<field name="jp_bp_user_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="jp_bp_user_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="jp_bp_user_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="jp_estimation"/>
+	</field>
+	<field name="jp_estimationdate" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="jp_estimationdate"/>
+		<property name="com.jaspersoft.studio.field.label" value="jp_estimationdate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="jp_estimation"/>
+	</field>
+	<field name="documentno" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="documentno"/>
+		<property name="com.jaspersoft.studio.field.label" value="documentno"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="jp_estimation"/>
+	</field>
+	<field name="grandtotal" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="grandtotal"/>
+		<property name="com.jaspersoft.studio.field.label" value="grandtotal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="jp_estimation"/>
+	</field>
+	<field name="subject" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="subject"/>
+		<property name="com.jaspersoft.studio.field.label" value="subject"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="jp_estimation"/>
+	</field>
+	<field name="description" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="description"/>
+		<property name="com.jaspersoft.studio.field.label" value="description"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="jp_estimation"/>
+	</field>
+	<field name="remarks" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="remarks"/>
+		<property name="com.jaspersoft.studio.field.label" value="remarks"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="jp_estimation"/>
+	</field>
+	<field name="duedate" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="duedate"/>
+		<property name="com.jaspersoft.studio.field.label" value="duedate"/>
+	</field>
+	<field name="salesreptitle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="salesreptitle"/>
+		<property name="com.jaspersoft.studio.field.label" value="salesreptitle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ad_user"/>
+	</field>
+	<field name="salesrepname" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="salesrepname"/>
+		<property name="com.jaspersoft.studio.field.label" value="salesrepname"/>
+	</field>
+	<field name="salesrepphon" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="salesrepphon"/>
+		<property name="com.jaspersoft.studio.field.label" value="salesrepphon"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ad_user"/>
+	</field>
+	<field name="salesrepemail" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="salesrepemail"/>
+		<property name="com.jaspersoft.studio.field.label" value="salesrepemail"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ad_user"/>
+	</field>
+	<field name="docstatus" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="docstatus"/>
+		<property name="com.jaspersoft.studio.field.label" value="docstatus"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="jp_estimation"/>
+	</field>
+	<field name="version" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="version"/>
+		<property name="com.jaspersoft.studio.field.label" value="version"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="jp_estimation"/>
+	</field>
+	<variable name="SumTax" class="java.math.BigDecimal" calculation="System"/>
+	<title>
+		<band height="802" splitType="Prevent">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="121" width="552" height="30" backcolor="#90BEE6" uuid="457affa8-a511-4dfe-99e3-daaf35e5f7c2">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAex明朝" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[御 見 積 書]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="405" y="172" width="140" height="16" uuid="473fc0c6-8588-4d48-b411-c366e68df564">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="IPAex明朝"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{documentno} +" - " +$F{version}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement x="40" y="4" width="262" height="108" uuid="f51e247d-2854-43e3-932c-90945e2cb70d">
+					<property name="com.jaspersoft.studio.element.name" value="住所ラベル"/>
+				</reportElement>
+				<box padding="2">
+					<pen lineWidth="0.75" lineStyle="Dotted" lineColor="#888888"/>
+				</box>
+				<textField textAdjust="ScaleFont">
+					<reportElement x="10" y="6" width="240" height="32" uuid="c9f9c68d-d28c-45fa-90f3-f0bc3c2b095f">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<box padding="2"/>
+					<textElement>
+						<font fontName="IPAex明朝" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{jp_bp_address} == null ? (""):($F{jp_bp_address})]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="ScaleFont">
+					<reportElement x="10" y="40" width="240" height="20" uuid="7b340268-3460-4bec-97c2-a8afc1d0e4e7">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="IPAex明朝" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{jp_bp_name} == null ? (""):($F{jp_bp_name})]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+					<reportElement x="54" y="72" width="196" height="28" uuid="c954dd05-253f-46f9-a6ca-82b538bea58c"/>
+					<box padding="2"/>
+					<textElement textAlignment="Right">
+						<font fontName="IPAex明朝"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{jp_bp_user_name} == null ? ("御中"):($F{jp_bp_user_name} + " 様")]]></textFieldExpression>
+				</textField>
+			</frame>
+			<image hAlign="Center" vAlign="Bottom">
+				<reportElement mode="Opaque" x="315" y="59" width="230" height="53" uuid="a9c022f0-03ac-4114-9048-100918943f40">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.element.name" value="OSS-ERP-Solutions"/>
+				</reportElement>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR}+"OSS-ERP-Solutions_logo_yoko.png"]]></imageExpression>
+			</image>
+			<textField pattern="#,##0.##円">
+				<reportElement x="268" y="360" width="276" height="50" uuid="7780e8e4-54b7-4a9b-b71e-542cbbbd05b4">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box padding="2">
+					<pen lineColor="#666666"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAex明朝" size="22" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{grandtotal}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="15" y="202" width="300" height="30" uuid="eae492eb-0f47-41cf-b456-7e41a9210bad"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="IPA明朝" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{jp_bp_name}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="82" y="463" width="400" height="80" uuid="fdaaf36e-61d1-4d98-bf44-fcb3262e25f1"/>
+				<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<returnValue subreportVariable="TaxSum" toVariable="SumTax"/>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "JPIERE-0494_手書見積書消費税明細.jasper"]]></subreportExpression>
+			</subreport>
+			<rectangle>
+				<reportElement x="15" y="232" width="300" height="2" backcolor="#023894" uuid="9869ac71-9e59-491e-9dba-485a88ed08c9">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.element.name" value="件名下線"/>
+				</reportElement>
+			</rectangle>
+			<textField pattern="yyyy年MM月dd日">
+				<reportElement x="405" y="156" width="120" height="16" uuid="2b1adaa5-4393-478a-8648-93b34d078c85">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="IPAex明朝"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{jp_estimationdate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="325" y="156" width="80" height="16" uuid="0ec6e1d8-b570-4234-ab0f-6f333210616d">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="IPAex明朝"/>
+				</textElement>
+				<text><![CDATA[見積日付：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="325" y="172" width="80" height="16" uuid="8dcd196d-c2ce-4f41-8884-d14a83c637c2">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="IPAex明朝"/>
+				</textElement>
+				<text><![CDATA[見積番号：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="325" y="188" width="80" height="16" uuid="7b4acf18-4e55-412d-9a43-4a4afb063874">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="IPAex明朝"/>
+				</textElement>
+				<text><![CDATA[登録番号：]]></text>
+			</staticText>
+			<image>
+				<reportElement x="468" y="244" width="67" height="62" uuid="f9de1d4c-81bc-42ea-a1cf-e94627e64e31">
+					<property name="com.jaspersoft.studio.element.name" value="角印"/>
+					<printWhenExpression><![CDATA[$F{docstatus}.equalsIgnoreCase( "CO" ) || $F{docstatus}.equalsIgnoreCase("CL")]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR}+"角印.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="405" y="188" width="120" height="16" uuid="09e04fa5-9e8e-4c09-b131-c8af8affa91b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="IPAex明朝"/>
+				</textElement>
+				<text><![CDATA[TAX-1234567890]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="232" width="185" height="20" uuid="9e525c5d-410d-4fbe-847f-a0a8470b14f0">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="IPAex明朝" size="12"/>
+				</textElement>
+				<text><![CDATA[株式会社OSS ERP Solutions]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="251" width="100" height="16" uuid="3ea9e48e-d1e4-4d20-9f10-96af158e9715">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="IPAex明朝"/>
+				</textElement>
+				<text><![CDATA[〒270-1350]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="284" width="185" height="16" uuid="93c0c124-f66f-4862-b6bc-3d0e1bd09965">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="IPAex明朝"/>
+				</textElement>
+				<text><![CDATA[TEL: 123-456-7890]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="268" width="185" height="16" uuid="d78739a8-79f6-4f6e-91fc-17e7d562da2f">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="IPAex明朝"/>
+				</textElement>
+				<text><![CDATA[千葉県印西市中央北2-1-3]]></text>
+			</staticText>
+			<frame>
+				<reportElement x="0" y="755" width="554" height="42" uuid="075ce695-5c14-47fe-b02d-bab338c787ca">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.element.name" value="備考"/>
+					<printWhenExpression><![CDATA[$F{remarks} != null]]></printWhenExpression>
+				</reportElement>
+				<box padding="2">
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+				</box>
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+					<reportElement x="0" y="0" width="550" height="38" uuid="e21abfbe-b308-4ef4-a6c1-dfb73e6751a1">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="2"/>
+					<textElement>
+						<font fontName="IPAex明朝" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{remarks}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<staticText>
+				<reportElement x="15" y="290" width="235" height="30" uuid="8aa3b9b9-2722-4b83-a179-56e34bf7e2b6">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="IPAex明朝" size="12"/>
+				</textElement>
+				<text><![CDATA[下記の通り、御見積申し上げます。]]></text>
+			</staticText>
+			<textField textAdjust="ScaleFont">
+				<reportElement x="15" y="322" width="527" height="30" uuid="e0eed940-e974-439c-be9d-fec5adf1aac3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="IPAex明朝" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{subject} == null ? ("") : ("件名： "+ $F{subject})]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="58" y="352" width="485" height="1" backcolor="#023894" uuid="6537d208-cb23-466c-8317-aeed96ab687c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Opaque" x="58" y="360" width="210" height="50" backcolor="#90BEE6" uuid="e23c141f-8fa9-4519-9403-a89a8cd603b6">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box padding="2">
+					<pen lineStyle="Solid" lineColor="#666666"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAex明朝" size="20"/>
+				</textElement>
+				<text><![CDATA[御 見 積 金 額]]></text>
+			</staticText>
+			<textField evaluationTime="Report" pattern="#,##0.##円" isBlankWhenNull="true">
+				<reportElement x="268" y="411" width="275" height="30" uuid="b620fa3e-0b91-4f42-a6ff-ec89cb861eb4">
+					<property name="com.jaspersoft.studio.element.name" value="税額合計"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAex明朝" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SumTax}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="58" y="411" width="210" height="30" uuid="6420cfaa-377e-4a24-96bb-ce721c5ce0ad">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box padding="2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="IPAex明朝" size="12"/>
+				</textElement>
+				<text><![CDATA[（  内消費税額：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="518" y="411" width="25" height="30" uuid="58570e06-5b2d-47c4-919b-8d5ea612c0b3">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box padding="2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="IPAex明朝" size="12"/>
+				</textElement>
+				<text><![CDATA[）]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="82" y="442" width="210" height="20" uuid="1d41b1f2-8588-4436-b4ef-ab3de4ee4ced">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box padding="2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="IPAex明朝" size="12"/>
+				</textElement>
+				<text><![CDATA[【消費税内訳】]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="550" width="532" height="60" uuid="7a5a9f94-c488-4e5f-ba59-7c3e4dd865cd">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[$F{description} != null]]></printWhenExpression>
+				</reportElement>
+				<box padding="1">
+					<pen lineWidth="1.0" lineStyle="Dotted" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="IPAex明朝"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="302" y="618" width="240" height="20" backcolor="#90BEE6" uuid="f637469f-6da9-428b-a243-796e8b01f5c9">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box padding="2">
+					<pen lineStyle="Solid" lineColor="#666666"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAex明朝" size="12"/>
+				</textElement>
+				<text><![CDATA[御見積に関するお問い合わせ]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="302" y="638" width="240" height="100" uuid="1285b4c9-8e70-466b-9bbf-0eb1c669f5dd">
+					<property name="com.jaspersoft.studio.element.name" value="問合せ先の枠組み"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineStyle="Solid" lineColor="#666666"/>
+				</graphicElement>
+			</rectangle>
+			<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+				<reportElement x="302" y="638" width="240" height="30" uuid="5a32e03a-46d2-4778-809e-754658219010"/>
+				<box padding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="IPAex明朝"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{salesreptitle}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="302" y="668" width="240" height="30" uuid="ac8bbbf2-2e48-41b9-934e-7d7800cf0479"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAex明朝" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{salesrepname}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="350" y="301" width="185" height="16" uuid="3be318a5-4c7c-49fb-af3a-8c64426938ec">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="IPAex明朝"/>
+				</textElement>
+				<text><![CDATA[www.oss-erp.co.jp]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="302" y="698" width="240" height="15" uuid="eff1f4f6-bebb-4523-9ed5-6089114da481">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{salesrepphon} != null]]></printWhenExpression>
+				</reportElement>
+				<box padding="2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="IPAex明朝"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TEL：" + $F{salesrepphon}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="302" y="713" width="240" height="15" uuid="80318db1-0e79-40cd-9edc-dd3ff957fec2">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{salesrepemail} != null]]></printWhenExpression>
+				</reportElement>
+				<box padding="2"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="IPAex明朝"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Eメール：" + $F{salesrepemail}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="80" y="10" width="400" height="30" uuid="107071b2-b3da-4254-8a61-a0985d49e4c7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAex明朝" size="20"/>
+				</textElement>
+				<text><![CDATA[データがありません。]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>
