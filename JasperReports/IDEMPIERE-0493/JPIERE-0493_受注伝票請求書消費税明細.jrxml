@@ -1,40 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.14.0.final using JasperReports Library version 6.14.0-2ab0d8625be255bf609c78e1181801213e51db8f  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="JPIERE-0491_請求書消費税明細" pageWidth="400" pageHeight="80" columnWidth="400" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d7cc2be2-1255-45e1-a11c-297edf160b21">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="JPIERE-0493_受注伝票請求書消費税明細" pageWidth="400" pageHeight="80" columnWidth="400" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d7cc2be2-1255-45e1-a11c-297edf160b21">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQL-JPiere82"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="RECORD_ID" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[1000129]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[1000087]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
-		<defaultValueExpression><![CDATA["C:\\Users\\hhagi\\OneDrive\\src-git\\jpiere-dev\\JPCS\\JasperReports\\IDEMPIERE-0491\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\Users\\hhagi\\OneDrive\\src-git\\jpiere-dev\\JPCS\\JasperReports\\IDEMPIERE-0493\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
 tax.Name,
 tax.TaxIndicator,
 tax.Rate,
-it.TaxBaseAmt,
-it.TaxAmt
-FROM C_InvoiceTax it 
-	INNER JOIN C_Tax tax ON (it.C_Tax_ID = tax.C_Tax_ID) 
-WHERE it.C_Invoice_ID= $P{RECORD_ID}
+ot.TaxBaseAmt,
+ot.TaxAmt
+FROM C_OrderTax ot 
+	INNER JOIN C_Tax tax ON (ot.C_Tax_ID = tax.C_Tax_ID) 
+WHERE ot.C_Order_ID= $P{RECORD_ID}
 ORDER BY tax.rate DESC]]>
 	</queryString>
 	<field name="name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="name"/>
 		<property name="com.jaspersoft.studio.field.label" value="name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_tax"/>
 	</field>
 	<field name="taxindicator" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="taxindicator"/>
 		<property name="com.jaspersoft.studio.field.label" value="taxindicator"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_tax"/>
 	</field>
 	<field name="rate" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="rate"/>
 		<property name="com.jaspersoft.studio.field.label" value="rate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_tax"/>
 	</field>
 	<field name="taxbaseamt" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="taxbaseamt"/>
 		<property name="com.jaspersoft.studio.field.label" value="taxbaseamt"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_ordertax"/>
 	</field>
 	<field name="taxamt" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="taxamt"/>
 		<property name="com.jaspersoft.studio.field.label" value="taxamt"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_ordertax"/>
 	</field>
 	<variable name="TaxSum" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{taxamt}]]></variableExpression>
