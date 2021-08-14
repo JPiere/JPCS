@@ -1,0 +1,9 @@
+Add JP_Subject and JP_Remakrs columns below tables
+
+・C_Order
+・M_InOut
+・C_Invoice
+・JP_Estimation
+・JP_Bill
+・JP_BillLine
+・JP_Recognition
