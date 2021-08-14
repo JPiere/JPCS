@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.14.0.final using JasperReports Library version 6.14.0-2ab0d8625be255bf609c78e1181801213e51db8f  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="JPIERE0090_資産の部" pageWidth="270" pageHeight="28" columnWidth="270" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="c4a29ac4-98bc-433c-8d3b-0c693cc2b4cd">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQL-JPiere82"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="Style1">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[($V{PAGE_COUNT} % 2) == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EEEEEE"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="T_Report_AD_PInstance_ID" class="java.lang.Integer"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\hhagi\\OneDrive\\src-git\\jpiere-dev\\JPCS\\JasperReports\\JPIERE-0090\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+p.SeqNo AS SeqNo,
+p.ParameterName AS ParameterName,
+CASE 
+	WHEN  p.ParameterName ='C_Period_ID' THEN '期間'
+	WHEN  p.ParameterName ='Org_ID' THEN '組織'
+	WHEN  p.ParameterName ='C_BPartner_ID' THEN '取引先'
+	WHEN  p.ParameterName ='M_Product_ID' THEN '品目'
+	WHEN  p.ParameterName ='C_Project_ID' THEN 'プロジェクト'
+	WHEN  p.ParameterName ='C_Activity_ID' THEN 'アクティビティ'
+	WHEN  p.ParameterName ='C_SalesRegion_ID' THEN '販売地域'
+	WHEN  p.ParameterName ='C_Campaign_ID' THEN 'キャンペーン'
+	WHEN  p.ParameterName ='User1_ID' THEN 'ユーザー定義1'
+	WHEN  p.ParameterName ='User2_ID' THEN 'ユーザー定義2'
+	WHEN  p.ParameterName ='DetailsSourceFirst' THEN '詳細表示を最初にする'
+	WHEN  p.ParameterName ='PA_Hierarchy_ID' THEN '会計レポートツリーセット'
+	WHEN  p.ParameterName ='PA_ReportCube_ID' THEN '会計レポートキューブ'
+	ELSE ''
+	END AS Name,
+ p.info AS Value
+ FROM AD_PInstance_Para p
+ WHERE p.AD_PInstance_ID = $P{T_Report_AD_PInstance_ID}
+ ORDER BY p.SeqNo]]>
+	</queryString>
+	<field name="seqno" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="seqno"/>
+		<property name="com.jaspersoft.studio.field.label" value="seqno"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ad_pinstance_para"/>
+	</field>
+	<field name="parametername" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="parametername"/>
+		<property name="com.jaspersoft.studio.field.label" value="parametername"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ad_pinstance_para"/>
+	</field>
+	<field name="name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="name"/>
+		<property name="com.jaspersoft.studio.field.label" value="name"/>
+	</field>
+	<field name="value" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="value"/>
+		<property name="com.jaspersoft.studio.field.label" value="value"/>
+	</field>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="com.jaspersoft.studio.layout"/>
+			<frame>
+				<reportElement style="Style1" mode="Opaque" x="0" y="0" width="270" height="12" uuid="defc7060-13ba-4a67-8af1-471214712b73"/>
+				<textField textAdjust="ScaleFont">
+					<reportElement mode="Transparent" x="0" y="0" width="110" height="12" uuid="8615a1da-35f4-4de7-9497-5a0103286728">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a739bac5-bcdd-4d79-805d-112bcce1351e"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box padding="2"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="IPAex明朝" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="110" y="0" width="160" height="12" uuid="cb5bb826-b213-4bf3-863d-c5a6fdee9f4f">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="78b2dd8a-efb8-460b-b091-f98a09ba4e73"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+					<box padding="2">
+						<pen lineWidth="1.0" lineStyle="Dotted" lineColor="#666666"/>
+						<topPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="IPAex明朝" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{value}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+</jasperReport>

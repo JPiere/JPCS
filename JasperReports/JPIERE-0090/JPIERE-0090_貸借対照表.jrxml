@@ -78,7 +78,7 @@
 			</frame>
 		</band>
 	</title>
-	<pageHeader>
+	<columnHeader>
 		<band height="20">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<subreport>
@@ -98,5 +98,40 @@
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"JPIERE-0090_負債と純資産の部合計行.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-	</pageHeader>
+	</columnHeader>
+	<summary>
+		<band height="80">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="10" y="0" width="270" height="30" uuid="9f3b37ad-c40d-4667-abee-5d3e15b4352f"/>
+				<box padding="2"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="IPAex明朝"/>
+				</textElement>
+				<text><![CDATA[【パラメーター】]]></text>
+			</staticText>
+			<frame>
+				<reportElement stretchType="ContainerHeight" x="10" y="30" width="270" height="40" uuid="a641770a-02fe-49c7-9b94-3488ddc47225"/>
+				<box>
+					<pen lineColor="#666666"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+				</box>
+				<subreport>
+					<reportElement stretchType="ContainerHeight" x="0" y="0" width="270" height="40" uuid="b81a59b2-c510-4b3f-b614-a24f12b4266d">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"JPIERE-0090_パラメーター.jasper"]]></subreportExpression>
+				</subreport>
+			</frame>
+			<image hAlign="Center" vAlign="Top">
+				<reportElement x="340" y="30" width="180" height="40" uuid="dfe4284c-d371-45e4-9cb5-3a7983171419"/>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR}+"OSS-ERP-Solutions_logo_yoko.png"]]></imageExpression>
+			</image>
+		</band>
+	</summary>
 </jasperReport>
