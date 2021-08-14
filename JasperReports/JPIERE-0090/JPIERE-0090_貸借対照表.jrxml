@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.14.0.final using JasperReports Library version 6.14.0-2ab0d8625be255bf609c78e1181801213e51db8f  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="JPIERE-0090_貸借対照表" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e31fac4b-3c3f-493c-a41b-b22ebf54c39c">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQL-JPiere82"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="T_Report_AD_PInstance_ID" class="java.lang.Integer"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\hhagi\\OneDrive\\src-git\\jpiere-dev\\JPCS\\JasperReports\\JPIERE-0090\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT Name,Description, Col_0 FROM T_Report WHERE AD_PInstance_ID = $P{T_Report_AD_PInstance_ID}]]>
+	</queryString>
+	<title>
+		<band height="250" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="126" y="0" width="310" height="30" uuid="e7959b01-ac37-4d4d-8dc7-2f0093ee5843"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAex明朝" size="18"/>
+				</textElement>
+				<text><![CDATA[貸 借 対 照 表]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="10" y="30" width="270" height="20" backcolor="#90BEE6" uuid="ece6a76d-e59e-4633-8a69-ddc0473f2c7a">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box padding="2">
+					<pen lineWidth="1.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAex明朝" size="14"/>
+				</textElement>
+				<text><![CDATA[資産の部]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="280" y="30" width="270" height="20" backcolor="#90BEE6" uuid="deb597b0-2ce1-4f3c-8a8b-c317c3c6c4fc">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box padding="2">
+					<pen lineWidth="1.5" lineColor="#666666"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAex明朝" size="14"/>
+				</textElement>
+				<text><![CDATA[負債と純資産の部]]></text>
+			</staticText>
+			<frame>
+				<reportElement stretchType="ElementGroupHeight" x="10" y="50" width="540" height="200" uuid="cb58dfde-e4a1-40ef-adc5-bbe42d4010ca"/>
+				<box>
+					<pen lineWidth="1.5" lineColor="#666666"/>
+				</box>
+				<subreport>
+					<reportElement stretchType="ContainerHeight" x="0" y="0" width="270" height="200" uuid="2bfa539a-1a6f-40bd-8d59-2b60cc907d31">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.element.name" value="資産の部"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"JPIERE-0090_資産の部.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport>
+					<reportElement stretchType="ContainerHeight" x="270" y="0" width="270" height="199" uuid="a1b324d9-d78e-4a6f-95fe-48a38a01e9e4">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.element.name" value="資産の部"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"JPIERE-0090_負債と純資産の部.jasper"]]></subreportExpression>
+				</subreport>
+			</frame>
+		</band>
+	</title>
+	<summary>
+		<band height="50">
+			<subreport>
+				<reportElement x="10" y="0" width="270" height="20" uuid="53a9e0be-1b99-45c4-9602-b6e5820ad0ca">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"JPIERE-0090_資産の部合計行.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="280" y="0" width="270" height="20" uuid="713bd575-dd57-4e97-9a17-456237d0974e">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"JPIERE-0090_負債と純資産の部合計行.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>

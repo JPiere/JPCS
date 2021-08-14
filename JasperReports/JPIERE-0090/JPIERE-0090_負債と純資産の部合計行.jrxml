@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.14.0.final using JasperReports Library version 6.14.0-2ab0d8625be255bf609c78e1181801213e51db8f  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="JPIERE0090_負債と純資産の部合計行" pageWidth="270" pageHeight="20" whenNoDataType="NoDataSection" columnWidth="270" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="c4a29ac4-98bc-433c-8d3b-0c693cc2b4cd">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQL-JPiere82"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="T_Report_AD_PInstance_ID" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT 
+r.name AS name,
+COALESCE(r.description,'') AS description,
+COALESCE(r.col_0,0) AS col_0
+ FROM T_Report r
+ INNER JOIN PA_ReportLine rl ON(r.PA_ReportLine_ID = rl.PA_ReportLine_ID)
+ WHERE r.AD_PInstance_ID = $P{T_Report_AD_PInstance_ID} AND rl.IsPrinted = 'Y' AND rl.JP_Parameter = 'CS'
+ ORDER BY r.SeqNo,r.LevelNo,r.Name]]>
+	</queryString>
+	<field name="name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="name"/>
+		<property name="com.jaspersoft.studio.field.label" value="name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_report"/>
+	</field>
+	<field name="description" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="description"/>
+		<property name="com.jaspersoft.studio.field.label" value="description"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_report"/>
+	</field>
+	<field name="col_0" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="col_0"/>
+		<property name="com.jaspersoft.studio.field.label" value="col_0"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_report"/>
+	</field>
+	<detail>
+		<band height="20">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="270" height="20" backcolor="#90BEE6" uuid="ccac53df-615a-4089-8f5e-5b2ca5130ca4"/>
+				<box>
+					<pen lineColor="#666666"/>
+					<topPen lineWidth="3.0" lineStyle="Double" lineColor="#666666"/>
+					<leftPen lineWidth="1.5" lineStyle="Solid" lineColor="#666666"/>
+					<bottomPen lineWidth="1.5" lineStyle="Solid" lineColor="#666666"/>
+					<rightPen lineWidth="1.5" lineStyle="Solid" lineColor="#666666"/>
+				</box>
+				<staticText>
+					<reportElement mode="Transparent" x="0" y="0" width="180" height="20" backcolor="#DEEBF7" uuid="d749df74-ce79-43aa-beea-bdd8a1b5ccb9">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="IPAex明朝" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[負債と純資産の部合計]]></text>
+				</staticText>
+				<textField pattern="#,##0.##円">
+					<reportElement mode="Transparent" x="180" y="0" width="90" height="20" backcolor="#DEEBF7" uuid="dce91a45-965b-4446-8856-25c7ad9757c2">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="2">
+						<pen lineColor="#666666"/>
+						<leftPen lineWidth="1.0" lineStyle="Dotted" lineColor="#666666"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="IPAex明朝" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{col_0}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.14.0.final using JasperReports Library version 6.14.0-2ab0d8625be255bf609c78e1181801213e51db8f  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="JPIERE0090_負債と純資産の部" pageWidth="270" pageHeight="28" columnWidth="270" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="c4a29ac4-98bc-433c-8d3b-0c693cc2b4cd">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQL-JPiere82"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="勘定科目">
+		<box>
+			<pen lineWidth="1.0" lineStyle="Dotted"/>
+			<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{jp_parameter}.equals("MS")]]></conditionExpression>
+			<style mode="Opaque" backcolor="#CCECFF">
+				<box padding="2">
+					<pen lineColor="#666666"/>
+					<topPen lineWidth="3.0" lineStyle="Double" lineColor="#666666"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.5" lineStyle="Solid" lineColor="#666666"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</style>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{levelno}.intValue()==0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#DEEBF7" isBlankWhenNull="true" isBold="true" isUnderline="false">
+				<box>
+					<pen lineColor="#666666"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#666666"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</style>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[($V{PAGE_COUNT} % 2) == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EEEEEE"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[($V{PAGE_COUNT} % 2) == 1]]></conditionExpression>
+			<style/>
+		</conditionalStyle>
+	</style>
+	<parameter name="T_Report_AD_PInstance_ID" class="java.lang.Integer"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\hhagi\\OneDrive\\src-git\\jpiere-dev\\JPCS\\JasperReports\\JPIERE-0090\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+r.name AS name,
+COALESCE(r.description,'') AS description,
+COALESCE(r.col_0,0) AS col_0,
+r.record_id AS account_id,
+r.levelno AS levelno,
+rl.JP_Parameter AS JP_Parameter 
+ FROM T_Report r
+ INNER JOIN PA_ReportLine rl ON(r.PA_ReportLine_ID = rl.PA_ReportLine_ID)
+ WHERE r.AD_PInstance_ID = $P{T_Report_AD_PInstance_ID} AND rl.IsPrinted = 'Y' AND rl.JP_Parameter IN('CR','MS')
+ ORDER BY r.SeqNo,r.LevelNo,r.Name]]>
+	</queryString>
+	<field name="name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="name"/>
+		<property name="com.jaspersoft.studio.field.label" value="name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_report"/>
+	</field>
+	<field name="description" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="description"/>
+		<property name="com.jaspersoft.studio.field.label" value="description"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_report"/>
+	</field>
+	<field name="col_0" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="col_0"/>
+		<property name="com.jaspersoft.studio.field.label" value="col_0"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_report"/>
+	</field>
+	<field name="account_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="account_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="account_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_report"/>
+	</field>
+	<field name="levelno" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="levelno"/>
+		<property name="com.jaspersoft.studio.field.label" value="levelno"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_report"/>
+	</field>
+	<field name="jp_parameter" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="jp_parameter"/>
+		<property name="com.jaspersoft.studio.field.label" value="jp_parameter"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pa_reportline"/>
+	</field>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="com.jaspersoft.studio.layout"/>
+			<frame>
+				<reportElement x="0" y="0" width="180" height="12" uuid="defc7060-13ba-4a67-8af1-471214712b73"/>
+				<box>
+					<pen lineColor="#666666"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Dotted" lineColor="#666666"/>
+				</box>
+				<textField textAdjust="ScaleFont">
+					<reportElement style="勘定科目" mode="Opaque" x="0" y="0" width="180" height="12" uuid="8615a1da-35f4-4de7-9497-5a0103286728">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a739bac5-bcdd-4d79-805d-112bcce1351e"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box padding="2"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="IPAex明朝" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{levelno}.intValue()==0? ($F{name}) : ($F{name}+" : " + $F{description})]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="180" y="0" width="90" height="12" uuid="9d2ba14a-fdce-454e-b254-27e0a06dce43"/>
+				<textField pattern="#,##0.##円">
+					<reportElement style="勘定科目" mode="Opaque" x="0" y="0" width="90" height="12" uuid="cb5bb826-b213-4bf3-863d-c5a6fdee9f4f">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="78b2dd8a-efb8-460b-b091-f98a09ba4e73"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box padding="2">
+						<rightPen lineWidth="1.0" lineColor="#666666"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="IPAex明朝" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{col_0}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+</jasperReport>
