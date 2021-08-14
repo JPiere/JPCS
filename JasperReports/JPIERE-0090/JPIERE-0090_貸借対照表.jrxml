@@ -78,8 +78,9 @@
 			</frame>
 		</band>
 	</title>
-	<summary>
-		<band height="50">
+	<pageHeader>
+		<band height="20">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<subreport>
 				<reportElement x="10" y="0" width="270" height="20" uuid="53a9e0be-1b99-45c4-9602-b6e5820ad0ca">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -97,5 +98,5 @@
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"JPIERE-0090_負債と純資産の部合計行.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-	</summary>
+	</pageHeader>
 </jasperReport>
