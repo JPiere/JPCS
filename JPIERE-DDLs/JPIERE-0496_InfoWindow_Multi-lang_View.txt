@@ -1,0 +1,53 @@
+-- View: adempiere.JP_Trl_InfoWindow
+
+-- DROP VIEW adempiere.JP_Trl_InfoWindow;
+
+CREATE OR REPLACE VIEW adempiere.JP_Trl_InfoWindow
+ AS
+ SELECT t.AD_Language,
+    t.JP_Trl_Name,
+    t.JP_Trl_Description,
+    t.JP_Trl_Help,
+    a.AD_InfoWindow_ID,
+    a.AD_Client_ID,
+    a.ad_Org_ID,
+    a.IsActive,
+    a.Created,
+    a.Createdby,
+    a.Updated,
+    a.Updatedby,
+    a.Entitytype,
+    a.Name,
+    a.Description,
+    a.help,
+    a.FromClause,
+    a.WhereClause,
+    a.OrderByClause,
+    a.IsDefault,
+    a.IsDistinct,
+    a.IsShowInDashboard,
+    a.IsValid,
+    a.IsLoadPageNum,
+    a.MaxQueryRecords,
+	a.PagingSize,
+	a.AD_Table_ID
+   FROM adempiere.AD_InfoWindow a
+     JOIN ( SELECT trl.AD_InfoWindow_ID,
+            trl.AD_Language,
+            trl.Name AS JP_Trl_Name,
+            trl.Description AS JP_Trl_Description,
+			trl.Help AS JP_Trl_Help
+           FROM adempiere.AD_InfoWindow_trl trl
+        UNION ALL
+         SELECT p.AD_InfoWindow_ID,
+            ( SELECT AD_language.AD_Language
+                   FROM adempiere.AD_Language
+                   WHERE ad_language.IsBaseLanguage = 'Y'::bpchar) AS AD_Language,
+            p.Name AS JP_Trl_Name,
+            p.Description AS JP_Trl_Description,
+            p.Help AS JP_Trl_Help
+           FROM adempiere.AD_InfoWindow p) t ON a.AD_InfoWindow_ID = t.AD_InfoWindow_ID;
+
+ALTER TABLE adempiere.JP_Trl_InfoWindow
+    OWNER TO adempiere;
+
