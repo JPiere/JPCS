@@ -1,0 +1,18 @@
+Add Table
+・JP_BillTax
+
+Add Column to the JP_Bill Table
+・IsTaxRecalculateJP
+・JP_TaxAdjust_Invoice_ID
+
+Add Column to the JP_BillLine Table
+・IsTaxAdjustLineJP
+
+
+Add Column to the JP_BillSchema Table
+・IsTaxRecalculateJP
+・JP_TaxAdjust_Charge_ID
+・JP_TaxAdjust_Description
+・JP_TaxAdjust_DocType_ID
+・JP_TaxAdjust_PriceList_ID
+・JP_TaxAdjust_Tax_ID

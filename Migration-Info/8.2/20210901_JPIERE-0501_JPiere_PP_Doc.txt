@@ -1,0 +1,14 @@
+Add Table
+・JP_PP_Doc
+・JP_PP_Plan
+・JP_PP_PlanLine
+・JP_PP_PlanLineQT
+・JP_PP_Fact
+・JP_PP_FactLine
+・JP_PP_FactLineQT
+・JP_PP_FactLineMA
+
+・JP_PP_DocT
+・JP_PP_PlanT
+・JP_PP_PlanLineT
+・JP_PP_PlanLineTQT
