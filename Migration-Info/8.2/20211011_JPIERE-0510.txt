@@ -1,0 +1,2 @@
+Add JP_BranchName Column to C_BP_BankAccount Table
+Add JP_A_Name Column to C_BP_BankAccount Table

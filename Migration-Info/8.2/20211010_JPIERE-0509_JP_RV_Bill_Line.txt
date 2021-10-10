@@ -1,0 +1,104 @@
+CREATE OR REPLACE VIEW adempiere.jp_rv_bill_line
+ AS
+ SELECT bill.jp_bill_id,
+    bill.ad_client_id,
+    bill.ad_org_id,
+    iv.documentno,
+    bill.c_doctype_id,
+    dt.docbasetype,
+    bill.dateinvoiced,
+    bill.dateacct,
+    bill.c_bpartner_id,
+    bill.m_pricelist_id,
+        CASE
+            WHEN c.issametax = 'N'::bpchar THEN c.istaxincluded
+            ELSE pl.istaxincluded
+        END AS istaxincluded,
+    bill.totallines,
+    bill.grandtotal,
+    bill.taxbaseamt,
+    bill.taxamt,
+    bill.payamt,
+    bill.openamt,
+    bill.c_currency_id,
+    il.c_invoice_id,
+    il.c_invoiceline_id,
+    iv.documentno AS jp_invoice_documentno,
+    il.line AS jp_invoice_line,
+    (iv.documentno::text || ' - '::text) || il.line AS jp_invoicedocumentnoline,
+    il.m_inoutline_id,
+    io.documentno AS jp_inout_documentno,
+    iol.line AS jp_inout_line,
+    (io.documentno::text || ' - '::text) || iol.line AS jp_inoutdocumentnoline,
+    il.c_orderline_id,
+    o.documentno AS jp_order_documentno,
+    ol.line AS jp_order_line,
+    (o.documentno::text || ' - '::text) || ol.line AS jp_orderdocumentnoline,
+    o.poreference,
+    il.line,
+    il.m_product_id,
+    il.c_charge_id,
+        CASE
+            WHEN il.m_product_id > 0::numeric THEN p.value
+            ELSE ''::character varying
+        END AS productvalue,
+        CASE
+            WHEN il.m_product_id > 0::numeric THEN p.name
+            ELSE c.name
+        END AS productname,
+        CASE
+            WHEN il.m_product_id > 0::numeric THEN ((p.value::text || ':'::text) || p.name::text)::character varying
+            ELSE c.name
+        END AS productvaluename,
+    il.qtyentered,
+    il.qtyinvoiced,
+    il.c_uom_id,
+        CASE
+            WHEN il.m_product_id > 0::numeric THEN puom.c_uom_id
+            ELSE 0::numeric
+        END AS m_product_c_uom_id,
+        CASE
+            WHEN dt.docbasetype = 'ARC'::bpchar THEN il.priceentered * '-1'::integer::numeric
+            ELSE il.priceentered
+        END AS priceentered,
+        CASE
+            WHEN dt.docbasetype = 'ARC'::bpchar THEN il.priceactual * '-1'::integer::numeric
+            ELSE il.priceactual
+        END AS priceactual,
+        CASE
+            WHEN dt.docbasetype = 'ARC'::bpchar THEN il.pricelist * '-1'::integer::numeric
+            ELSE il.pricelist
+        END AS pricelist,
+    il.c_tax_id,
+    t.taxindicator AS taxname,
+        CASE
+            WHEN dt.docbasetype = 'ARC'::bpchar THEN il.linenetamt * '-1'::integer::numeric
+            ELSE il.linenetamt
+        END AS linenetamt,
+    il.description,
+        CASE
+            WHEN dt.docbasetype = 'ARC'::bpchar THEN il.jp_taxbaseamt * '-1'::integer::numeric
+            ELSE il.jp_taxbaseamt
+        END AS jp_taxbaseamt,
+        CASE
+            WHEN dt.docbasetype = 'ARC'::bpchar THEN il.jp_taxamt * '-1'::integer::numeric
+            ELSE il.jp_taxamt
+        END AS jp_taxamt,
+    bill.line AS jp_billlineno,
+    bill.istaxadjustlinejp
+   FROM adempiere.jp_billline bill
+     JOIN adempiere.c_invoice iv ON bill.c_invoice_id = iv.c_invoice_id
+     JOIN adempiere.c_doctype dt ON bill.c_doctype_id = dt.c_doctype_id
+     JOIN adempiere.m_pricelist pl ON bill.m_pricelist_id = pl.m_pricelist_id
+     JOIN adempiere.c_invoiceline il ON bill.c_invoice_id = il.c_invoice_id
+     LEFT JOIN adempiere.m_inoutline iol ON il.m_inoutline_id = iol.m_inoutline_id
+     LEFT JOIN adempiere.m_inout io ON iol.m_inout_id = io.m_inout_id
+     LEFT JOIN adempiere.c_orderline ol ON il.c_orderline_id = ol.c_orderline_id
+     LEFT JOIN adempiere.c_order o ON ol.c_order_id = o.c_order_id
+     LEFT JOIN adempiere.m_product p ON il.m_product_id = p.m_product_id
+     LEFT JOIN adempiere.c_uom puom ON p.c_uom_id = puom.c_uom_id
+     LEFT JOIN adempiere.c_charge c ON il.c_charge_id = c.c_charge_id
+     LEFT JOIN adempiere.c_tax t ON il.c_tax_id = t.c_tax_id;
+
+ALTER TABLE adempiere.jp_rv_bill_line
+    OWNER TO postgres;
