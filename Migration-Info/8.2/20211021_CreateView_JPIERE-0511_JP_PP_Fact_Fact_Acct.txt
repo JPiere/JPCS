@@ -1,0 +1,68 @@
+CREATE OR REPLACE VIEW adempiere.JP_PP_Fact_Fact_Acct
+ AS
+ SELECT
+    f.Fact_Acct_ID
+    ,f.Fact_Acct_ID AS JP_PP_Fact_Fact_Acct_ID 
+    ,f.AD_Client_ID
+    ,f.AD_Org_ID
+    ,f.IsActive
+    ,f.Created
+    ,f.CreatedBy
+    ,f.Updated 
+    ,f.UpdatedBy
+    ,f.C_AcctSchema_ID
+    ,f.Account_ID
+    ,f.DateTrx
+    ,f.DateAcct
+    ,f.C_Period_ID
+    ,f.AD_Table_ID
+    ,f.Record_ID
+    ,f.Record_ID AS M_Production_ID
+    ,f.Line_ID
+    ,f.Line_ID AS M_ProductionLine_ID
+    ,f.GL_Category_ID
+    ,f.GL_Budget_ID
+    ,f.C_Tax_ID
+    ,f.M_Locator_ID
+    ,f.PostingType
+    ,f.C_Currency_ID
+    ,f.AmtSourceDR
+    ,f.AmtSourceCR
+    ,f.AmtAcctDR
+    ,f.AmtAcctCR
+    ,f.C_UOM_ID
+    ,f.Qty
+    ,f.M_Product_ID
+    ,f.C_BPartner_ID
+    ,f.AD_OrgTrx_ID
+    ,f.C_LocFrom_ID
+    ,f.C_LocTo_ID
+    ,f.C_SalesRegion_ID
+    ,f.C_Project_ID
+    ,f.C_Campaign_ID
+    ,f.C_Activity_ID
+    ,f.User1_ID
+    ,f.User2_ID
+    ,f.Description
+    ,f.A_Asset_ID
+    ,f.C_SubAcct_ID
+    ,f.UserElement1_ID
+    ,f.UserElement2_ID
+    ,f.C_ProjectPhase_ID
+    ,f.C_ProjectTask_ID
+    ,f.Fact_Acct_UU
+    ,f.Fact_Acct_UU AS JP_PP_Fact_Fact_Acct_UU
+    ,f.JP_Order_ID
+    ,f.JP_ContractContent_ID
+    ,p.JP_PP_Fact_ID
+    ,p.DocumentNo AS JP_Production_DocumentNo
+    ,p.DocStatus
+    ,ev.Value AS JP_Account_Value
+    ,ev.Name AS JP_Account_Name
+FROM adempiere.Fact_Acct f
+	INNER JOIN adempiere.M_Production p ON (f.Record_ID = p.M_Production_ID AND f.AD_Table_ID=325)
+	INNER JOIN adempiere.C_ElementValue ev ON (f.Account_ID = ev.C_ElementValue_ID)
+WHERE AD_Table_ID=325 ;
+
+ALTER TABLE adempiere.JP_PP_Fact_Fact_Acct
+    OWNER TO adempiere;
