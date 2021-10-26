@@ -1,0 +1,1 @@
+JPIERE-0501 JP PP Doc - Add M_AttributeSetInstance_ID column to JP_PP_PlanLine and JP_PP_PlanLineT Table
