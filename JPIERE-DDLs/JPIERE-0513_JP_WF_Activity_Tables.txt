@@ -69,6 +69,28 @@ SELECT
 	,CASE WHEN IsSOTrx='Y' THEN 'ARI' ELSE 'API' END AS JP_WF_Type
 From adempiere.C_Invoice
 
+UNION ALL
+SELECT 
+	291::numeric AS AD_Table_ID
+	,C_BPartner_ID AS Record_ID
+	,Name2 AS DocumentNo
+	,Value AS Value
+	,Name AS JP_Subject
+	,Description AS Description
+	,NULL AS C_DocType_ID
+	,C_BPartner_ID AS C_BPartner_ID
+	,SalesRep_ID AS SalesRep_ID
+	,NULL AS DateAcct
+	,NULL AS DateDoc
+	,NULL AS DocStatus
+	,NULL AS C_Currency_ID
+	,NULL AS Amount
+	,SO_CreditLimit AS ApprovalAmt
+	,AD_Client_ID AS AD_Client_ID
+	,AD_Org_ID AS AD_Org_ID
+	,'CBP'AS JP_WF_Type
+From adempiere.C_BPartner
+
 ;
 
 ALTER TABLE adempiere.JP_WF_Activity_Tables
