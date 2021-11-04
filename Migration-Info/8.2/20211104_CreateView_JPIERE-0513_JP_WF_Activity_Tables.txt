@@ -1,0 +1,75 @@
+-- View: adempiere.JP_WF_Activity_Tables
+
+-- DROP VIEW adempiere.JP_WF_Activity_Tables;
+
+CREATE OR REPLACE VIEW adempiere.JP_WF_Activity_Tables AS
+
+SELECT 
+	1000080::numeric AS AD_Table_ID
+	,JP_Estimation_ID AS Record_ID
+	,DocumentNo AS DocumentNo
+	,POReference AS Value
+	,JP_Subject AS JP_Subject
+	,Description AS Description
+	,C_DocTypeTarget_ID AS C_DocType_ID
+	,C_BPartner_ID AS C_BPartner_ID
+	,SalesRep_ID AS SalesRep_ID 
+	,DateAcct AS DateAcct
+	,JP_EstimationDate AS DateDoc
+	,DocStatus AS DocStatus
+	,C_Currency_ID AS C_Currency_ID
+	,TotalLines AS Amount
+	,GrandTotal AS ApprovalAmt
+	,AD_Client_ID AS AD_Client_ID 
+	,AD_Org_ID AS AD_Org_ID
+	,'JPE' AS JP_WF_Type
+FROM adempiere.JP_Estimation
+
+UNION ALL
+SELECT 
+	259::numeric AS AD_Table_ID
+	,C_Order_ID AS Record_ID
+	,DocumentNo AS DocumentNo
+	,POReference AS Value
+	,JP_Subject AS JP_Subject
+	,Description AS Description
+	,C_DocTypeTarget_ID AS C_DocType_ID
+	,C_BPartner_ID AS C_BPartner_ID
+	,SalesRep_ID AS SalesRep_ID
+	,DateAcct AS DateAcct
+	,DateOrdered AS DateDoc
+	,DocStatus AS DocStatus
+	,C_Currency_ID AS C_Currency_ID
+	,TotalLines AS Amount
+	,GrandTotal AS ApprovalAmt
+	,AD_Client_ID AS AD_Client_ID 
+	,AD_Org_ID AS AD_Org_ID
+	,CASE WHEN IsSOTrx='Y' THEN 'SOO' ELSE 'POO' END AS JP_WF_Type
+FROM adempiere.C_Order
+
+UNION ALL
+SELECT 
+	318::numeric AS AD_Table_ID
+	,C_Invoice_ID AS Record_ID
+	,DocumentNo AS DocumentNo
+	,POReference AS Value
+	,JP_Subject AS JP_Subject
+	,Description AS Description
+	,C_DocTypeTarget_ID AS C_DocType_ID
+	,C_BPartner_ID AS C_BPartner_ID
+	,SalesRep_ID AS SalesRep_ID
+	,DateAcct AS DateAcct
+	,DateInvoiced AS DateDoc
+	,DocStatus AS DocStatus
+	,C_Currency_ID AS C_Currency_ID
+	,TotalLines AS Amount
+	,GrandTotal AS ApprovalAmt
+	,AD_Client_ID AS AD_Client_ID
+	,AD_Org_ID AS AD_Org_ID
+	,CASE WHEN IsSOTrx='Y' THEN 'ARI' ELSE 'API' END AS JP_WF_Type
+From adempiere.C_Invoice
+
+;
+
+ALTER TABLE adempiere.JP_WF_Activity_Tables
+    OWNER TO adempiere;
