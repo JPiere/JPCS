@@ -1,0 +1,2 @@
+Create Table - JP_WF_AutoAddApprovers
+Create Table - JP_WF_AutoAddUser

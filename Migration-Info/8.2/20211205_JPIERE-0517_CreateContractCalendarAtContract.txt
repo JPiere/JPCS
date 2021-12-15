@@ -1,0 +1,4 @@
+Add JP_Processing5 Column to JP_ContractContent Table
+Add JP_Processing3 Column to JP_ContractLine Table
+Add JP_Processing4 Column to JP_ContractLine Table
+Add JP_Contract_ID Column to JP_ContractCalender Table
