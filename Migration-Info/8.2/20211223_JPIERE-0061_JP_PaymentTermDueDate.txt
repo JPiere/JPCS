@@ -1,0 +1,1 @@
+Changed the argument of the JP_PaymentTermDueDate function used in the "C_invoice_v" and "JP_invoice_v" views from the Date Invoiced (DateInvoiced) to the Posting date (DateAcct).
