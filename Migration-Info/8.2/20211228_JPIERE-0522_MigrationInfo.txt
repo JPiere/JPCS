@@ -1,0 +1,4 @@
+Add Column JP_Contract_ID to GL_Journal Table
+Add Column JP_ContracContent_ID to GL_Journal Table
+Add Column JP_ContractProcPeriod_ID to GL_Journal Table
+Add Column JP_Order_ID to GL_Journal Table

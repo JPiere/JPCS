@@ -1,0 +1,8 @@
+Add Column JP_Contract_ID to Fact_Acct Table
+Add Column JP_ContractProcPeriod_ID to Fact_Acct Table
+
+Add Column JP_Contract_ID to Fact_Acct_SummaryJP Table
+Add Column JP_ContractProcPeriod_ID to Fact_Acct_SummaryJP Table
+
+Add Column JP_Contract_ID to Fact_Acct_BS_JP Table
+Add Column JP_ContractProcPeriod_ID to Fact_Acct_BS_JP Table
