@@ -1,9 +1,11 @@
-CREATE OR REPLACE VIEW adempiere.JP_Pivot_Invoice
+CREATE OR REPLACE VIEW adempiere.JP_Pivot_Recognition
  AS
 SELECT
-o.C_Invoice_ID AS C_Invoice_ID
+o.JP_Recognition_ID AS JP_Recognition_ID
 ,o.C_Order_ID AS C_Order_ID
 ,odr.DocumentNo AS JP_Order_DocumentNo
+,o.M_InOut_ID AS M_InOut_ID
+,o.M_RMA_ID AS M_RMA_ID
 ,o.JP_Contract_ID AS JP_Contract_ID
 ,cnt.DocumentNo AS JP_Contract_DocumentNo
 ,cnt.JP_ContractCategory_ID AS JP_ContractCategory_ID
@@ -38,13 +40,11 @@ o.C_Invoice_ID AS C_Invoice_ID
 ,cy.ISO_Code AS ISO_Code
 ,o.SalesRep_ID AS SalesRep_ID
 ,usr.Name AS JP_SalesRep_Name
-,o.C_PaymentTerm_ID AS C_PaymentTerm_ID
-,pt.Value  || '_' ||  pt.Name AS JP_PaymentTerm_VN
 ,o.DocumentNo AS DocumentNo
 ,o.DateOrdered AS DateOrdered
 ,to_char(o.DateOrdered, 'YYYY-MM') AS JP_OrderedMonth
-,o.DateInvoiced AS DateInvoiced
-,to_char(o.DateInvoiced, 'YYYY-MM') AS JP_InvoicedMonth
+,o.MovementDate AS MovementDate
+,to_char(o.MovementDate, 'YYYY-MM') AS JP_MovementMonth
 ,o.DateAcct AS DateAcct
 ,to_char(o.DateAcct, 'YYYY-MM') AS JP_AcctMonth
 ,o.IsSOTrx AS IsSOTrx
@@ -52,7 +52,7 @@ o.C_Invoice_ID AS C_Invoice_ID
 ,o.Processed AS Processed
 ,o.IsActive AS IsActive
 
-,ol.C_InvoiceLine_ID AS C_InvoiceLine_ID 
+,ol.JP_RecognitionLine_ID AS JP_RecognitionLine_ID 
 ,ol.Line AS Line
 ,ol.M_Product_ID AS M_Product_ID
 ,p.Value || '_' ||  p.Name AS JP_Product_VN
@@ -75,28 +75,28 @@ o.C_Invoice_ID AS C_Invoice_ID
 ,pj.Value || '_' ||  pj.Name AS JP_Project_VN
 
 ,CASE
-    WHEN dt.DocBaseType='ARC'::text THEN ol.QtyInvoiced * '-1'::integer::numeric
-    WHEN dt.DocBaseType='APC'::text THEN ol.QtyInvoiced * '-1'::integer::numeric
+    WHEN dt.DocBaseType='JPS'::text THEN ol.QtyInvoiced * '-1'::integer::numeric
+    WHEN dt.DocBaseType='JPY'::text THEN ol.QtyInvoiced * '-1'::integer::numeric
     ELSE ol.QtyInvoiced END AS QtyInvoiced
 
 ,CASE
-    WHEN dt.DocBaseType='ARC'::text THEN ol.PriceActual * '-1'::integer::numeric
-    WHEN dt.DocBaseType='APC'::text THEN ol.PriceActual * '-1'::integer::numeric
+    WHEN dt.DocBaseType='JPS'::text THEN ol.PriceActual * '-1'::integer::numeric
+    WHEN dt.DocBaseType='JPY'::text THEN ol.PriceActual * '-1'::integer::numeric
     ELSE ol.PriceActual END AS PriceActual 
     
 ,CASE
-    WHEN dt.DocBaseType='ARC'::text THEN ol.lineNetAmt * '-1'::integer::numeric
-    WHEN dt.DocBaseType='APC'::text THEN ol.lineNetAmt * '-1'::integer::numeric
+    WHEN dt.DocBaseType='JPS'::text THEN ol.lineNetAmt * '-1'::integer::numeric
+    WHEN dt.DocBaseType='JPY'::text THEN ol.lineNetAmt * '-1'::integer::numeric
     ELSE ol.lineNetAmt END AS lineNetAmt 
     
 ,CASE
-    WHEN dt.DocBaseType='ARC'::text THEN ol.JP_TaxBaseAmt * '-1'::integer::numeric
-    WHEN dt.DocBaseType='APC'::text THEN ol.JP_TaxBaseAmt * '-1'::integer::numeric
+    WHEN dt.DocBaseType='JPS'::text THEN ol.JP_TaxBaseAmt * '-1'::integer::numeric
+    WHEN dt.DocBaseType='JPY'::text THEN ol.JP_TaxBaseAmt * '-1'::integer::numeric
     ELSE ol.JP_TaxBaseAmt END AS JP_TaxBaseAmt
     
 ,CASE
-    WHEN dt.DocBaseType='ARC'::text THEN ol.JP_TaxAmt * '-1'::integer::numeric
-    WHEN dt.DocBaseType='APC'::text THEN ol.JP_TaxAmt * '-1'::integer::numeric
+    WHEN dt.DocBaseType='JPS'::text THEN ol.JP_TaxAmt * '-1'::integer::numeric
+    WHEN dt.DocBaseType='JPY'::text THEN ol.JP_TaxAmt * '-1'::integer::numeric
     ELSE ol.JP_TaxAmt END  AS JP_TaxAmt
  
 ,ol.JP_ContractProcPeriod_ID AS JP_CPP_Line_ID
@@ -104,7 +104,7 @@ o.C_Invoice_ID AS C_Invoice_ID
 ,cc.JP_Contract_Acct_ID AS JP_Contract_Acct_ID
 ,ca.Value || '_' ||   ca.Name AS JP_Contract_Acct_VN
 
-FROM adempiere.C_Invoice o
+FROM adempiere.JP_Recognition o
 	LEFT OUTER JOIN adempiere.AD_Org otrx ON (o.AD_OrgTrx_ID = otrx.AD_Org_ID)
 	INNER JOIN adempiere.AD_Org org ON (o.AD_Org_ID = org.AD_Org_ID)
 		INNER JOIN adempiere.AD_OrgInfo oif ON (org.AD_Org_ID = oif.AD_Org_ID)
@@ -118,7 +118,6 @@ FROM adempiere.C_Invoice o
 	INNER JOIN adempiere.M_PriceList pl ON (o.M_PriceList_ID = pl.M_PriceList_ID)
 	INNER JOIN adempiere.C_Currency cy ON (o.C_Currency_ID = cy.C_Currency_ID)
 	INNER JOIN adempiere.AD_User usr ON (o.SalesRep_ID = usr.AD_User_ID)
-	LEFT OUTER JOIN adempiere.C_PaymentTerm pt ON (o.C_PaymentTerm_ID = pt.C_PaymentTerm_ID)
 	LEFT OUTER JOIN adempiere.C_Order odr ON (o.C_Order_ID = odr.C_Order_ID)
 	LEFT OUTER JOIN adempiere.JP_Contract cnt ON (o.JP_Contract_ID = cnt.JP_Contract_ID)
 		LEFT OUTER JOIN adempiere.JP_ContractCategory cntc ON (cnt.JP_ContractCategory_ID = cntc.JP_ContractCategory_ID)
@@ -126,7 +125,7 @@ FROM adempiere.C_Invoice o
 		LEFT OUTER JOIN adempiere.JP_Contract_Acct ca ON (cc.JP_Contract_Acct_ID = ca.JP_Contract_Acct_ID)
 	LEFT OUTER JOIN adempiere.JP_ContractProcPeriod cpp ON (o.JP_ContractProcPeriod_ID = cpp.JP_ContractProcPeriod_ID)
 		
-INNER JOIN adempiere.C_InvoiceLine ol ON (o.C_Invoice_ID = ol.C_Invoice_ID)
+INNER JOIN adempiere.JP_RecognitionLine ol ON (o.JP_Recognition_ID = ol.JP_Recognition_ID)
 	LEFT OUTER JOIN adempiere.M_Product p ON (ol.M_Product_ID = p.M_Product_ID)
 		LEFT OUTER JOIN adempiere.M_Product_Category pc ON (p.M_Product_Category_ID = pc.M_Product_Category_ID)
 	LEFT OUTER JOIN adempiere.C_Charge ch ON (ol.C_Charge_ID = ch.C_Charge_ID)

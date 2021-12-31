@@ -101,6 +101,8 @@ o.C_Invoice_ID AS C_Invoice_ID
  
 ,ol.JP_ContractProcPeriod_ID AS JP_CPP_Line_ID
 ,cppl.Name AS JP_CPP_Line_Name
+,cc.JP_Contract_Acct_ID AS JP_Contract_Acct_ID
+,ca.Value || '_' ||   ca.Name AS JP_Contract_Acct_VN
 
 FROM adempiere.C_Invoice o
 	LEFT OUTER JOIN adempiere.AD_Org otrx ON (o.AD_OrgTrx_ID = otrx.AD_Org_ID)
@@ -121,6 +123,7 @@ FROM adempiere.C_Invoice o
 	LEFT OUTER JOIN adempiere.JP_Contract cnt ON (o.JP_Contract_ID = cnt.JP_Contract_ID)
 		LEFT OUTER JOIN adempiere.JP_ContractCategory cntc ON (cnt.JP_ContractCategory_ID = cntc.JP_ContractCategory_ID)
 	LEFT OUTER JOIN adempiere.JP_ContractContent cc ON (o.JP_ContractContent_ID = cc.JP_ContractContent_ID)
+		LEFT OUTER JOIN adempiere.JP_Contract_Acct ca ON (cc.JP_Contract_Acct_ID = ca.JP_Contract_Acct_ID)
 	LEFT OUTER JOIN adempiere.JP_ContractProcPeriod cpp ON (o.JP_ContractProcPeriod_ID = cpp.JP_ContractProcPeriod_ID)
 		
 INNER JOIN adempiere.C_InvoiceLine ol ON (o.C_Invoice_ID = ol.C_Invoice_ID)
