@@ -1,0 +1,1 @@
+Add JP_Recognition_JournalPolicy Column to the JP_Contract_Acct Table
