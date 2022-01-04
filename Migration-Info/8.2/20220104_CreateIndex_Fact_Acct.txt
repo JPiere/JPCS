@@ -1,0 +1,10 @@
+CREATE INDEX 
+	JP_Fact_Acct_Contract
+    ON adempiere.Fact_Acct(JP_Contract_ID)
+    WHERE JP_Contract_ID IS NOT NULL;
+    
+CREATE INDEX 
+	JP_Fact_Acct_ContractContent
+    ON adempiere.Fact_Acct(JP_ContractContent_ID)
+    WHERE JP_ContractContent_ID IS NOT NULL;
+    

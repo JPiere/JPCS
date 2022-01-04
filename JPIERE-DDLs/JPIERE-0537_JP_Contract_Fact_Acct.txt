@@ -1,0 +1,68 @@
+CREATE OR REPLACE VIEW adempiere.JP_Contract_Fact_Acct
+ AS
+ SELECT
+    f.AD_Client_ID
+    ,f.AD_Org_ID
+    ,'Y' AS IsActive
+    ,max(f.Created) AS Created
+    , 100 AS CreatedBy
+    ,max(f.Updated) AS Updated 
+    , 100 AS UpdatedBy
+    ,f.C_AcctSchema_ID
+    ,f.Account_ID
+    ,f.GL_Budget_ID
+    ,f.PostingType
+    ,f.C_Currency_ID
+    ,sum(f.AmtSourceDR) AS AmtSourceDR
+    ,sum(f.AmtSourceCR) AS AmtSourceCR
+    ,sum(f.AmtAcctDR) AS AmtAcctDR
+    ,sum(f.AmtAcctCR) AS AmtAcctCR
+    ,Case 
+    	WHEN ev.AccountType='A' THEN sum(f.AmtAcctDR) - sum(f.AmtAcctCR)
+    	WHEN ev.AccountType='L' THEN sum(f.AmtAcctCR) - sum(f.AmtAcctDR)
+    	WHEN ev.AccountType='O' THEN sum(f.AmtAcctCR) - sum(f.AmtAcctDR)
+    	WHEN ev.AccountType='R' THEN sum(f.AmtAcctCR) - sum(f.AmtAcctDR)
+    	WHEN ev.AccountType='E' THEN sum(f.AmtAcctDR) - sum(f.AmtAcctCR)
+    	ELSE sum(f.AmtAcctDR) - sum(f.AmtAcctCR) END AS JP_Balance
+    ,f.M_Product_ID
+    ,f.C_BPartner_ID
+    ,f.AD_OrgTrx_ID
+    ,f.C_SubAcct_ID
+    ,ev.Value AS JP_Account_Value
+    ,ev.Name AS JP_Account_Name
+    ,ev.AccountType
+    ,pd.Value AS JP_Product_Value
+    ,pd.Name AS JP_Product_Name
+    ,bp.Value AS JP_BPartner_Value
+    ,bp.Name AS JP_BPartner_Name
+    ,f.JP_Contract_ID
+FROM adempiere.Fact_Acct f
+	INNER JOIN adempiere.C_ElementValue ev ON (f.Account_ID = ev.C_ElementValue_ID)
+	LEFT OUTER JOIN adempiere.M_Product pd ON (f.M_Product_ID = pd.M_Product_ID)
+	LEFT OUTER JOIN adempiere.C_BPartner bp ON (f.C_BPartner_ID = bp.C_BPartner_ID)
+GROUP BY
+    f.AD_Client_ID
+    ,f.AD_Org_ID
+    ,f.C_AcctSchema_ID
+    ,f.Account_ID
+    ,f.GL_Budget_ID
+    ,f.C_Tax_ID
+    ,f.M_Locator_ID
+    ,f.PostingType
+    ,f.C_Currency_ID
+    ,f.M_Product_ID
+    ,f.C_BPartner_ID
+    ,f.AD_OrgTrx_ID
+    ,f.C_SubAcct_ID
+    ,ev.Value
+    ,ev.Name
+    ,ev.AccountType
+    ,pd.Value
+    ,pd.Name
+    ,bp.Value
+    ,bp.Name
+    ,f.JP_Contract_ID
+ ;
+
+ALTER TABLE adempiere.JP_Contract_Fact_Acct
+    OWNER TO adempiere;
