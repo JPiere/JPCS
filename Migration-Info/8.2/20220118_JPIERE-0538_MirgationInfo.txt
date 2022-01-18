@@ -1,0 +1,2 @@
+Add Column IsProcessedApprovalRequestJP to AD_WF_Activity Table
+Add Column IsProcessedApprovalRequestJP to AD_WF_ActivityApprover Table
