@@ -1,0 +1,42 @@
+Add Column
+[JP_Contract_Acct]
+IsPostingGLJournalJP [U‘Öd–ó“`•[‚ğg—p‚·‚é(use GL Journal)]
+JP_GLJournal_JournalPolicy [U‘Öd–ó“`•[‚Ìd–ó•ûj(Journal Policy of GL Journal)]
+JP_GLJournal_DateDocSelect [U‘Öd–ó“`•[‚Ì“`•[“ú•t‘I‘ğ (Doc date selection of GL Journal)]
+JP_GLJournal_DateDoc [U‘Öd–ó“`•[‚Ì“`•[“ú•t(Doc Date of GL Journal)]
+JP_GLJournal_DateAcctSelect [U‘Öd–ó“`•[‚Ì“]‹L“ú•t‘I‘ğ (Account date selection of GL Journal)]
+JP_GLJournal_DateAcct [U‘Öd–ó“`•[‚Ì“]‹L“ú•t(Account Date of GL Journal)]
+
+[JP_Contract_Product_Acct]
+JP_GL_Revenue_Acct [U‘Öd–óû‰vŠ¨’è(Product Revenue(GL Journal))]
+JP_GL_TradeDeiscountGrant_Acct [U‘Öd–ó”„ã’lˆøŠ¨’è(Trade Discount Granted(GL Journal))]
+JP_GL_Expense_Acct [U‘Öd–ó”ï—pŠ¨’è(Product Expense(GL Journal))]
+JP_GL_TradeDeiscountRec_Acct [U‘Öd–ód“ü’lˆøŠ¨’è(Trade Discount Received(GL Journal))]
+
+[JP_Contract_Charge_Acct]
+JP_GL_Ch_Expense_Acct [U‘Öd–ó“E—v‰È–ÚŠ¨’è(Charge(GL Journal))]
+
+[JP_Contract_Tax_Acct]
+JP_GL_TaxDue_Acct [U‘Öd–ó‰¼óÅ‹àŠ¨’è(Tax Due(GL Journal))]
+JP_GL_TaxCredit_Acct [U‘Öd–ó‰¼•¥Å‹àŠ¨’è(Tax Credit(GL Journal))]
+JP_GL_TaxExpense_Acct [U‘Öd–ó‘dÅŒö‰ÛŠ¨’è(Tax Expense(GL Journal))]
+
+[C_DocType]
+JP_DocTypeGLJournal_ID [U‘Öd–ó“`•[‚Ì“`•[ƒ^ƒCƒv(Document Type of GL Journal)]
+
+[GL_Journal]
+JP_Invoice_ID [U‘Öd–ó“`•[]
+
+[GL_JournalLine]
+JP_InvoiceLine_ID [¿‹“`•[–¾×]
+JP_ContractLine_ID [Œ_–ñ“à—e–¾×]
+
+
+Add Lis Validation of Reference
+JP_GLJournal_JournalPolicy
+JP_GLJournal_DateAcctSelect
+
+Add Dynamic Validation
+JP_InvoiceLine belong to Invoice
+
+
