@@ -1,0 +1,6 @@
+Create Table JP_ContractContentTax
+
+Add GrandTotal Column to JP_ContractContent Table
+
+Add JP_TaxBaseAmt Column to JP_ContractLine Table
+Add JP_TaxAmt Column to JP_ContractLine Table
