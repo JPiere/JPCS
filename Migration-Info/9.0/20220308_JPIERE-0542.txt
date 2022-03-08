@@ -1,0 +1,17 @@
+Added below columns to JP_BankData Table
+・JP_BankDataCreated
+・JP_BankDataFrom
+・JP_BankDataTo
+・JP_BankData_TorikeshiNum
+・JP_BankData_TorikeshiAmt
+
+
+Added below columns to JP_BankDataLine Table
+・JP_BankData_ReferenceNo
+・JP_BankData_Kanjyoubi
+・JP_BankData_Kisanbi
+・JP_BankData_Taten_StmtAmt
+・JP_RequesterCode
+・JP_BankData_Torikeshikubun
+・JP_BankData_EDI_Info
+
