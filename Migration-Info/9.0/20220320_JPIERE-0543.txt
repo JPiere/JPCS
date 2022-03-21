@@ -1,0 +1,5 @@
+Add below Column to FACT_Acct Table
+
+JP_SOPOType
+JP_TaxBaseAmt
+JP_TaxAmt

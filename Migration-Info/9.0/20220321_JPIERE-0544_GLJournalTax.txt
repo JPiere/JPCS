@@ -1,0 +1,8 @@
+Create JP_GLJournalTax Table
+
+
+Add below Column to GL_JournanLine Table
+*C_Tax_ID
+*JP_SOPOType
+*JP_TaxBaseAmt
+*JP_TaxAmt

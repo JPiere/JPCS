@@ -88,6 +88,11 @@ SELECT
  ,cnt.DocumentNo AS JP_Contract_DocNo
  ,fas.JP_Order_ID AS C_Order_ID
  ,ord.DocumentNo AS JP_Order_DocumentNo
+ ,cpp.JP_ContractProcPeriod_ID
+ ,cpp.name AS JP_ContractProcperiod_Name
+ ,fas.JP_SOPOType AS JP_SOPOType
+ ,fas.JP_TaxBaseAmt
+ ,fas.JP_TaxAmt
   
  FROM adempiere.Fact_Acct fas
  		LEFT OUTER JOIN adempiere.AD_Org otrx ON (fas.AD_OrgTrx_ID = otrx.AD_Org_ID)
@@ -120,6 +125,7 @@ SELECT
 
 		LEFT OUTER JOIN adempiere.JP_ContractContent cc ON (fas.JP_ContractContent_ID = cc.JP_ContractContent_ID )
 			LEFT OUTER JOIN adempiere.JP_Contract cnt ON (cc.JP_Contract_ID = cnt.JP_Contract_ID )
+		LEFT JOIN adempiere.JP_ContractProcPeriod cpp ON fas.JP_ContractProcPeriod_ID = cpp.JP_ContractProcperiod_ID
 		LEFT OUTER JOIN adempiere.C_Order ord ON (fas.JP_Order_ID = ord.C_Order_ID )
 ;
 
