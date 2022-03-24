@@ -1,0 +1,4 @@
+Added below Column to the I_GLJournalJP Table
+*JP_SOPOType
+*JP_ContractProcPeriod_Name
+*JP_ContractProcPeriod_ID
