@@ -1,0 +1,2 @@
+Add JP_ValidFrom Column to AD_User_OrgAccess Table
+Add JP_ValidTo Column to AD_User_OrgAccess Table
