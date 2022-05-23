@@ -1,0 +1,7 @@
+Add below columns to the C_ElementValue Table
+*JP_Group1
+*JP_Group2
+*JP_Group3
+*JP_Group4
+*JP_Group5
+*JP_Group6
