@@ -1,0 +1,8 @@
+Add below column to the C_BPartner Table
+*IsQualifiedInvoiceIssuerJP
+*JP_RegisteredNumberOfQII
+*JP_RegisteredDateOfQII
+
+Add below column to the Fact_Acct Table
+*IsQualifiedInvoiceIssuerJP
+*JP_RegisteredNumberOfQII
