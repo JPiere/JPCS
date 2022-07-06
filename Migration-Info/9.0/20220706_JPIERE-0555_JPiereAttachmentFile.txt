@@ -1,0 +1,19 @@
+Add JP_StorageAttachment_ID column to the AD_ClientInfo table.
+
+Add JP_Hash_Algorithm column to the AD_StorageProvider table.
+
+Add below column to the JP_AttachmentFileRecord table.
+*AD_StorageProvider_ID
+*JP_Subject
+*JP_Remarks
+*TotalLines
+*GrandTotal
+*TotalAmt
+*LineNetAmt
+*PayAmt
+*JPBillAmt
+*StmtAmt
+*TrxAmt
+*ChargeAmt
+*JP_Hash_File
+*JP_Hash_Algorithm
