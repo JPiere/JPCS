@@ -1,0 +1,22 @@
+Add below Columns to Fact_Acct Table
+*JP_PriceActual
+*JP_Charge_ID
+*JP_BankAccount_ID
+
+Add below Columns to C_BankStatementLine Table
+*JP_PriceActual
+*JP_Product_ID
+*JP_Qty
+*JP_UOM_ID
+
+Add below Columns to JP_BankDataLine Table
+*JP_PriceActual
+*JP_Product_ID
+*JP_Qty
+*JP_UOM_ID
+
+
+Add JP_PriceActual Column to GL_JournalLine Table
+
+Add JP_PriceActual Column to I_GLJournalJP Table
+
