@@ -1,0 +1,1 @@
+Add JP_SOPOType Column to the JP_BankDataLine Table
