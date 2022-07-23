@@ -1,0 +1,62 @@
+-- Table: adempiere.jp_charge_history
+
+-- DROP TABLE IF EXISTS adempiere.jp_charge_history;
+
+CREATE TABLE IF NOT EXISTS adempiere.jp_charge_history
+(
+    ad_client_id numeric(10,0) NOT NULL,
+    ad_org_id numeric(10,0) NOT NULL,
+    c_charge_id numeric(10,0) NOT NULL,
+    created timestamp without time zone NOT NULL,
+    createdby numeric(10,0) NOT NULL,
+    datefrom timestamp without time zone NOT NULL,
+    dateto timestamp without time zone NOT NULL,
+    description character varying(255) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    isactive character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'Y'::bpchar,
+    jp_charge_history_id numeric(10,0) NOT NULL,
+    jp_charge_history_uu character varying(36) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    name character varying(60) COLLATE pg_catalog."default" NOT NULL,
+    updated timestamp without time zone NOT NULL,
+    updatedby numeric(10,0) NOT NULL,
+    CONSTRAINT jp_charge_history_key PRIMARY KEY (jp_charge_history_id),
+    CONSTRAINT jp_charge_history_uu_idx UNIQUE (jp_charge_history_uu),
+    CONSTRAINT adclient_jpchargehistory FOREIGN KEY (ad_client_id)
+        REFERENCES adempiere.ad_client (ad_client_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT adorg_jpchargehistory FOREIGN KEY (ad_org_id)
+        REFERENCES adempiere.ad_org (ad_org_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT ccharge_jpchargehistory FOREIGN KEY (c_charge_id)
+        REFERENCES adempiere.c_charge (c_charge_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT createdby_jpchargehistory FOREIGN KEY (createdby)
+        REFERENCES adempiere.ad_user (ad_user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT updatedby_jpchargehistory FOREIGN KEY (updatedby)
+        REFERENCES adempiere.ad_user (ad_user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT jp_charge_history_isactive_check CHECK (isactive = ANY (ARRAY['Y'::bpchar, 'N'::bpchar]))
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS adempiere.jp_charge_history
+    OWNER to adempiere;
+-- Index: jp_charge_history_charge_id
+
+-- DROP INDEX IF EXISTS adempiere.jp_charge_history_charge_id;
+
+CREATE INDEX IF NOT EXISTS jp_charge_history_charge_id
+    ON adempiere.jp_charge_history USING btree
+    (c_charge_id ASC NULLS LAST)
+    TABLESPACE pg_default;
