@@ -1,0 +1,63 @@
+-- Table: adempiere.jp_corporation_history
+
+-- DROP TABLE IF EXISTS adempiere.jp_corporation_history;
+
+CREATE TABLE IF NOT EXISTS adempiere.jp_corporation_history
+(
+    ad_client_id numeric(10,0) NOT NULL,
+    ad_org_id numeric(10,0) NOT NULL,
+    created timestamp without time zone NOT NULL,
+    createdby numeric(10,0) NOT NULL,
+    datefrom timestamp without time zone NOT NULL,
+    dateto timestamp without time zone NOT NULL,
+    description character varying(255) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    isactive character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'Y'::bpchar,
+    jp_corporation_history_id numeric(10,0) NOT NULL,
+    jp_corporation_history_uu character varying(36) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_corporation_id numeric(10,0) NOT NULL,
+    name character varying(60) COLLATE pg_catalog."default" NOT NULL,
+    name2 character varying(60) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    updated timestamp without time zone NOT NULL,
+    updatedby numeric(10,0) NOT NULL,
+    CONSTRAINT jp_corporation_history_key PRIMARY KEY (jp_corporation_history_id),
+    CONSTRAINT jp_corporation_history_uu_idx UNIQUE (jp_corporation_history_uu),
+    CONSTRAINT adclient_jpcorporationhistory FOREIGN KEY (ad_client_id)
+        REFERENCES adempiere.ad_client (ad_client_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT adorg_jpcorporationhistory FOREIGN KEY (ad_org_id)
+        REFERENCES adempiere.ad_org (ad_org_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT createdby_jpcorporationhistory FOREIGN KEY (createdby)
+        REFERENCES adempiere.ad_user (ad_user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT jpcorporation_jpcorporationhis FOREIGN KEY (jp_corporation_id)
+        REFERENCES adempiere.jp_corporation (jp_corporation_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT updatedby_jpcorporationhistory FOREIGN KEY (updatedby)
+        REFERENCES adempiere.ad_user (ad_user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT jp_corporation_history_isactive_check CHECK (isactive = ANY (ARRAY['Y'::bpchar, 'N'::bpchar]))
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS adempiere.jp_corporation_history
+    OWNER to adempiere;
+-- Index: jp_corporation_history_corp_id
+
+-- DROP INDEX IF EXISTS adempiere.jp_corporation_history_corp_id;
+
+CREATE INDEX IF NOT EXISTS jp_corporation_history_corp_id
+    ON adempiere.jp_corporation_history USING btree
+    (jp_corporation_id ASC NULLS LAST)
+    TABLESPACE pg_default;
