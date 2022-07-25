@@ -1,0 +1,3 @@
+Add below column to the Fact_Acct Table
+*JP_Invoice_ID
+*JP_Payment_ID
