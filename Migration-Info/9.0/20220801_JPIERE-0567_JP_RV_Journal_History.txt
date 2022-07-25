@@ -1,0 +1,131 @@
+CREATE OR REPLACE VIEW adempiere.JP_RV_Journal_History
+ AS
+SELECT 
+	f.Fact_Acct_ID
+	,f.DateAcct
+	,f.DateTrx
+	,f.AD_Client_ID
+	,f.AD_Org_ID
+	,CASE WHEN ooh.Name IS NULL THEN oo.Name ELSE ooh.Name END AS JP_Org_Name
+	,oi.JP_Corporation_ID AS JP_Org_Corporation_ID
+	,CASE WHEN oich.Name IS NULL THEN oic.Name ELSE oich.Name END AS JP_Org_Corporation_Name
+	,f.AD_OrgTrx_ID
+	,CASE WHEN oth.Name IS NULL THEN ot.Name ELSE oth.Name END AS JP_OrgTrx_Name
+	,f.C_AcctSchema_ID
+	,f.AD_Table_ID
+	,f.Record_ID
+	,CASE
+		WHEN f.ad_table_id = 250::numeric THEN o.documentno
+		WHEN f.ad_table_id = 319::numeric THEN io.documentno
+		WHEN f.ad_table_id = 318::numeric THEN inv.documentno
+		WHEN f.ad_table_id = 473::numeric THEN mpo.documentno
+		WHEN f.ad_table_id = 472::numeric THEN minv.documentno
+		WHEN f.ad_table_id = 335::numeric THEN pay.documentno
+		WHEN f.ad_table_id = 735::numeric THEN alc.documentno
+		WHEN f.ad_table_id = 392::numeric THEN bs.name
+		WHEN f.ad_table_id = 323::numeric THEN mov.documentno
+		WHEN f.ad_table_id = 321::numeric THEN miv.documentno
+		WHEN f.ad_table_id = 325::numeric THEN mprd.documentno
+		WHEN f.ad_table_id = 224::numeric THEN gl.documentno
+		WHEN f.ad_table_id = 632::numeric THEN pi.description
+		WHEN f.ad_table_id = 407::numeric THEN cash.name
+		WHEN f.ad_table_id = 1000188::numeric THEN recog.documentno
+		ELSE ''::character varying
+	END AS documentno
+	,f.Description
+	,f.C_Period_ID
+	,f.PostingType
+	,f.GL_Budget_ID
+	,f.GL_Category_ID
+	,f.Account_ID
+	,ev.Value AS JP_Account_Value
+	,CASE WHEN evh.Name IS NULL THEN ev.Name ELSE evh.Name END AS JP_Account_Name
+	,f.C_SubAcct_ID
+	,f.JP_Charge_ID
+	,CASE WHEN chh.Name IS NULL THEN ch.Name ELSE chh.Name END AS JP_Charge_Name
+	,f.C_BPartner_ID
+	,CASE WHEN bph.Name IS NULL THEN bp.Name ELSE bph.Name END AS JP_BPartner_Name
+	,bp.JP_Corporation_ID
+	,CASE WHEN coh.Name IS NULL THEN co.Name ELSE coh.Name END AS JP_Corporation_Name
+	,f.M_Product_ID
+	,CASE WHEN prh.Name IS NULL THEN pr.Name ELSE prh.Name END AS JP_Product_Name
+	,f.C_Project_ID
+	,f.C_ProjectPhase_ID
+	,f.C_ProjectTask_ID
+	,f.C_Campaign_ID
+	,f.C_Activity_ID
+	,f.C_SalesRegion_ID
+	,f.C_LocFrom_ID
+	,f.C_LocTo_ID
+	,f.M_Locator_ID
+	,f.User1_ID
+	,f.User2_ID
+	,f.UserElement1_ID
+	,f.UserElement2_ID
+	,f.C_Currency_ID
+	,f.AmtSourceDr
+	,f.AmtSourceCr
+	,f.AmtAcctDr
+	,f.AmtAcctCr
+	,f.C_Tax_ID
+	,tax.Rate AS JP_Tax_Rate
+	,CASE WHEN taxh.Name IS NULL THEN tax.Name ELSE taxh.Name END AS JP_Tax_Name
+	,f.JP_SOPOType
+	,f.JP_TaxBaseAmt
+	,f.JP_TaxAmt
+	,f.IsQualifiedInvoiceIssuerJP
+	,f.JP_RegisteredNumberOfQII
+	,f.C_UOM_ID
+	,f.Qty
+	,f.JP_PriceActual
+	,f.JP_Order_ID
+	,f.JP_Invoice_ID
+	,f.JP_Payment_ID
+	,f.JP_Contract_ID
+	,f.JP_ContractContent_ID
+	,f.JP_ContractProcPeriod_ID
+	,f.Line_ID
+	,f.A_Asset_ID
+	,f.JP_BankAccount_ID
+	,CASE WHEN bah.Name IS NULL THEN ba.Name ELSE bah.Name END AS JP_BankAccount_Name
+
+FROM adempiere.Fact_Acct f
+     LEFT JOIN adempiere.c_order o ON f.ad_table_id = 250::numeric AND f.record_id = o.c_order_id
+     LEFT JOIN adempiere.m_inout io ON f.ad_table_id = 319::numeric AND f.record_id = io.m_inout_id
+     LEFT JOIN adempiere.c_invoice inv ON f.ad_table_id = 318::numeric AND f.record_id = inv.c_invoice_id
+     LEFT JOIN adempiere.m_matchpo mpo ON f.ad_table_id = 473::numeric AND f.record_id = mpo.m_matchpo_id
+     LEFT JOIN adempiere.m_matchinv minv ON f.ad_table_id = 472::numeric AND f.record_id = minv.m_matchinv_id
+     LEFT JOIN adempiere.c_payment pay ON f.ad_table_id = 335::numeric AND f.record_id = pay.c_payment_id
+     LEFT JOIN adempiere.c_allocationhdr alc ON f.ad_table_id = 735::numeric AND f.record_id = alc.c_allocationhdr_id
+     LEFT JOIN adempiere.c_bankstatement bs ON f.ad_table_id = 392::numeric AND f.record_id = bs.c_bankstatement_id
+     LEFT JOIN adempiere.m_movement mov ON f.ad_table_id = 323::numeric AND f.record_id = mov.m_movement_id
+     LEFT JOIN adempiere.m_inventory miv ON f.ad_table_id = 321::numeric AND f.record_id = miv.m_inventory_id
+     LEFT JOIN adempiere.m_production mprd ON f.ad_table_id = 325::numeric AND f.record_id = mprd.m_production_id
+     LEFT JOIN adempiere.gl_journal gl ON f.ad_table_id = 224::numeric AND f.record_id = gl.gl_journal_id
+     LEFT JOIN adempiere.c_projectissue pi ON f.ad_table_id = 623::numeric AND f.record_id = pi.c_projectissue_id
+     LEFT JOIN adempiere.c_cash cash ON f.ad_table_id = 407::numeric AND f.record_id = cash.c_cash_id
+     LEFT JOIN adempiere.jp_recognition recog ON f.ad_table_id = 1000188::numeric AND f.record_id = recog.jp_recognition_id
+INNER JOIN adempiere.AD_Org oo ON (f.AD_Org_ID = oo.AD_Org_ID)
+	LEFT OUTER JOIN adempiere.JP_Org_History ooh ON (f.AD_Org_ID = ooh.AD_Org_ID AND ooh.DateFrom <= f.DateAcct AND f.DateAcct <= ooh.DateTo)
+INNER JOIN adempiere.AD_OrgInfo oi ON (f.AD_Org_ID = oi.AD_Org_ID)
+	LEFT OUTER JOIN adempiere.JP_Corporation oic ON (oi.JP_Corporation_ID = oic.JP_Corporation_ID)
+	LEFT OUTER JOIN adempiere.JP_Corporation_History oich ON (oi.JP_Corporation_ID = oich.JP_Corporation_ID AND oich.DateFrom <= f.DateAcct AND f.DateAcct <= oich.DateTo)
+INNER JOIN adempiere.C_ElementValue ev on(f.Account_ID = ev.C_ElementValue_ID)
+	LEFT OUTER JOIN adempiere.JP_ElementValue_History evh ON (f.Account_ID = evh.C_ElementValue_ID AND evh.DateFrom <= f.DateAcct AND f.DateAcct <= evh.DateTo)
+LEFT OUTER JOIN adempiere.AD_Org ot ON (f.AD_OrgTrx_ID = ot.AD_Org_ID)
+	LEFT OUTER JOIN adempiere.JP_Org_History oth ON (f.AD_OrgTrx_ID = oth.AD_Org_ID AND oth.DateFrom <= f.DateAcct AND f.DateAcct <= oth.DateTo)
+LEFT OUTER JOIN adempiere.C_BPartner bp ON (f.C_BPartner_ID = bp.C_BPartner_ID)
+	LEFT OUTER JOIN adempiere.JP_BPartner_History bph ON (f.C_BPartner_ID = bph.C_BPartner_ID AND bph.DateFrom <= f.DateAcct AND f.DateAcct <= bph.DateTo)
+	LEFT OUTER JOIN adempiere.JP_Corporation co ON (bp.JP_Corporation_ID = co.JP_Corporation_ID)
+	LEFT OUTER JOIN adempiere.JP_Corporation_History coh ON (bp.JP_Corporation_ID = coh.JP_Corporation_ID AND coh.DateFrom <= f.DateAcct AND f.DateAcct <= coh.DateTo)
+LEFT OUTER JOIN adempiere.M_Product pr ON (f.M_Product_ID = pr.M_Product_ID)
+	LEFT OUTER JOIN adempiere.JP_Product_History prh ON (f.M_Product_ID = prh.M_Product_ID AND prh.DateFrom <= f.DateAcct AND f.DateAcct <= prh.DateTo)	
+LEFT OUTER JOIN adempiere.C_Charge ch ON (f.JP_Charge_ID = ch.C_Charge_ID)
+	LEFT OUTER JOIN adempiere.JP_Charge_History chh ON (f.JP_Charge_ID = chh.C_Charge_ID AND chh.DateFrom <= f.DateAcct AND f.DateAcct <= chh.DateTo)	
+LEFT OUTER JOIN adempiere.C_Tax tax ON (f.C_Tax_ID = tax.C_Tax_ID)
+	LEFT OUTER JOIN adempiere.JP_tax_History taxh ON (f.C_Tax_ID = taxh.C_tax_ID AND taxh.DateFrom <= f.DateAcct AND f.DateAcct <= taxh.DateTo)	
+LEFT OUTER JOIN adempiere.C_BankAccount ba ON (f.JP_BankAccount_ID = ba.C_BankAccount_ID)
+	LEFT OUTER JOIN adempiere.JP_BankAccount_History bah ON (f.JP_BankAccount_ID = bah.C_BankAccount_ID AND bah.DateFrom <= f.DateAcct AND f.DateAcct <= bah.DateTo)	
+;
+ALTER TABLE adempiere.JP_RV_Journal_History
+    OWNER TO adempiere;
