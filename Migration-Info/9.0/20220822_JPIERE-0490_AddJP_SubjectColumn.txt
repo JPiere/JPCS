@@ -1,0 +1,7 @@
+Add JP_Subject and JP_Remarks Columns to below tables
+
+*JP_Contract
+*JP_ContractContent
+*JP_ContractT
+*JP_ContractContentT
+*JP_ContractProcSchedule
