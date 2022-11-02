@@ -1,0 +1,103 @@
+-- Table: adempiere.jp_banktransferfeededuct
+
+-- DROP TABLE IF EXISTS adempiere.jp_banktransferfeededuct;
+
+CREATE TABLE IF NOT EXISTS adempiere.jp_banktransferfeededuct
+(
+    ad_client_id numeric(10,0) NOT NULL,
+    ad_org_id numeric(10,0) NOT NULL,
+    c_charge_id numeric(10,0) DEFAULT NULL::numeric,
+    c_currency_id numeric(10,0),
+    c_doctype_id numeric(10,0) NOT NULL,
+    c_paymentterm_id numeric(10,0) NOT NULL,
+    c_tax_id numeric(10,0) NOT NULL,
+    created timestamp without time zone NOT NULL,
+    createdby numeric(10,0) NOT NULL,
+    description character varying(255) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    isactive character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'Y'::bpchar,
+    istaxincluded character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'N'::bpchar,
+    jp_banktransferfeededuct_id numeric(10,0) NOT NULL,
+    jp_banktransferfeededuct_uu character varying(36) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_lowerlimitbanktransferfee numeric NOT NULL DEFAULT 0,
+    line numeric(10,0) NOT NULL DEFAULT 10,
+    m_pricelist_id numeric(10,0) NOT NULL,
+    m_product_id numeric(10,0) DEFAULT NULL::numeric,
+    name character varying(60) COLLATE pg_catalog."default" NOT NULL,
+    paymentrule character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'P'::bpchar,
+    priceentered numeric NOT NULL,
+    updated timestamp without time zone NOT NULL,
+    updatedby numeric(10,0) NOT NULL,
+    value character varying(40) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    CONSTRAINT jp_banktransferfeededuct_key PRIMARY KEY (jp_banktransferfeededuct_id),
+    CONSTRAINT jp_banktransferfeededuct_uuidx UNIQUE (jp_banktransferfeededuct_uu),
+    CONSTRAINT adclient_jpbanktransferfeededu FOREIGN KEY (ad_client_id)
+        REFERENCES adempiere.ad_client (ad_client_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT adorg_jpbanktransferfeededuct FOREIGN KEY (ad_org_id)
+        REFERENCES adempiere.ad_org (ad_org_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT ccharge_jpbanktransferfeededuc FOREIGN KEY (c_charge_id)
+        REFERENCES adempiere.c_charge (c_charge_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT ccurrency_jpbanktransferfeeded FOREIGN KEY (c_currency_id)
+        REFERENCES adempiere.c_currency (c_currency_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT cdoctype_jpbanktransferfeededu FOREIGN KEY (c_doctype_id)
+        REFERENCES adempiere.c_doctype (c_doctype_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT cpaymentterm_jpbanktransferfee FOREIGN KEY (c_paymentterm_id)
+        REFERENCES adempiere.c_paymentterm (c_paymentterm_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT createdby_jpbanktransferfeeded FOREIGN KEY (createdby)
+        REFERENCES adempiere.ad_user (ad_user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT ctax_jpbanktransferfeededuct FOREIGN KEY (c_tax_id)
+        REFERENCES adempiere.c_tax (c_tax_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT mpricelist_jpbanktransferfeede FOREIGN KEY (m_pricelist_id)
+        REFERENCES adempiere.m_pricelist (m_pricelist_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT mproduct_jpbanktransferfeededu FOREIGN KEY (m_product_id)
+        REFERENCES adempiere.m_product (m_product_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT updatedby_jpbanktransferfeeded FOREIGN KEY (updatedby)
+        REFERENCES adempiere.ad_user (ad_user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT jp_banktransferfeededuct_isactive_check CHECK (isactive = ANY (ARRAY['Y'::bpchar, 'N'::bpchar])),
+    CONSTRAINT jp_banktransferfeededuct_istaxincluded_check CHECK (istaxincluded = ANY (ARRAY['Y'::bpchar, 'N'::bpchar]))
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS adempiere.jp_banktransferfeededuct
+    OWNER to adempiere;
+-- Index: jp_banktransferfeededuct_unique
+
+-- DROP INDEX IF EXISTS adempiere.jp_banktransferfeededuct_unique;
+
+CREATE UNIQUE INDEX IF NOT EXISTS jp_banktransferfeededuct_unique
+    ON adempiere.jp_banktransferfeededuct USING btree
+    (ad_client_id ASC NULLS LAST, value COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

@@ -1,0 +1,77 @@
+-- Table: adempiere.t_payselectioncheckjp
+
+-- DROP TABLE IF EXISTS adempiere.t_payselectioncheckjp;
+
+CREATE TABLE IF NOT EXISTS adempiere.t_payselectioncheckjp
+(
+    ad_client_id numeric(10,0) NOT NULL,
+    ad_org_id numeric(10,0) NOT NULL,
+    ad_pinstance_id numeric(10,0) NOT NULL,
+    c_bp_bankaccount_id numeric(10,0) DEFAULT NULL::numeric,
+    c_bpartner_id numeric(10,0) NOT NULL,
+    c_payselection_id numeric(10,0) NOT NULL,
+    created timestamp without time zone NOT NULL DEFAULT adempiere.getdate(),
+    createdby numeric(10,0) NOT NULL,
+    discountamt numeric NOT NULL,
+    isactive character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'Y'::bpchar,
+    isreceipt character(1) COLLATE pg_catalog."default" NOT NULL,
+    payamt numeric NOT NULL,
+    qty numeric(10,0) NOT NULL,
+    t_payselectioncheckjp_id numeric(10,0) NOT NULL,
+    t_payselectioncheckjp_uu character varying(36) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    updated timestamp without time zone NOT NULL DEFAULT adempiere.getdate(),
+    updatedby numeric(10,0) NOT NULL,
+    writeoffamt numeric NOT NULL DEFAULT 0,
+    c_invoice_id numeric(10,0) DEFAULT NULL::numeric,
+    jp_banktransferfee numeric NOT NULL DEFAULT 0,
+    CONSTRAINT t_payselectioncheckjp_key PRIMARY KEY (t_payselectioncheckjp_id),
+    CONSTRAINT t_payselectioncheckjp_uu_idx UNIQUE (t_payselectioncheckjp_uu),
+    CONSTRAINT adpinstance_tpayselectioncheck FOREIGN KEY (ad_pinstance_id)
+        REFERENCES adempiere.ad_pinstance (ad_pinstance_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT cbpartner_tpayselectioncheckjp FOREIGN KEY (c_bpartner_id)
+        REFERENCES adempiere.c_bpartner (c_bpartner_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT cbpbankaccount_tpayselectionch FOREIGN KEY (c_bp_bankaccount_id)
+        REFERENCES adempiere.c_bp_bankaccount (c_bp_bankaccount_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT cinvoice_tpayselectioncheckjp FOREIGN KEY (c_invoice_id)
+        REFERENCES adempiere.c_invoice (c_invoice_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT cpayselection_tpayselectionche FOREIGN KEY (c_payselection_id)
+        REFERENCES adempiere.c_payselection (c_payselection_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT t_payselectioncheckjp_isactive_check CHECK (isactive = ANY (ARRAY['Y'::bpchar, 'N'::bpchar])),
+    CONSTRAINT t_payselectioncheckjp_isreceipt_check CHECK (isreceipt = ANY (ARRAY['Y'::bpchar, 'N'::bpchar]))
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS adempiere.t_payselectioncheckjp
+    OWNER to adempiere;
+-- Index: t_payselectioncheckjp_payselection
+
+-- DROP INDEX IF EXISTS adempiere.t_payselectioncheckjp_payselection;
+
+CREATE INDEX IF NOT EXISTS t_payselectioncheckjp_payselection
+    ON adempiere.t_payselectioncheckjp USING btree
+    (c_payselection_id ASC NULLS LAST)
+    TABLESPACE pg_default;
+-- Index: t_payselectioncheckjp_pinstance
+
+-- DROP INDEX IF EXISTS adempiere.t_payselectioncheckjp_pinstance;
+
+CREATE INDEX IF NOT EXISTS t_payselectioncheckjp_pinstance
+    ON adempiere.t_payselectioncheckjp USING btree
+    (ad_pinstance_id ASC NULLS LAST)
+    TABLESPACE pg_default;

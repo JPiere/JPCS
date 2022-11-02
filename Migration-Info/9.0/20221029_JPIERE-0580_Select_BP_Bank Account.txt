@@ -1,0 +1,2 @@
+Add JP_BP_BankAccount_ID Column to C_Invoice Table
+ADd JP_BP_BankAccount_ID Column to C_PaySelectionLine Table
