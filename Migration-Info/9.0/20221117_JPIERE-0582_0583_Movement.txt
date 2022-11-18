@@ -1,0 +1,22 @@
+Add below columns to M_Movement Table
+*JP_WarehouseNext_ID
+*JP_PhysicalWarehouseNext_ID
+*JP_MovementDateNext
+*IsRecordRouteJP
+*JP_Processing1
+*JP_WarehouseDep_ID
+*JP_PhysicalWarehouseDep_ID
+*JP_MovementDateDep
+*JP_WarehouseDst_ID
+*JP_PhysicalWarehouseDst_ID
+*JP_MovementDateDst
+*JP_MovementPre_ID
+*JP_MovementNext_ID
+*JP_Subject
+*JP_CommunicationColumn
+*JP_Remarks
+
+
+Add below column to M_Movement Table
+*JP_CommunicationColumn
+
