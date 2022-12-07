@@ -1,0 +1,9 @@
+Add below columns to M_Requisition Table
+*JP_Subject
+*JP_CommunicationColumn
+*JP_Remarks
+
+
+Add below column to M_RequisitionLine Table
+*JP_CommunicationColumn
+
