@@ -1,0 +1,41 @@
+CREATE OR REPLACE VIEW adempiere.JP_StorageOnHand_PW
+ AS
+ SELECT 
+    s.AD_Client_ID,
+    0 AS AD_Org_ID,
+    s.AD_Org_ID AS JP_Org_ID,
+    org.Value || '_' || org.Name AS JP_Org_VN,
+    s.M_Locator_ID,
+    loc.Value AS JP_Locator_Value,
+    s.M_Product_ID,
+    p.Value || '_' || p.Name AS JP_Product_VN,
+    p.M_Product_Category_ID,
+    pc.Value || '_' || pc.Name AS JP_Product_Category_VN,
+    s.M_AttributeSetInstance_ID,
+    asi.Description AS AttributeValue,
+    loc.M_Warehouse_ID,
+    wh.Value || '_' || wh.Name AS JP_Warehouse_VN,
+    loc.JP_PhysicalWarehouse_ID,
+    pwh.value ||'_' || pwh.Name AS JP_PhysicalWarehouse_VN,
+    loc.M_LocatorType_ID,
+	lt.Name AS JP_LocatorType_Name,
+	oi.JP_Corporation_ID,
+	co.value ||'_' || co.Name AS JP_Corporation_VN,
+    s.IsActive,
+    s.DateMaterialPolicy,
+    s.Qtyonhand
+   FROM adempiere.M_StorageOnHand s
+    INNER JOIN adempiere.AD_Org org ON (s.AD_Org_ID = org.AD_Org_ID)
+    INNER JOIN adempiere.AD_OrgInfo oi ON (org.AD_Org_ID = oi.AD_Org_ID)
+    	LEFT OUTER JOIN adempiere.JP_Corporation co ON (oi.JP_Corporation_ID = co.JP_Corporation_ID)
+   	INNER JOIN adempiere.M_Locator loc ON (s.M_Locator_ID = loc.M_Locator_ID)
+   		INNER JOIN adempiere.M_Warehouse wh ON (loc.M_Warehouse_ID = wh.M_Warehouse_ID)
+   		LEFT OUTER JOIN adempiere.JP_PhysicalWarehouse pwh ON (loc.JP_PhysicalWarehouse_ID = pwh.JP_PhysicalWarehouse_ID)
+   		LEFT OUTER JOIN adempiere.M_LocatorType lt ON (loc.M_LocatorType_ID = lt.M_LocatorType_ID)
+   	INNER JOIN adempiere.M_Product p ON (s.M_Product_ID = p.M_Product_ID)
+   		INNER JOIN adempiere.M_Product_Category pc ON (p.M_Product_Category_ID = pc.M_Product_Category_ID)
+   	LEFT OUTER JOIN adempiere.M_AttributeSetInstance asi ON (s.M_AttributeSetInstance_ID = asi.M_AttributeSetInstance_ID);
+
+
+ALTER TABLE adempiere.JP_StorageOnHand_PW
+    OWNER TO adempiere;
