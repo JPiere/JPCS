@@ -1,0 +1,154 @@
+-- View: adempiere.fact_acct_jp_v
+
+-- DROP VIEW adempiere.fact_acct_jp_v;
+
+CREATE OR REPLACE VIEW adempiere.fact_acct_jp_v
+ AS
+ SELECT fas.ad_client_id,
+    fas.ad_orgtrx_id,
+    (otrx.value::text || '_'::text) || otrx.name::text AS jp_orgtrx_vn,
+    fas.ad_org_id,
+    (org.value::text || '_'::text) || org.name::text AS jp_org_vn,
+    oif.jp_corporation_id AS jp_org_corporation_id,
+    (ocrp.value::text || '_'::text) || ocrp.name::text AS jp_org_corporation_vn,
+    oif.jp_businessunit_id,
+    (bu.value::text || '_'::text) || bu.name::text AS jp_businessunit_vn,
+    fas.c_acctschema_id,
+    fas.postingtype,
+    fas.account_id,
+    (ev.value::text || '_'::text) || ev.name::text AS jp_account_vn,
+    fas.c_subacct_id,
+    (sub.value::text || '_'::text) || sub.name::text AS jp_subacct_vn,
+    fas.description,
+    fas.ad_table_id,
+    tab.tablename,
+    fas.record_id,
+    fas.fact_acct_id,
+    fas.dateacct,
+    fas.datetrx,
+    fas.isactive,
+    fas.c_period_id,
+    priod.name AS jp_period_name,
+    fas.c_currency_id,
+    cry.iso_code,
+    fas.amtsourcecr,
+    fas.amtsourcedr,
+        CASE
+            WHEN ev.accounttype = 'A'::bpchar THEN fas.amtsourcedr - fas.amtsourcecr
+            WHEN ev.accounttype = 'L'::bpchar THEN fas.amtsourcecr - fas.amtsourcedr
+            WHEN ev.accounttype = 'O'::bpchar THEN fas.amtsourcecr - fas.amtsourcedr
+            WHEN ev.accounttype = 'R'::bpchar THEN fas.amtsourcecr - fas.amtsourcedr
+            WHEN ev.accounttype = 'E'::bpchar THEN fas.amtsourcedr - fas.amtsourcecr
+            ELSE fas.amtsourcedr - fas.amtsourcecr
+        END AS jp_fluctuationamtsource,
+    fas.amtacctcr,
+    fas.amtacctdr,
+        CASE
+            WHEN ev.accounttype = 'A'::bpchar THEN fas.amtacctdr - fas.amtacctcr
+            WHEN ev.accounttype = 'L'::bpchar THEN fas.amtacctcr - fas.amtacctdr
+            WHEN ev.accounttype = 'O'::bpchar THEN fas.amtacctcr - fas.amtacctdr
+            WHEN ev.accounttype = 'R'::bpchar THEN fas.amtacctcr - fas.amtacctdr
+            WHEN ev.accounttype = 'E'::bpchar THEN fas.amtacctdr - fas.amtacctcr
+            ELSE fas.amtacctdr - fas.amtacctcr
+        END AS jp_fluctuationamtacct,
+    ev.accounttype,
+    fas.qty,
+    fas.c_uom_id,
+    uom.uomsymbol,
+    fas.c_activity_id,
+    (act.value::text || '_'::text) || act.name::text AS jp_activity_vn,
+    fas.c_bpartner_id,
+    (bp.value::text || '_'::text) || bp.name::text AS jp_bpartner_vn,
+    bpg.c_bp_group_id,
+    (bpg.value::text || '_'::text) || bpg.name::text AS jp_bp_group_vn,
+    bp.jp_corporation_id,
+    (crp.value::text || '_'::text) || crp.name::text AS jp_corporation_vn,
+    fas.c_campaign_id,
+    (cmp.value::text || '_'::text) || cmp.name::text AS jp_campaign_vn,
+    fas.c_projectphase_id,
+    pjp.name AS jp_projectphase_name,
+    fas.c_project_id,
+    (pj.value::text || '_'::text) || pj.name::text AS jp_project_vn,
+    fas.c_salesregion_id,
+    (sr.value::text || '_'::text) || sr.name::text AS jp_salesregion_vn,
+    fas.gl_budget_id,
+    bdgt.name AS jp_budget_name,
+    fas.m_product_id,
+    (p.value::text || '_'::text) || p.name::text AS jp_product_vn,
+    pc.m_product_category_id,
+    (pc.value::text || '_'::text) || p.name::text AS jp_product_category_vn,
+    fas.gl_category_id,
+    glc.name AS jp_gl_category_name,
+    fas.c_tax_id,
+    tax.name AS jp_tax_name,
+    tax.c_taxcategory_id,
+    taxc.name AS jp_taxcategory_name,
+    cc.jp_contractcontent_id,
+    cc.documentno AS jp_contractcontent_docno,
+    cnt.jp_contract_id,
+    cnt.documentno AS jp_contract_docno,
+    fas.jp_order_id AS c_order_id,
+    ord.documentno AS jp_order_documentno,
+    cpp.jp_contractprocperiod_id,
+    cpp.name AS jp_contractprocperiod_name,
+    fas.jp_sopotype,
+    fas.jp_taxbaseamt,
+    fas.jp_taxamt,
+    ev.jp_if_value,
+    ev.jp_group1,
+    ev.jp_group2,
+    ev.jp_group3,
+    ev.jp_group4,
+    ev.jp_group5,
+    ev.jp_group6,
+    bp.isqualifiedinvoiceissuerjp AS isqualifiedinvoiceissuerbpjp,
+    fas.isqualifiedinvoiceissuerjp AS isqualifiedinvoiceissuerjjp,
+    fas.jp_registerednumberofqii,
+    fas.jp_Invoice_id AS c_Invoice_id,
+    inv.documentno AS JP_Invoice_DocumentNo,
+    fas.JP_Payment_ID AS C_Payment_ID,
+    pay.DocumentNo AS JP_Payment_DocumentNo,
+    fas.JP_BankAccount_ID AS C_BankAccount_ID,
+    bac.Name AS JP_BankAccount_Name,
+    fas.JP_Charge_ID AS C_Charge_ID,
+    chg.Name AS JP_Charge_Name
+    
+   FROM adempiere.fact_acct fas
+     LEFT JOIN adempiere.ad_org otrx ON fas.ad_orgtrx_id = otrx.ad_org_id
+     JOIN adempiere.ad_org org ON fas.ad_org_id = org.ad_org_id
+     JOIN adempiere.ad_orginfo oif ON org.ad_org_id = oif.ad_org_id
+     LEFT JOIN adempiere.jp_corporation ocrp ON oif.jp_corporation_id = ocrp.jp_corporation_id
+     LEFT JOIN adempiere.jp_businessunit bu ON oif.jp_businessunit_id = bu.jp_businessunit_id
+     JOIN adempiere.c_elementvalue ev ON fas.account_id = ev.c_elementvalue_id
+     LEFT JOIN adempiere.c_subacct sub ON fas.c_subacct_id = sub.c_subacct_id
+     JOIN adempiere.ad_table tab ON fas.ad_table_id = tab.ad_table_id
+     JOIN adempiere.c_currency cry ON fas.c_currency_id = cry.c_currency_id
+     LEFT JOIN adempiere.c_uom uom ON fas.c_uom_id = uom.c_uom_id
+     LEFT JOIN adempiere.c_activity act ON fas.c_activity_id = act.c_activity_id
+     LEFT JOIN adempiere.c_bpartner bp ON fas.c_bpartner_id = bp.c_bpartner_id
+     LEFT JOIN adempiere.c_bp_group bpg ON bp.c_bp_group_id = bpg.c_bp_group_id
+     LEFT JOIN adempiere.jp_corporation crp ON bp.jp_corporation_id = crp.jp_corporation_id
+     LEFT JOIN adempiere.c_campaign cmp ON fas.c_campaign_id = cmp.c_campaign_id
+     JOIN adempiere.c_period priod ON fas.c_period_id = priod.c_period_id
+     LEFT JOIN adempiere.c_projectphase pjp ON fas.c_projectphase_id = pjp.c_projectphase_id
+     LEFT JOIN adempiere.c_project pj ON fas.c_project_id = pj.c_project_id
+     LEFT JOIN adempiere.c_salesregion sr ON fas.c_salesregion_id = sr.c_salesregion_id
+     LEFT JOIN adempiere.gl_budget bdgt ON fas.gl_budget_id = bdgt.gl_budget_id
+     LEFT JOIN adempiere.m_product p ON fas.m_product_id = p.m_product_id
+     LEFT JOIN adempiere.m_product_category pc ON p.m_product_category_id = pc.m_product_category_id
+     LEFT JOIN adempiere.gl_category glc ON fas.gl_category_id = glc.gl_category_id
+     LEFT JOIN adempiere.c_tax tax ON fas.c_tax_id = tax.c_tax_id
+     LEFT JOIN adempiere.c_taxcategory taxc ON tax.c_taxcategory_id = taxc.c_taxcategory_id
+     LEFT JOIN adempiere.jp_contractcontent cc ON fas.jp_contractcontent_id = cc.jp_contractcontent_id
+     LEFT JOIN adempiere.jp_contract cnt ON cc.jp_contract_id = cnt.jp_contract_id
+     LEFT JOIN adempiere.jp_contractprocperiod cpp ON fas.jp_contractprocperiod_id = cpp.jp_contractprocperiod_id
+     LEFT JOIN adempiere.c_order ord ON fas.jp_order_id = ord.c_order_id
+     LEFT JOIN adempiere.C_Invoice inv ON fas.JP_Invoice_ID= inv.C_Invoice_ID
+     LEFT JOIN adempiere.C_Payment pay ON fas.JP_Payment_ID= pay.C_Payment_ID
+     LEFT JOIN adempiere.C_BankAccount bac ON fas.JP_BankAccount_ID= bac.C_BankAccount_ID
+     LEFT JOIN adempiere.C_Charge chg ON fas.JP_Charge_ID= chg.C_Charge_ID
+     ;
+
+ALTER TABLE adempiere.fact_acct_jp_v
+    OWNER TO adempiere;
+
