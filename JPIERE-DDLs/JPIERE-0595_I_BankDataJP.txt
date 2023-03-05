@@ -1,0 +1,119 @@
+-- Table: adempiere.i_bankdatajp
+
+-- DROP TABLE IF EXISTS adempiere.i_bankdatajp;
+
+CREATE TABLE IF NOT EXISTS adempiere.i_bankdatajp
+(
+    ad_client_id numeric(10,0) NOT NULL,
+    ad_orgtrx_id numeric(10,0) DEFAULT NULL::numeric,
+    ad_org_id numeric(10,0) NOT NULL,
+    accountno character varying(20) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    bankaccounttype character(1) COLLATE pg_catalog."default" DEFAULT NULL::bpchar,
+    c_bankaccount_id numeric(10,0) DEFAULT NULL::numeric,
+    c_bank_id numeric(10,0) DEFAULT NULL::numeric,
+    created timestamp without time zone NOT NULL,
+    createdby numeric(10,0) NOT NULL,
+    dateacct timestamp without time zone,
+    i_bankdatajp_id numeric(10,0) NOT NULL,
+    i_bankdatajp_uu character varying(36) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    i_errormsg character varying(2000) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    i_isimported character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'N'::bpchar,
+    isactive character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'Y'::bpchar,
+    jp_a_name_kana character varying(48) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_acctdate character varying(2) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_acctmonth character varying(2) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_bankaccounttype character varying(20) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_bankaccount_value character varying(40) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_bankdatacustomercode1 character varying(10) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_bankdatacustomercode2 character varying(10) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_bankdata_edi_info character varying(20) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_bankdata_referenceno character varying(6) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_bankname_kana character varying(15) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_bank_name character varying(60) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_branchname character varying(255) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_branchname_kana character varying(15) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_date character varying(2) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_line_description character varying(255) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_month character varying(2) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_orgtrx_value character varying(40) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_org_value character varying(40) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_salesrep_email character varying(60) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_salesrep_name character varying(60) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_salesrep_value character varying(40) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    processed character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'N'::bpchar,
+    processing character(1) COLLATE pg_catalog."default" DEFAULT NULL::bpchar,
+    routingno character varying(20) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    salesrep_id numeric(10,0) DEFAULT NULL::numeric,
+    statementdate timestamp without time zone,
+    stmtamt numeric NOT NULL DEFAULT 0,
+    trxamt numeric NOT NULL DEFAULT 0,
+    updated timestamp without time zone NOT NULL,
+    updatedby numeric(10,0) NOT NULL,
+    jp_bankdata_id numeric(10,0) DEFAULT NULL::numeric,
+    jp_bankdataline_id numeric(10,0) DEFAULT NULL::numeric,
+    jp_a_name character varying(255) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_requestername character varying(40) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_branchcode character varying(3) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_bankname_kana_line character varying(15) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_branchname_kana_line character varying(15) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    CONSTRAINT i_bankdatajp_key PRIMARY KEY (i_bankdatajp_id),
+    CONSTRAINT i_bankdatajp_uu_idx UNIQUE (i_bankdatajp_uu),
+    CONSTRAINT adclient_ibankdatajp FOREIGN KEY (ad_client_id)
+        REFERENCES adempiere.ad_client (ad_client_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT adorg_ibankdatajp FOREIGN KEY (ad_org_id)
+        REFERENCES adempiere.ad_org (ad_org_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT adorgtrx_ibankdatajp FOREIGN KEY (ad_orgtrx_id)
+        REFERENCES adempiere.ad_org (ad_org_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT cbank_ibankdatajp FOREIGN KEY (c_bank_id)
+        REFERENCES adempiere.c_bank (c_bank_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT cbankaccount_ibankdatajp FOREIGN KEY (c_bankaccount_id)
+        REFERENCES adempiere.c_bankaccount (c_bankaccount_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT createdby_ibankdatajp FOREIGN KEY (createdby)
+        REFERENCES adempiere.ad_user (ad_user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT jpbankdata_ibankdatajp FOREIGN KEY (jp_bankdata_id)
+        REFERENCES adempiere.jp_bankdata (jp_bankdata_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT jpbankdataline_ibankdatajp FOREIGN KEY (jp_bankdataline_id)
+        REFERENCES adempiere.jp_bankdataline (jp_bankdataline_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT salesrep_ibankdatajp FOREIGN KEY (salesrep_id)
+        REFERENCES adempiere.ad_user (ad_user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT updatedby_ibankdatajp FOREIGN KEY (updatedby)
+        REFERENCES adempiere.ad_user (ad_user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT i_bankdatajp_i_isimported_check CHECK (i_isimported = ANY (ARRAY['Y'::bpchar, 'N'::bpchar])),
+    CONSTRAINT i_bankdatajp_isactive_check CHECK (isactive = ANY (ARRAY['Y'::bpchar, 'N'::bpchar])),
+    CONSTRAINT i_bankdatajp_processed_check CHECK (processed = ANY (ARRAY['Y'::bpchar, 'N'::bpchar]))
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS adempiere.i_bankdatajp
+    OWNER to adempiere;

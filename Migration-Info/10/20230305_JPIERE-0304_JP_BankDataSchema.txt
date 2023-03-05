@@ -1,0 +1,1 @@
+Add BPartnerColumn Column to the JP_BankDataSchema Table
