@@ -1,0 +1,2 @@
+Add JP_Bill_PrintFormat_ID Column to the C_BPartner Table.
+Add JP_Bill_PrintFormat_ID Column to the AD_PrintForm Table.
