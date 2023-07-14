@@ -1,0 +1,2 @@
+ADD JP_BankStatementDocType_ID Column to the JP_BankDataSchema Table
+ADD JP_ProductionDocType_ID Column to the C_DocType Table
