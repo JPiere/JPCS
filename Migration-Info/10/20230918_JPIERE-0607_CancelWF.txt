@@ -1,0 +1,5 @@
+Add JP_CancelWorkflow_ID column to the AD_Process table
+Add JP_CancelWFAction column to the C_Order table
+Add JP_CancelWFStatus column to the C_Order table
+Add JP_CancelWFAction column to the C_Invoice table
+Add JP_CancelWFStatus column to the C_Invoice table
