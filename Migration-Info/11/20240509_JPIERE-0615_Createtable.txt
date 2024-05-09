@@ -1,0 +1,51 @@
+-- Table: adempiere.jp_paymentexportclass
+
+-- DROP TABLE IF EXISTS adempiere.jp_paymentexportclass;
+
+CREATE TABLE IF NOT EXISTS adempiere.jp_paymentexportclass
+(
+    ad_client_id numeric(10,0) NOT NULL,
+    ad_org_id numeric(10,0) NOT NULL,
+    created timestamp without time zone NOT NULL,
+    createdby numeric(10,0) NOT NULL,
+    description character varying(255) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    isactive character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'Y'::bpchar,
+    isreceipt character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'N'::bpchar,
+    jp_lineend character varying(2) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    jp_paymentexportclass_id numeric(10,0) NOT NULL,
+    jp_paymentexportclass_uu character varying(36) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    name character varying(60) COLLATE pg_catalog."default" NOT NULL,
+    paymentexportclass character varying(60) COLLATE pg_catalog."default" NOT NULL,
+    updated timestamp without time zone NOT NULL,
+    updatedby numeric(10,0) NOT NULL,
+    value character varying(40) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    CONSTRAINT jp_paymentexportclass_key PRIMARY KEY (jp_paymentexportclass_id),
+    CONSTRAINT jp_paymentexportclass_uu_idx UNIQUE (jp_paymentexportclass_uu),
+    CONSTRAINT adclient_jppaymentexportclass FOREIGN KEY (ad_client_id)
+        REFERENCES adempiere.ad_client (ad_client_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT adorg_jppaymentexportclass FOREIGN KEY (ad_org_id)
+        REFERENCES adempiere.ad_org (ad_org_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT createdby_jppaymentexportclass FOREIGN KEY (createdby)
+        REFERENCES adempiere.ad_user (ad_user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT updatedby_jppaymentexportclass FOREIGN KEY (updatedby)
+        REFERENCES adempiere.ad_user (ad_user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT jp_paymentexportclass_isactive_check CHECK (isactive = ANY (ARRAY['Y'::bpchar, 'N'::bpchar])),
+    CONSTRAINT jp_paymentexportclass_isreceipt_check CHECK (isreceipt = ANY (ARRAY['Y'::bpchar, 'N'::bpchar]))
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS adempiere.jp_paymentexportclass
+    OWNER to adempiere;
