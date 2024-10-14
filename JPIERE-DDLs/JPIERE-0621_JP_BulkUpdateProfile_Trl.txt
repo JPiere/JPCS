@@ -1,0 +1,60 @@
+-- Table: adempiere.JP_BulkUpdateProfile_Trl
+
+-- DROP TABLE IF EXISTS adempiere.JP_BulkUpdateProfile_Trl;
+
+CREATE TABLE IF NOT EXISTS adempiere.JP_BulkUpdateProfile_Trl
+(
+    AD_Client_ID numeric(10,0) NOT NULL,
+    AD_Language character varying(6) COLLATE pg_catalog."default" NOT NULL,
+    AD_Org_ID numeric(10,0) NOT NULL,
+    Created timestamp without time zone NOT NULL DEFAULT adempiere.getdate(),
+    Createdby numeric(10,0) NOT NULL,
+    IsActive character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'Y'::bpchar,
+    IsTranslated character(1) COLLATE pg_catalog."default" NOT NULL,
+    JP_BulkUpdateProfile_ID numeric(10,0) NOT NULL,
+    JP_BulkUpdateProfile_Trl_UU character varying(36) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    Description character varying(255) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    Help character varying(2000) COLLATE pg_catalog."default" DEFAULT NULL::character varying,
+    Name character varying(60) COLLATE pg_catalog."default" NOT NULL,
+    Updated timestamp without time zone NOT NULL DEFAULT adempiere.getdate(),
+    Updatedby numeric(10,0) NOT NULL,
+    CONSTRAINT JP_BulkUpdateProfile_Trl_PKey PRIMARY KEY (JP_BulkUpdateProfile_ID, AD_Language),
+    CONSTRAINT jp_bulkupdateprofile_trl_uu_idx UNIQUE (jp_bulkupdateprofile_trl_uu),
+    CONSTRAINT adclient_jpbulkupdateprofiletrl FOREIGN KEY (ad_client_id)
+        REFERENCES adempiere.ad_client (ad_client_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT adlanguage_jpbulkupdateprofiletrl FOREIGN KEY (ad_language)
+        REFERENCES adempiere.ad_language (ad_language) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT adorg_jpbulkupdateprofiletrl FOREIGN KEY (ad_org_id)
+        REFERENCES adempiere.ad_org (ad_org_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT createdby_jpbulkupdateprofiletrl FOREIGN KEY (createdby)
+        REFERENCES adempiere.ad_user (ad_user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT jpbulkupdateprofile_jpbulkupdateprofiletrl FOREIGN KEY (jp_bulkupdateprofile_id)
+        REFERENCES adempiere.jp_bulkupdateprofile (jp_bulkupdateprofile_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT updatedby_jpbulkupdateprofiletrl FOREIGN KEY (updatedby)
+        REFERENCES adempiere.ad_user (ad_user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT jp_bulkupdateprofile_trl_isactive_check CHECK (isactive = ANY (ARRAY['Y'::bpchar, 'N'::bpchar])),
+    CONSTRAINT jp_bulkupdateprofile_trl_istranslated_check CHECK (istranslated = ANY (ARRAY['Y'::bpchar, 'N'::bpchar]))
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS adempiere.jp_bulkupdateprofile_trl
+    OWNER to adempiere;
